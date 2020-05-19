@@ -18,6 +18,7 @@ public class FoodManager : MonoBehaviour
     private List<Food> rFoods = new List<Food>(),pFoods = new List<Food>(),gFoods = new List<Food>(),yFoods = new List<Food>();
     private bool rSpawning, pSpawning, gSpawning, ySpawning;
     private Random r = new Random();
+    public int spawnSpread = 5;
     void Start()
     {
         rFoods = new List<Food>(maxFoodOnMap/4);pFoods = new List<Food>(maxFoodOnMap/4);
@@ -44,7 +45,7 @@ public class FoodManager : MonoBehaviour
         Food rInstance = gameObject.AddComponent(typeof(Food)) as Food;
          
          rInstance.instance = Instantiate(foodPrefab, 
-             new Vector3(rSpawn.position.x+ (float) NextGaussianDouble(r)*6-3,rSpawn.position.y,rSpawn.position.z+(float) NextGaussianDouble(r)*6-3), 
+             new Vector3(rSpawn.position.x+ (float) NextGaussianDouble(r)*spawnSpread- (spawnSpread/2f),rSpawn.position.y,rSpawn.position.z+(float) NextGaussianDouble(r)*spawnSpread- (spawnSpread/2f)), 
              rSpawn.rotation);
          rInstance.instance.GetComponentInChildren<MeshRenderer>().material.color=red;
          rInstance.instance.GetComponent<Food>().foodColor = red;
@@ -56,8 +57,8 @@ public class FoodManager : MonoBehaviour
         Food pInstance = gameObject.AddComponent(typeof(Food)) as Food;
 
         pInstance.instance = Instantiate(foodPrefab,
-            new Vector3(pSpawn.position.x + (float) NextGaussianDouble(r)*6-3, pSpawn.position.y,
-                pSpawn.position.z + (float) NextGaussianDouble(r)*6-3),
+            new Vector3(pSpawn.position.x + (float) NextGaussianDouble(r)*spawnSpread- (spawnSpread/2f), pSpawn.position.y,
+                pSpawn.position.z + (float) NextGaussianDouble(r)*spawnSpread- (spawnSpread/2f)),
             pSpawn.rotation);
         pInstance.instance.GetComponentInChildren<MeshRenderer>().material.color = purple;
         pInstance.instance.GetComponent<Food>().foodColor = purple;
@@ -70,7 +71,7 @@ public class FoodManager : MonoBehaviour
         Food gInstance = gameObject.AddComponent(typeof(Food)) as Food;
          
         gInstance.instance = Instantiate(foodPrefab, 
-            new Vector3(gSpawn.position.x+(float) NextGaussianDouble(r)*6-3,gSpawn.position.y,gSpawn.position.z+(float) NextGaussianDouble(r)*6-3),
+            new Vector3(gSpawn.position.x+(float) NextGaussianDouble(r)*spawnSpread- (spawnSpread/2f),gSpawn.position.y,gSpawn.position.z+(float) NextGaussianDouble(r)*spawnSpread- (spawnSpread/2f)),
             gSpawn.rotation);
         gInstance.instance.GetComponentInChildren<MeshRenderer>().material.color=green;
         gInstance.instance.GetComponent<Food>().foodColor = green;
@@ -81,7 +82,7 @@ public class FoodManager : MonoBehaviour
         Food yInstance = gameObject.AddComponent(typeof(Food)) as Food;
         
          yInstance.instance = Instantiate(foodPrefab, 
-             new Vector3(ySpawn.position.x+(float) NextGaussianDouble(r)*6-3,ySpawn.position.y,ySpawn.position.z+(float) NextGaussianDouble(r)*6-3), 
+             new Vector3(ySpawn.position.x+(float) NextGaussianDouble(r)*spawnSpread- (spawnSpread/2f),ySpawn.position.y,ySpawn.position.z+(float) NextGaussianDouble(r)*spawnSpread- (spawnSpread/2f)), 
              ySpawn.rotation);
          yInstance.instance.GetComponentInChildren<MeshRenderer>().material.color=yellow;
          yInstance.instance.GetComponent<Food>().foodColor = yellow;

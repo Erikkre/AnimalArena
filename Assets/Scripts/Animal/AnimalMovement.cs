@@ -1,4 +1,6 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
+using Random = UnityEngine.Random;
 
 public class AnimalMovement : MonoBehaviour
 {
@@ -24,8 +26,16 @@ public class AnimalMovement : MonoBehaviour
     private float OriginalPitch;              // The pitch of the audio source at the start of the scene.
     [HideInInspector]public Color playerColor;
 
+    public Transform flatCanvas, raisedCanvas;
+    private Quaternion originalFlatCanvas, originalRaisedCanvas,originalLocalFlatCanvas, originalLocalRaisedCanvas;
+
     private void Awake ()
     {
+        originalFlatCanvas = flatCanvas.rotation;
+        originalRaisedCanvas = raisedCanvas.rotation;
+
+        //originalLocalFlatCanvas = flatCanvas.localRotation;
+        //originalLocalRaisedCanvas = raisedCanvas.localRotation;
         Rigidbody = GetComponent<Rigidbody> ();
     }
 
@@ -66,6 +76,15 @@ public class AnimalMovement : MonoBehaviour
         yInputValue = Input.GetAxis (yAxisName);
 
         EngineAudio ();
+
+    }
+
+    private void LateUpdate()
+    {
+        flatCanvas.rotation = originalFlatCanvas;
+        raisedCanvas.rotation = originalRaisedCanvas;
+        //flatCanvas.transform.localRotation = originalLocalFlatCanvas;
+        //raisedCanvas.transform.localRotation=originalLocalRaisedCanvas;
     }
 
     private void EngineAudio ()
@@ -117,7 +136,7 @@ public class AnimalMovement : MonoBehaviour
         Vector3 force = new Vector3(movementX, Rigidbody.velocity.y*3,
             movementZ);
         // Create a vector in the direction the animal is facing with a magnitude based on the input, speed and the time between frames.
-        Rigidbody.velocity = force/3 ;
+        //Rigidbody.velocity = force/3 ;
 
         // Apply this movement to the rigidbody's position.
 

@@ -84,5 +84,6 @@ public class AnimalManager
 
         instance.SetActive (false);
         instance.SetActive (true);
+
     }
 }

@@ -1,6 +1,7 @@
 ﻿using EnergyBarToolkit;
 using UnityEngine.UI;
 using UnityEngine;
+using UnityEngine.PlayerLoop;
 
 public class AnimalHealth : MonoBehaviour
 {
@@ -17,11 +18,14 @@ public class AnimalHealth : MonoBehaviour
     private ParticleSystem explosionParticles;        // The particle system the will play when the animal is destroyed.
     [HideInInspector]public float currentHealth;                      // How much health the animal currently has.
     private bool dead;                                // Has the animal been reduced beyond zero health yet?
-
+    public Transform animalSphere;
+    public SphereCollider sphereCollider;
+    public int healthMassNumber;
 
     private void Awake ()
     {
-        startingHealth = 100f / healthBarGroupings / 2; //player starts with 1 mass worth of health, if there are 6 groupings then 12 masses can be stored
+
+        startingHealth = healthMassNumber*100f / healthBarGroupings / 2; //player starts with 1 mass worth of health, if there are 6 groupings then 12 masses can be stored
         //healthBar.GetComponent<RepeatedRendererUGUI>().spriteIcon.color = playerColor;
 
         // Instantiate the explosion prefab and get a reference to the particle system on it.
@@ -37,11 +41,12 @@ public class AnimalHealth : MonoBehaviour
 
     private void OnEnable()
     {
+
         // When the animal is enabled, reset the animal's health and whether or not it's dead.
         currentHealth = startingHealth;
         healthBar.valueCurrent = (int) currentHealth;
         dead = false;
-
+        UpdateScale();
         // Update the health slider's value and color.
     }
 
@@ -58,7 +63,10 @@ public class AnimalHealth : MonoBehaviour
         {
             OnDeath ();
         }
+
+        UpdateScale();
     }
+
     public void AddHealth (float amount)
     {
         // Reduce current health by the amount of damage done.
@@ -66,7 +74,7 @@ public class AnimalHealth : MonoBehaviour
         Debug.Log(amount+" health increased");
         if (currentHealth > 100) currentHealth = 100;
         healthBar.valueCurrent = (int) currentHealth;
-
+        UpdateScale();
     }
 
 
@@ -87,5 +95,11 @@ public class AnimalHealth : MonoBehaviour
 
         // Turn the animal off.
         gameObject.SetActive (false);
+    }
+
+    private void UpdateScale()
+    {
+        float scale = 1 + (currentHealth / (100f / healthBarGroupings / 2)) / 10;
+        transform.localScale = new Vector3(scale, scale, scale);
     }
 }

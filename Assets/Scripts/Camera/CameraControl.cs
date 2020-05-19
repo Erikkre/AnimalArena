@@ -2,16 +2,16 @@
 
 public class CameraControl : MonoBehaviour
 {
-    public float dampTime = 0.1f;                 // Approximate time for the camera to refocus.
-    public float screenEdgeBuffer = 3f;           // Space between the top/bottom most target and the screen edge.
-    public float minSize = 6.5f;                  // The smallest orthographic size the camera can be.
+    public float dampTime = 0.2f;                 // Approximate time for the camera to refocus.
+    public float screenEdgeBuffer = 1f;           // Space between the top/bottom most target and the screen edge.
+    public float minSize = 9f;                  // The smallest orthographic size the camera can be.
     [HideInInspector] public AnimalManager[] targets; // All the targets the camera needs to encompass.
 
     private Camera Camera;                        // Used for referencing the camera.
     private float ZoomSpeed;                      // Reference speed for the smooth damping of the orthographic size.
     private Vector3 MoveVelocity;                 // Reference velocity for the smooth damping of the position.
     private Vector3 DesiredPosition;              // The position the camera is moving towards.
-
+    public int otherPlayersTrackingRange = 45;
 
     private void Awake ()
     {
@@ -46,7 +46,7 @@ public class CameraControl : MonoBehaviour
         for (int i = 0; i < targets.Length; i++)
         {
             // ... and if they aren't active continue on to the next target.
-            if (!targets[i].instance.activeSelf || (i!=0 && targets[0].instance.activeSelf && Vector3.Distance(targets[i].instance.transform.position, targets[0].instance.transform.position) > 40) )
+            if (!targets[i].instance.activeSelf || (i!=0 && targets[0].instance.activeSelf && Vector3.Distance(targets[i].instance.transform.position, targets[0].instance.transform.position) > otherPlayersTrackingRange) )
                 continue;
 
 /********************** AVERAGE POINT FINDER SEGMENT***********************************/
