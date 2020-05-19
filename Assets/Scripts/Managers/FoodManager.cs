@@ -13,20 +13,21 @@ public class FoodManager : MonoBehaviour
 
     [Header("Spawnpoints")] public Transform rSpawn, pSpawn, gSpawn, ySpawn;
     public GameObject foodPrefab;
-    public int maxFoodOnMap = 60, spawnDelay = 4;
-    public float spawnInterval = 0.5f;
-    private List<Food> rFoods = new List<Food>(),pFoods = new List<Food>(),gFoods = new List<Food>(),yFoods = new List<Food>();
+    public int maxFoodOnMap = 80, spawnDelay = 4;
+    public float spawnInterval = 1.5f;
+    private ArrayList rFoods = new ArrayList(),pFoods = new ArrayList(),gFoods = new ArrayList(),yFoods = new ArrayList();
     private bool rSpawning, pSpawning, gSpawning, ySpawning;
     private Random r = new Random();
     public int spawnSpread = 5;
     void Start()
     {
-        rFoods = new List<Food>(maxFoodOnMap/4);pFoods = new List<Food>(maxFoodOnMap/4);
-        gFoods = new List<Food>(maxFoodOnMap/4);yFoods = new List<Food>(maxFoodOnMap/4);
+        rFoods = new ArrayList((maxFoodOnMap/4)+1);pFoods = new ArrayList((maxFoodOnMap/4)+1);
+        gFoods = new ArrayList((maxFoodOnMap/4)+1);yFoods = new ArrayList((maxFoodOnMap/4)+1);
     }
 
     private void Update()
     {
+        Debug.Log("r:"+rFoods.Count+",r capacity:"+rFoods.Capacity+"y:"+yFoods.Count);
         if (rSpawning&&rFoods.Count>=maxFoodOnMap/4) {CancelInvoke("RSpawnFood");rSpawning=false;}
         else if (!rSpawning&&rFoods.Count<maxFoodOnMap/4){InvokeRepeating("RSpawnFood", spawnDelay, spawnInterval);rSpawning=true;}
         
@@ -44,12 +45,15 @@ public class FoodManager : MonoBehaviour
     {
         Food rInstance = gameObject.AddComponent(typeof(Food)) as Food;
          
-         rInstance.instance = Instantiate(foodPrefab, 
+         rInstance.instance = Instantiate(foodPrefab,
              new Vector3(rSpawn.position.x+ (float) NextGaussianDouble(r)*spawnSpread- (spawnSpread/2f),rSpawn.position.y,rSpawn.position.z+(float) NextGaussianDouble(r)*spawnSpread- (spawnSpread/2f)), 
              rSpawn.rotation);
          rInstance.instance.GetComponentInChildren<MeshRenderer>().material.color=red;
          rInstance.instance.GetComponent<Food>().foodColor = red;
-         rFoods.Add(rInstance);
+         rInstance.instance.GetComponent<Food>().list = rFoods;
+         rInstance.instance.GetComponent<Food>().instance = rInstance.instance;
+
+         rFoods.Add(rInstance.instance);
     }
 
     void PSpawnFood()
@@ -62,7 +66,8 @@ public class FoodManager : MonoBehaviour
             pSpawn.rotation);
         pInstance.instance.GetComponentInChildren<MeshRenderer>().material.color = purple;
         pInstance.instance.GetComponent<Food>().foodColor = purple;
-
+        pInstance.instance.GetComponent<Food>().list = pFoods;
+        pInstance.instance.GetComponent<Food>().instance = pInstance.instance;
         pFoods.Add(pInstance);
     }
 
@@ -75,6 +80,8 @@ public class FoodManager : MonoBehaviour
             gSpawn.rotation);
         gInstance.instance.GetComponentInChildren<MeshRenderer>().material.color=green;
         gInstance.instance.GetComponent<Food>().foodColor = green;
+        gInstance.instance.GetComponent<Food>().list = gFoods;
+        gInstance.instance.GetComponent<Food>().instance = gInstance.instance;
         gFoods.Add(gInstance);
     }
 
@@ -86,11 +93,13 @@ public class FoodManager : MonoBehaviour
              ySpawn.rotation);
          yInstance.instance.GetComponentInChildren<MeshRenderer>().material.color=yellow;
          yInstance.instance.GetComponent<Food>().foodColor = yellow;
+         yInstance.instance.GetComponent<Food>().list = yFoods;
+         yInstance.instance.GetComponent<Food>().instance = yInstance.instance;
          yFoods.Add(yInstance);
     }
     
     // Used during the phases of the game where the player shouldn't be able to control their animal.
-    public void DisableFoodMovement ()
+    /*public void DisableFoodMovement ()
     {
         for (int i=0;i<yFoods.Count;i++)
         {
@@ -130,7 +139,7 @@ public class FoodManager : MonoBehaviour
         {
             pFoods[i].enabled = true;
         }
-    }
+    }*/
 
 
     public void Reset ()

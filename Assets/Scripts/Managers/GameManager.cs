@@ -179,7 +179,6 @@ public class GameManager : MonoBehaviour
             if (animals[i].instance.activeSelf)
                 numAnimalsLeft++;
         }
-        Debug.Log("Animals:"+numAnimalsLeft);
         // If there are one or fewer animals remaining return true, otherwise return false.
         return numAnimalsLeft <= 1;
     }

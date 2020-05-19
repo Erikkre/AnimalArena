@@ -57,7 +57,7 @@ public class AnimalShooting : MonoBehaviour
 
         if (targetTrans)  //if player character
         {
-            Debug.Log("% power shooting/2: "+currentLaunchForce/maxLaunchForce/2+", % health: "+100f/animalHealth.healthBarGroupings/2);
+            //Debug.Log("% power shooting/2: "+currentLaunchForce/maxLaunchForce/2+", % health: "+100f/animalHealth.healthBarGroupings/2);
 
             // The slider should have a default value of the minimum launch force.
             if (aimSlider.value>minLaunchForce) aimSlider.value = minLaunchForce;
