@@ -11,7 +11,7 @@ public class DemoActorSSController : MonoBehaviour {
 
     void Start ()
     {
-        health = GetComponentInChildren<ScreenSpacePanel>().PanelUIElement.GetComponent<MOBAHealthBarPanel>().HealthBar;
+        //health = GetComponentInChildren<ScreenSpacePanel>().PanelUIElement.GetComponent<MOBAHealthBarPanel>().HealthBar;
         healthText = health.Value.ToString();
         maxHealthText = health.MaxValue.ToString();
         startPos = transform.position;

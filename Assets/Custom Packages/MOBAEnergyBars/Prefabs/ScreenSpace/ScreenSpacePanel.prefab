@@ -44,4 +44,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ShowOnCanvas: {fileID: 0}
-  UIElementPrefab: {fileID: 187362, guid: 2cc4e1b4c282d36448c5912b9bb0b6cb, type: 3}
+  UIElementPrefab:
+  - {fileID: 100010, guid: c1c34b8f4e58faa4a9388418bec7b2f1, type: 3}
+  - {fileID: 100010, guid: 9529eb1ce3d58bf489c8e73395ddf877, type: 3}
