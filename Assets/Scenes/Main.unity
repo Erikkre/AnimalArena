@@ -537,42 +537,46 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   coroutineManagerInstance: {fileID: 949312114}
-  NumRoundsToWin: 3
-  StartDelay: 0
-  EndDelay: 3
-  CameraControl: {fileID: 1996483767}
-  MessageText: {fileID: 580091720}
-  AnimalPrefab: {fileID: 8038635930756840293, guid: 2ce421f9dcf2a2f49994f23a9bf216c5,
+  numRoundsToWin: 2
+  startDelay: 0.1
+  endDelay: 0.1
+  cameraControl: {fileID: 1996483767}
+  messageText: {fileID: 580091720}
+  animalPrefab: {fileID: 8038635930756840293, guid: 2ce421f9dcf2a2f49994f23a9bf216c5,
     type: 3}
-  Animals:
-  - PlayerColor: {r: 1, g: 0, b: 0, a: 0}
-    SpawnPoint: {fileID: 665184658}
-    PlayerNumber: 0
-    ColoredPlayerText: 
-    Instance: {fileID: 0}
-    Wins: 0
+  animals:
+  - playerColor: {r: 1, g: 0, b: 0, a: 0}
+    spawnPoint: {fileID: 665184658}
+    playerNumber: 0
+    coloredPlayerText: 
+    instance: {fileID: 0}
+    wins: 0
     coroutineManagerInstance: {fileID: 0}
-  - PlayerColor: {r: 1, g: 0.99296916, b: 0, a: 0}
-    SpawnPoint: {fileID: 283134299}
-    PlayerNumber: 0
-    ColoredPlayerText: 
-    Instance: {fileID: 0}
-    Wins: 0
+  - playerColor: {r: 1, g: 0.9214486, b: 0, a: 0}
+    spawnPoint: {fileID: 283134299}
+    playerNumber: 0
+    coloredPlayerText: 
+    instance: {fileID: 0}
+    wins: 0
     coroutineManagerInstance: {fileID: 0}
-  - PlayerColor: {r: 0.6033907, g: 0, b: 1, a: 0}
-    SpawnPoint: {fileID: 239632108}
-    PlayerNumber: 0
-    ColoredPlayerText: 
-    Instance: {fileID: 0}
-    Wins: 0
+  - playerColor: {r: 0.44855833, g: 0, b: 1, a: 0}
+    spawnPoint: {fileID: 239632108}
+    playerNumber: 0
+    coloredPlayerText: 
+    instance: {fileID: 0}
+    wins: 0
     coroutineManagerInstance: {fileID: 0}
-  - PlayerColor: {r: 0, g: 1, b: 0.083200455, a: 0}
-    SpawnPoint: {fileID: 355768644}
-    PlayerNumber: 0
-    ColoredPlayerText: 
-    Instance: {fileID: 0}
-    Wins: 0
+  - playerColor: {r: 0, g: 1, b: 0.11986828, a: 0}
+    spawnPoint: {fileID: 355768644}
+    playerNumber: 0
+    coloredPlayerText: 
+    instance: {fileID: 0}
+    wins: 0
     coroutineManagerInstance: {fileID: 0}
+  red: {r: 1, g: 0, b: 0, a: 0}
+  purple: {r: 0.5131402, g: 0, b: 1, a: 0}
+  green: {r: 0, g: 1, b: 0.0184803, a: 0}
+  yellow: {r: 1, g: 0.95224696, b: 0, a: 0}
   playerIsAlive: 1
 --- !u!4 &949312110
 Transform:
@@ -728,7 +732,7 @@ MonoBehaviour:
   pSpawn: {fileID: 239632108}
   gSpawn: {fileID: 355768644}
   ySpawn: {fileID: 283134299}
-  FoodPrefab: {fileID: 5556296407137450861, guid: 3470a0a038d1d4544a5ffa1fbf6ae856,
+  foodPrefab: {fileID: 5556296407137450861, guid: 3470a0a038d1d4544a5ffa1fbf6ae856,
     type: 3}
   maxFoodOnMap: 60
   spawnDelay: 2
@@ -980,10 +984,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c54e3c1f18f8cbb49b10f5e2dc8a1865, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  DampTime: 0.2
-  ScreenEdgeBuffer: 3
-  MinSize: 9
-  Targets: []
+  dampTime: 0.1
+  screenEdgeBuffer: 3
+  minSize: 6.5
+  targets: []
 --- !u!4 &1996483768
 Transform:
   m_ObjectHideFlags: 0
