@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class UIDirectionControl : MonoBehaviour
 {
-    public bool UseRelativeRotation = true;  
+    public bool useRelativeRotation = true;  
 
 
     private Quaternion RelativeRotation;     
@@ -16,7 +16,7 @@ public class UIDirectionControl : MonoBehaviour
 
     private void Update()
     {
-        if (UseRelativeRotation)
+        if (useRelativeRotation)
             transform.rotation = RelativeRotation;
     }
 }

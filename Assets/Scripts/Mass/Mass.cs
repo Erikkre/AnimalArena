@@ -9,45 +9,45 @@ public class Mass : MonoBehaviour
     public int playerShooterNum=1;
     public Rigidbody rBody;
     public Collider collider;
+
     public Light explosionLight;
     [HideInInspector]public CoroutineManager coroutineManagerInstance;
-    public LayerMask AnimalMask;                        // Used to filter what the explosion affects, this should be set to "Players".
+    public LayerMask animalMask;                        // Used to filter what the explosion affects, this should be set to "Players".
     public ParticleSystem explosionParticles;         // Reference to the particles that will play on explosion.
-    public GameObject MassExplosion;
-    public AudioSource ExplosionAudio;                // Reference to the audio that will play on explosion.
-    public float MaxDamage = 100f;                    // The amount of damage done if the explosion is centred on a animal.
-    public float ExplosionForce = 1000f;              // The amount of force added to a animal at the centre of the explosion.
-    public float MaxLifeTime = 4f;                    // The time in seconds before the mass is removed.
-    public float ExplosionRadius = 5f;                // The maximum distance away from the explosion animals can be and are still affected.
+    public GameObject massExplosion;
+    public AudioSource explosionAudio;                // Reference to the audio that will play on explosion.
+    public float maxDamage = 70f;                    // The amount of damage done if the explosion is centred on a animal.
+    public float explosionForce = 2000f;              // The amount of force added to a animal at the centre of the explosion.
+    public float maxLifeTime = 4f;                    // The time in seconds before the mass is removed.
+    public float explosionRadius = 5f;                // The maximum distance away from the explosion animals can be and are still affected.
 
 
     private void Start ()
     {
         //rBody = GetComponent<Rigidbody>();
         // If it isn't destroyed by then, destroy the mass after it's lifetime.
-        Destroy (gameObject, MaxLifeTime);
+        Destroy (gameObject, maxLifeTime);
     }
 
     private void OnTriggerEnter (Collider other)
     {
-        var otherPlayNum = ((AnimalMovement) other.GetComponent(
-            typeof(AnimalMovement)));
-        if (otherPlayNum != null && otherPlayNum.PlayerNumber == playerShooterNum)
+        var otherPlayNum = (AnimalMovement) other.GetComponent(
+            typeof(AnimalMovement));
+        if (otherPlayNum != null && otherPlayNum.playerNumber == playerShooterNum)
         {
-            print(otherPlayNum.PlayerNumber);
             Physics.IgnoreCollision(collider, other);
         }
         else
         {
-            print("lol"); //"Animal"+GetComponent<AnimalManager>().PlayerNumber+" took damage.");
+             //"Animal"+GetComponent<AnimalManager>().PlayerNumber+" took damage.");
             // Collect all the colliders in a sphere from the mass's current position to a radius of the explosion radius.
             Collider[] colliders =
-                Physics.OverlapSphere(transform.position, ExplosionRadius, AnimalMask);
+                Physics.OverlapSphere(transform.position, explosionRadius, animalMask);
 
             // Go through all the colliders...
             for (int i = 0; i < colliders.Length; i++)
             {
-                print(i);
+                //print(i);
                 // ... and find their rigidbody.
                 Rigidbody targetRigidbody = colliders[i].GetComponent<Rigidbody>();
 
@@ -55,12 +55,12 @@ public class Mass : MonoBehaviour
                 if (!targetRigidbody || targetRigidbody.name.CompareTo("Mass") == 0
                                      || targetRigidbody.name.CompareTo("Mass (Clone)") == 0
                                      || ((AnimalMovement) targetRigidbody.GetComponent(
-                                         typeof(AnimalMovement))).PlayerNumber == playerShooterNum)
+                                         typeof(AnimalMovement))).playerNumber == playerShooterNum)
                     continue;
 
                 // Add an explosion force.
-                targetRigidbody.AddExplosionForce(ExplosionForce, transform.position,
-                    ExplosionRadius);
+                targetRigidbody.AddExplosionForce(explosionForce, transform.position,
+                    explosionRadius);
 
                 // Find the AnimalHealth script associated with the rigidbody.
                 AnimalHealth targetHealth = targetRigidbody.GetComponent<AnimalHealth>();
@@ -77,7 +77,7 @@ public class Mass : MonoBehaviour
             }
 
             // Unparent the particles from the mass.
-            MassExplosion.transform.parent = null;
+            massExplosion.transform.parent = null;
 
             // Play the particle system.
             explosionParticles.Play();
@@ -85,7 +85,7 @@ public class Mass : MonoBehaviour
             explosionLight.enabled = true;
             coroutineManagerInstance.newCoroutine(MassExplosionFlash());
             // Play the explosion sound effect.
-            ExplosionAudio.Play();
+            explosionAudio.Play();
 
             // Once the particles have finished, destroy the gameobject they are on.
 
@@ -102,7 +102,7 @@ public class Mass : MonoBehaviour
             explosionLight.intensity = Mathf.Lerp(explosionLight.intensity, 0, 0.27f);
             yield return wait;
         }
-        print("end");
+        //print("end");
     }
 
     private float CalculateDamage (Vector3 targetPosition)
@@ -114,10 +114,10 @@ public class Mass : MonoBehaviour
         float explosionDistance = explosionToTarget.magnitude;
 
         // Calculate the proportion of the maximum distance (the explosionRadius) the target is away.
-        float relativeDistance = (ExplosionRadius - explosionDistance) / ExplosionRadius;
+        float relativeDistance = (explosionRadius - explosionDistance) / explosionRadius;
 
         // Calculate damage as this proportion of the maximum possible damage.
-        float damage = relativeDistance * MaxDamage;
+        float damage = relativeDistance * maxDamage;
 
         // Make sure that the minimum damage is always 0.
         damage = Mathf.Max (0f, damage);

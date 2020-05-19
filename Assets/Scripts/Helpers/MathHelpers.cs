@@ -4,17 +4,17 @@ using System;
 public class MathHelpers{
     public static double NextGaussianDouble(Random r)
     {
-    double u, v, S;
+    double u, v, s;
 
         do
     {
         u = 2.0 * r.NextDouble() - 1.0;
         v = 2.0 * r.NextDouble() - 1.0;
-        S = u * u + v * v;
+        s = u * u + v * v;
     }
-    while (S >= 1.0);
+    while (s >= 1.0);
 
-    double fac = Math.Sqrt(-2.0 * Math.Log(S) / S);
+    double fac = Math.Sqrt(-2.0 * Math.Log(s) / s);
         return u * fac;
     }
 }

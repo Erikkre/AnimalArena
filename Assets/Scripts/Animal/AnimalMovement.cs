@@ -2,14 +2,14 @@
 
 public class AnimalMovement : MonoBehaviour
 {
-    public int PlayerNumber = 1;              // Used to identify which animal belongs to which player.  This is set by this animal's manager.
-    public float Speed = 120f;                 // How fast the animal moves forward and back.
-    public float j_Speed = 2f;            //jump speed
+    [HideInInspector]public int playerNumber = 1;              // Used to identify which animal belongs to which player.  This is set by this animal's manager.
+    public float speed = 1200f;                 // How fast the animal moves forward and back.
+    public float jSpeed = 20f;            //jump speed
     //public float TurnSpeed = 180f;            // How fast the animal turns in degrees per second.
-    public AudioSource RollingAudio;         // Reference to the audio source used to play engine sounds. NB: different to the shooting audio source.
-    public AudioClip EngineIdling;            // Audio to play when the animal isn't moving.
-    public AudioClip EngineDriving;           // Audio to play when the animal is moving.
-    public float PitchRange = 0.2f;           // The amount by which the pitch of the engine noises can vary.
+    public AudioSource rollingAudio;         // Reference to the audio source used to play engine sounds. NB: different to the shooting audio source.
+    public AudioClip engineIdling;            // Audio to play when the animal isn't moving.
+    public AudioClip engineDriving;           // Audio to play when the animal is moving.
+    public float pitchRange = 0.2f;           // The amount by which the pitch of the engine noises can vary.
 
     private Rigidbody Rigidbody;              // Reference used to move the animal.
 
@@ -17,12 +17,12 @@ public class AnimalMovement : MonoBehaviour
     private string yAxisName;
     private string zAxisName;
     private float xInputValue;         // The current value of the Xmovement input.
-    private float yInputValue;         // The current value of the Xmovement input.
-    private float zInputValue;         // The current value of the Xmovement input.
+    private float yInputValue;         // The current value of the Ymovement input.
+    private float zInputValue;         // The current value of the Zmovement input.
 
     private float TurnInputValue;             // The current value of the turn input.
     private float OriginalPitch;              // The pitch of the audio source at the start of the scene.
-
+    [HideInInspector]public Color playerColor;
 
     private void Awake ()
     {
@@ -49,12 +49,12 @@ public class AnimalMovement : MonoBehaviour
     private void Start ()
     {
         // The axes names are based on player number.
-        xAxisName = "x" + PlayerNumber;
-        yAxisName = "y" + PlayerNumber;
-        zAxisName = "z" + PlayerNumber;
+        xAxisName = "x" + playerNumber;
+        yAxisName = "y" + playerNumber;
+        zAxisName = "z" + playerNumber;
 
         // Store the original pitch of the audio source.
-        OriginalPitch = RollingAudio.pitch;
+        OriginalPitch = rollingAudio.pitch;
     }
 
 
@@ -74,23 +74,23 @@ public class AnimalMovement : MonoBehaviour
         if (Mathf.Abs (xInputValue) < 0.1f && Mathf.Abs (TurnInputValue) < 0.1f)
         {
             // ... and if the audio source is currently playing the driving clip...
-            if (RollingAudio.clip == EngineDriving)
+            if (rollingAudio.clip == engineDriving)
             {
                 // ... change the clip to idling and play it.
-                RollingAudio.clip = EngineIdling;
-                RollingAudio.pitch = Random.Range (OriginalPitch - PitchRange, OriginalPitch + PitchRange);
-                RollingAudio.Play ();
+                rollingAudio.clip = engineIdling;
+                rollingAudio.pitch = Random.Range (OriginalPitch - pitchRange, OriginalPitch + pitchRange);
+                rollingAudio.Play ();
             }
         }
         else
         {
             // Otherwise if the animal is moving and if the idling clip is currently playing...
-            if (RollingAudio.clip == EngineIdling)
+            if (rollingAudio.clip == engineIdling)
             {
                 // ... change the clip to driving and play.
-                RollingAudio.clip = EngineDriving;
-                RollingAudio.pitch = Random.Range(OriginalPitch - PitchRange, OriginalPitch + PitchRange);
-                RollingAudio.Play();
+                rollingAudio.clip = engineDriving;
+                rollingAudio.pitch = Random.Range(OriginalPitch - pitchRange, OriginalPitch + pitchRange);
+                rollingAudio.Play();
             }
         }
     }
@@ -106,11 +106,21 @@ public class AnimalMovement : MonoBehaviour
 
     private void Move ()
     {
-        // Create a vector in the direction the animal is facing with a magnitude based on the input, speed and the time between frames.
-        Rigidbody.velocity = new Vector3(Speed * Time.deltaTime*xInputValue, Rigidbody.velocity.y, Speed * Time.deltaTime*zInputValue) ;
+        float movementX = xInputValue * speed * Time.deltaTime;
+        float movementZ = zInputValue * speed * Time.deltaTime;
+        float movementY = yInputValue * speed * Time.deltaTime;
+
 
         // Apply this movement to the rigidbody's position.
-        //Rigidbody.AddForce(force);
+        Rigidbody.AddForce(new Vector3(movementX,movementY,movementZ));
+
+        Vector3 force = new Vector3(movementX, Rigidbody.velocity.y*3,
+            movementZ);
+        // Create a vector in the direction the animal is facing with a magnitude based on the input, speed and the time between frames.
+        Rigidbody.velocity = force/3 ;
+
+        // Apply this movement to the rigidbody's position.
+
     }
 
 

@@ -131,16 +131,16 @@ MonoBehaviour:
   collider: {fileID: 7059535322484587172}
   explosionLight: {fileID: 5680027840459643226}
   coroutineManagerInstance: {fileID: 0}
-  AnimalMask:
+  animalMask:
     serializedVersion: 2
     m_Bits: 512
   explosionParticles: {fileID: 3398813380775369614}
-  MassExplosion: {fileID: 3398813380790262344}
-  ExplosionAudio: {fileID: 5680027840459643227}
-  MaxDamage: 100
-  ExplosionForce: 1000
-  MaxLifeTime: 4
-  ExplosionRadius: 5
+  massExplosion: {fileID: 3398813380790262344}
+  explosionAudio: {fileID: 5680027840459643227}
+  maxDamage: 70
+  explosionForce: 2000
+  maxLifeTime: 4
+  explosionRadius: 5
 --- !u!108 &5076529103087385054
 Light:
   m_ObjectHideFlags: 0

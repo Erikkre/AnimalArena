@@ -9,10 +9,10 @@ using static MathHelpers;
 
 public class FoodManager : MonoBehaviour
 {
-    [Header("Spawning Food Colors")] public Color red, purple, green, yellow;
+    [HideInInspector] public Color red, purple, green, yellow;
 
     [Header("Spawnpoints")] public Transform rSpawn, pSpawn, gSpawn, ySpawn;
-    public GameObject FoodPrefab;
+    public GameObject foodPrefab;
     public int maxFoodOnMap = 60, spawnDelay = 4;
     public float spawnInterval = 0.5f;
     private List<Food> rFoods = new List<Food>(),pFoods = new List<Food>(),gFoods = new List<Food>(),yFoods = new List<Food>();
@@ -26,63 +26,65 @@ public class FoodManager : MonoBehaviour
 
     private void Update()
     {
-        if (rSpawning&&rFoods.Count>=maxFoodOnMap/4) {CancelInvoke("rSpawnFood");rSpawning=false;}
-        else if (!rSpawning&&rFoods.Count<maxFoodOnMap/4){InvokeRepeating("rSpawnFood", spawnDelay, spawnInterval);rSpawning=true;}
+        if (rSpawning&&rFoods.Count>=maxFoodOnMap/4) {CancelInvoke("RSpawnFood");rSpawning=false;}
+        else if (!rSpawning&&rFoods.Count<maxFoodOnMap/4){InvokeRepeating("RSpawnFood", spawnDelay, spawnInterval);rSpawning=true;}
         
-        if (pSpawning&&pFoods.Count>=maxFoodOnMap/4) {CancelInvoke("pSpawnFood");pSpawning=false;}
-        else if (!pSpawning&&pFoods.Count<maxFoodOnMap/4){InvokeRepeating("pSpawnFood", spawnDelay, spawnInterval);pSpawning=true;}
+        if (pSpawning&&pFoods.Count>=maxFoodOnMap/4) {CancelInvoke("PSpawnFood");pSpawning=false;}
+        else if (!pSpawning&&pFoods.Count<maxFoodOnMap/4){InvokeRepeating("PSpawnFood", spawnDelay, spawnInterval);pSpawning=true;}
         
-        if (gSpawning&&gFoods.Count>=maxFoodOnMap/4) {CancelInvoke("gSpawnFood");gSpawning=false;}
-        else if (!gSpawning&&gFoods.Count<maxFoodOnMap/4){InvokeRepeating("gSpawnFood", spawnDelay, spawnInterval);gSpawning=true;}
+        if (gSpawning&&gFoods.Count>=maxFoodOnMap/4) {CancelInvoke("GSpawnFood");gSpawning=false;}
+        else if (!gSpawning&&gFoods.Count<maxFoodOnMap/4){InvokeRepeating("GSpawnFood", spawnDelay, spawnInterval);gSpawning=true;}
         
-        if (ySpawning&&yFoods.Count>=maxFoodOnMap/4) {CancelInvoke("ySpawnFood");ySpawning=false;}
-        else if (!ySpawning&&yFoods.Count<maxFoodOnMap/4){InvokeRepeating("ySpawnFood", spawnDelay, spawnInterval);ySpawning=true;}
+        if (ySpawning&&yFoods.Count>=maxFoodOnMap/4) {CancelInvoke("YSpawnFood");ySpawning=false;}
+        else if (!ySpawning&&yFoods.Count<maxFoodOnMap/4){InvokeRepeating("YSpawnFood", spawnDelay, spawnInterval);ySpawning=true;}
     }
 
-    void rSpawnFood()
+    void RSpawnFood()
     {
-        Food rInstance = new Food();
+        Food rInstance = gameObject.AddComponent(typeof(Food)) as Food;
          
-         rInstance.Instance = Instantiate(FoodPrefab, 
+         rInstance.instance = Instantiate(foodPrefab, 
              new Vector3(rSpawn.position.x+ (float) NextGaussianDouble(r)*6-3,rSpawn.position.y,rSpawn.position.z+(float) NextGaussianDouble(r)*6-3), 
              rSpawn.rotation);
-         rInstance.Instance.GetComponentInChildren<MeshRenderer>().material.color=red; 
-         
+         rInstance.instance.GetComponentInChildren<MeshRenderer>().material.color=red;
+         rInstance.instance.GetComponent<Food>().foodColor = red;
          rFoods.Add(rInstance);
     }
 
-    void pSpawnFood()
+    void PSpawnFood()
     {
-        Food pInstance = new Food();
-        pInstance.Instance = Instantiate(FoodPrefab,
+        Food pInstance = gameObject.AddComponent(typeof(Food)) as Food;
+
+        pInstance.instance = Instantiate(foodPrefab,
             new Vector3(pSpawn.position.x + (float) NextGaussianDouble(r)*6-3, pSpawn.position.y,
                 pSpawn.position.z + (float) NextGaussianDouble(r)*6-3),
             pSpawn.rotation);
-        pInstance.Instance.GetComponentInChildren<MeshRenderer>().material.color = purple;
-        
+        pInstance.instance.GetComponentInChildren<MeshRenderer>().material.color = purple;
+        pInstance.instance.GetComponent<Food>().foodColor = purple;
+
         pFoods.Add(pInstance);
     }
 
-    void gSpawnFood()
+    void GSpawnFood()
     {
-        Food gInstance = new Food();
+        Food gInstance = gameObject.AddComponent(typeof(Food)) as Food;
          
-        gInstance.Instance = Instantiate(FoodPrefab, 
+        gInstance.instance = Instantiate(foodPrefab, 
             new Vector3(gSpawn.position.x+(float) NextGaussianDouble(r)*6-3,gSpawn.position.y,gSpawn.position.z+(float) NextGaussianDouble(r)*6-3),
             gSpawn.rotation);
-        gInstance.Instance.GetComponentInChildren<MeshRenderer>().material.color=green;
-        
+        gInstance.instance.GetComponentInChildren<MeshRenderer>().material.color=green;
+        gInstance.instance.GetComponent<Food>().foodColor = green;
         gFoods.Add(gInstance);
     }
 
-    void ySpawnFood(){
-        Food yInstance = new Food();
+    void YSpawnFood(){
+        Food yInstance = gameObject.AddComponent(typeof(Food)) as Food;
         
-         yInstance.Instance = Instantiate(FoodPrefab, 
+         yInstance.instance = Instantiate(foodPrefab, 
              new Vector3(ySpawn.position.x+(float) NextGaussianDouble(r)*6-3,ySpawn.position.y,ySpawn.position.z+(float) NextGaussianDouble(r)*6-3), 
              ySpawn.rotation);
-         yInstance.Instance.GetComponentInChildren<MeshRenderer>().material.color=yellow;
-         
+         yInstance.instance.GetComponentInChildren<MeshRenderer>().material.color=yellow;
+         yInstance.instance.GetComponent<Food>().foodColor = yellow;
          yFoods.Add(yInstance);
     }
     

@@ -12,41 +12,45 @@ public class AnimalManager
     // different phases of the game.
 
     
-    public Color PlayerColor;                             // This is the color this animal will be tinted.
-    public Transform SpawnPoint;                          // The position and direction the animal will have when it spawns.
-    [HideInInspector] public int PlayerNumber;            // This specifies which player this the manager for.
-    [HideInInspector] public string ColoredPlayerText;    // A string that represents the player with their number colored to match their animal.
-    [HideInInspector] public GameObject Instance;         // A reference to the instance of the animal when it is created.
-    [HideInInspector] public int Wins;                    // The number of wins this player has so far.
+    [HideInInspector]public Color playerColor;                             // This is the color this animal will be tinted.
+    public Transform spawnPoint;                          // The position and direction the animal will have when it spawns.
+    [HideInInspector] public int playerNumber;            // This specifies which player this the manager for.
+    [HideInInspector] public string coloredPlayerText;    // A string that represents the player with their number colored to match their animal.
+    [HideInInspector] public GameObject instance;         // A reference to the instance of the animal when it is created.
+    [HideInInspector] public int wins;                    // The number of wins this player has so far.
 
     [HideInInspector] public CoroutineManager coroutineManagerInstance;
     private AnimalMovement Movement;                        // Reference to animal's movement script, used to disable and enable control.
     private AnimalShooting Shooting;                        // Reference to animal's shooting script, used to disable and enable control.
+    private AnimalHealth Health;
     private GameObject HealthCanvasGameObject;                  // Used to disable the world space UI during the Starting and Ending phases of each round.
 
 
     public void Setup ()
     {
         // Get references to the components.
-        Movement = Instance.GetComponent<AnimalMovement> ();
-        Shooting = Instance.GetComponent<AnimalShooting> ();
-        HealthCanvasGameObject = Instance.GetComponentInChildren<Canvas> ().gameObject;
+        Movement = instance.GetComponent<AnimalMovement> ();
+        Shooting = instance.GetComponent<AnimalShooting> ();
+        Health = instance.GetComponent<AnimalHealth> ();
+        HealthCanvasGameObject = instance.GetComponentInChildren<Canvas> ().gameObject;
 
         // Set the player numbers to be consistent across the scripts.
-        Movement.PlayerNumber = PlayerNumber;
-        Shooting.PlayerNumber = PlayerNumber;
+        Movement.playerNumber = playerNumber;
+        Shooting.playerNumber = playerNumber;
+        Health.playerColor = playerColor;
+
         Shooting.coroutineManagerInstance = coroutineManagerInstance;
         // Create a string using the correct color that says 'PLAYER 1' etc based on the animal's color and the player's number.
-        ColoredPlayerText = "<color=#" + ColorUtility.ToHtmlStringRGB(PlayerColor) + ">PLAYER " + PlayerNumber + "</color>";
+        coloredPlayerText = "<color=#" + ColorUtility.ToHtmlStringRGB(playerColor) + ">PLAYER " + playerNumber + "</color>";
 
         // Get all of the renderers of the animal.
-        MeshRenderer[] renderers = Instance.GetComponentsInChildren<MeshRenderer> ();
+        MeshRenderer[] renderers = instance.GetComponentsInChildren<MeshRenderer> ();
 
         // Go through all the renderers...
         for (int i = 0; i < renderers.Length; i++)
         {
             // ... set their material color to the color specific to this animal.
-            renderers[i].material.color = PlayerColor;
+            renderers[i].material.color = playerColor;
         }
     }
 
@@ -74,11 +78,11 @@ public class AnimalManager
     // Used at the start of each round to put the animal into it's default state.
     public void Reset ()
     {
-        Instance.transform.position = 
-            new Vector3(SpawnPoint.position.x+Random.Range(-10,10),SpawnPoint.position.y+Random.Range(10,30),SpawnPoint.position.z+Random.Range(-10,10));
-        Instance.transform.rotation = SpawnPoint.rotation;
+        instance.transform.position = 
+            new Vector3(spawnPoint.position.x+Random.Range(-10,10),spawnPoint.position.y+Random.Range(10,30),spawnPoint.position.z+Random.Range(-10,10));
+        instance.transform.rotation = spawnPoint.rotation;
 
-        Instance.SetActive (false);
-        Instance.SetActive (true);
+        instance.SetActive (false);
+        instance.SetActive (true);
     }
 }

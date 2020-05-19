@@ -7,7 +7,7 @@ namespace Managers
 {
     public class CoroutineManager : MonoBehaviour
     {
-        public List<Coroutine> CRL=new List<Coroutine>();
+        public List<Coroutine> crl=new List<Coroutine>();
 
         public Coroutine newCoroutine(IEnumerator e)
         {
@@ -15,7 +15,7 @@ namespace Managers
             print(CRL.Count);
             print(CRL.Count);
             return CRL[CRL.Count-1];*/
-            print("lol3");
+
             return StartCoroutine(e);
         }
     }

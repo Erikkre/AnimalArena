@@ -6,14 +6,16 @@ using UnityEngine.UI;
 public class GameManager : MonoBehaviour
 {
     public CoroutineManager coroutineManagerInstance;
-    public int NumRoundsToWin = 2;            // The number of rounds a single player has to win to win the game.
-    public float StartDelay = 0.1f;             // The delay between the start of RoundStarting and RoundPlaying phases.
-    public float EndDelay = 0.1f;               // The delay between the end of RoundPlaying and RoundEnding phases.
-    public CameraControl CameraControl;       // Reference to the CameraControl script for control during different phases.
-    public Text MessageText;                  // Reference to the overlay Text to display winning text, etc.
-    public GameObject AnimalPrefab;             // Reference to the prefab the players will control.
-    public AnimalManager[] Animals;               // A collection of managers for enabling and disabling different aspects of the animals.
-    
+    public int numRoundsToWin = 2;            // The number of rounds a single player has to win to win the game.
+    public float startDelay = 0.1f;             // The delay between the start of RoundStarting and RoundPlaying phases.
+    public float endDelay = 0.1f;               // The delay between the end of RoundPlaying and RoundEnding phases.
+    public CameraControl cameraControl;       // Reference to the CameraControl script for control during different phases.
+    public Text messageText;                  // Reference to the overlay Text to display winning text, etc.
+    public GameObject animalPrefab;             // Reference to the prefab the players will control.
+    public AnimalManager[] animals;               // A collection of managers for enabling and disabling different aspects of the animals.
+
+    [Header("Spawning Team Colors (Food&HealthBar")]  public Color red, purple, green, yellow;
+
     public bool playerIsAlive = true;
     private int RoundNumber;                  // Which round the game is currently on.
     private WaitForSeconds StartWait;         // Used to have a delay whilst the round starts.
@@ -24,9 +26,10 @@ public class GameManager : MonoBehaviour
 
     private void Start()
     {
+        GetComponent<FoodManager>().red = red;GetComponent<FoodManager>().purple = purple;GetComponent<FoodManager>().green = green;GetComponent<FoodManager>().yellow = yellow;
         // Create the delays so they only have to be made once.
-        StartWait = new WaitForSeconds (StartDelay);
-        EndWait = new WaitForSeconds (EndDelay);
+        StartWait = new WaitForSeconds (startDelay);
+        EndWait = new WaitForSeconds (endDelay);
 
 
         SpawnAllAnimals();
@@ -38,19 +41,21 @@ public class GameManager : MonoBehaviour
 
 
     private void SpawnAllAnimals()
-    {
+    {animals[0].playerColor = red; animals[1].playerColor = purple; animals[2].playerColor = green; animals[3].playerColor = yellow;
         // For all the animals...
-        for (int i = 0; i < Animals.Length; i++)
+        for (int i = 0; i < animals.Length; i++)
         {
 
             // ... create them, set their player number and references needed for control.
-            Animals[i].Instance =
-                Instantiate(AnimalPrefab, Animals[i].SpawnPoint.position, Animals[i].SpawnPoint.rotation);
-            Animals[i].PlayerNumber = i + 1;
-            Animals[i].coroutineManagerInstance = coroutineManagerInstance;
-            Animals[i].Setup();
+            animals[i].instance =
+                Instantiate(animalPrefab, animals[i].spawnPoint.position, animals[i].spawnPoint.rotation);
+            animals[i].playerNumber = i + 1;
+            animals[i].coroutineManagerInstance = coroutineManagerInstance;
+            animals[i].Setup();
             //if (i == 1) CameraControl.mainPlayer = Animals[i];
         }
+
+
     }
 
 
@@ -68,7 +73,7 @@ public class GameManager : MonoBehaviour
 
         // These are the targets the camera should follow.
 
-        CameraControl.Targets = Animals;
+        cameraControl.targets = animals;
     }
 
 
@@ -106,11 +111,11 @@ public class GameManager : MonoBehaviour
         DisableAnimalControl ();
 
         // Snap the camera's zoom and position to something appropriate for the reset animals.
-        CameraControl.SetStartPositionAndSize ();
+        cameraControl.SetStartPositionAndSize ();
 
         // Increment the round number and display text showing the players what round it is.
         RoundNumber++;
-        MessageText.text = "ROUND " + RoundNumber;
+        messageText.text = "ROUND " + RoundNumber;
 
         // Wait for the specified length of time until yielding control back to the game loop.
         yield return StartWait;
@@ -123,7 +128,7 @@ public class GameManager : MonoBehaviour
         EnableAnimalControl ();
 
         // Clear the text from the screen.
-        MessageText.text = string.Empty;
+        messageText.text = string.Empty;
 
         // While there is not one animal left...
         while (!OneAnimalLeft())
@@ -147,14 +152,14 @@ public class GameManager : MonoBehaviour
 
         // If there is a winner, increment their score.
         if (RoundWinner != null)
-            RoundWinner.Wins++;
+            RoundWinner.wins++;
 
         // Now the winner's score has been incremented, see if someone has one the game.
         GameWinner = GetGameWinner ();
 
         // Get a message based on the scores and whether or not there is a game winner and display it.
         string message = EndMessage ();
-        MessageText.text = message;
+        messageText.text = message;
 
         // Wait for the specified length of time until yielding control back to the game loop.
         yield return EndWait;
@@ -168,10 +173,10 @@ public class GameManager : MonoBehaviour
         int numAnimalsLeft = 0;
 
         // Go through all the animals...
-        for (int i = 0; i < Animals.Length; i++)
+        for (int i = 0; i < animals.Length; i++)
         {
             // ... and if they are active, increment the counter.
-            if (Animals[i].Instance.activeSelf)
+            if (animals[i].instance.activeSelf)
                 numAnimalsLeft++;
         }
 
@@ -185,11 +190,11 @@ public class GameManager : MonoBehaviour
     private AnimalManager GetRoundWinner()
     {
         // Go through all the animals...
-        for (int i = 0; i < Animals.Length; i++)
+        for (int i = 0; i < animals.Length; i++)
         {
             // ... and if one of them is active, it is the winner so return it.
-            if (Animals[i].Instance.activeSelf)
-                return Animals[i];
+            if (animals[i].instance.activeSelf)
+                return animals[i];
         }
 
         // If none of the animals are active it is a draw so return null.
@@ -201,11 +206,11 @@ public class GameManager : MonoBehaviour
     private AnimalManager GetGameWinner()
     {
         // Go through all the animals...
-        for (int i = 0; i < Animals.Length; i++)
+        for (int i = 0; i < animals.Length; i++)
         {
             // ... and if one of them has enough rounds to win the game, return it.
-            if (Animals[i].Wins == NumRoundsToWin)
-                return Animals[i];
+            if (animals[i].wins == numRoundsToWin)
+                return animals[i];
         }
 
         // If no animals have enough rounds to win, return null.
@@ -221,20 +226,20 @@ public class GameManager : MonoBehaviour
 
         // If there is a winner then change the message to reflect that.
         if (RoundWinner != null)
-            message = RoundWinner.ColoredPlayerText + " WINS THE ROUND!";
+            message = RoundWinner.coloredPlayerText + " WINS THE ROUND!";
 
         // Add some line breaks after the initial message.
         message += "\n\n\n\n";
 
         // Go through all the animals and add each of their scores to the message.
-        for (int i = 0; i < Animals.Length; i++)
+        for (int i = 0; i < animals.Length; i++)
         {
-            message += Animals[i].ColoredPlayerText + ": " + Animals[i].Wins + " WINS\n";
+            message += animals[i].coloredPlayerText + ": " + animals[i].wins + " WINS\n";
         }
 
         // If there is a game winner, change the entire message to reflect that.
         if (GameWinner != null)
-            message = GameWinner.ColoredPlayerText + " WINS THE GAME!";
+            message = GameWinner.coloredPlayerText + " WINS THE GAME!";
 
         return message;
     }
@@ -243,27 +248,27 @@ public class GameManager : MonoBehaviour
     // This function is used to turn all the animals back on and reset their positions and properties.
     private void ResetAllAnimals()
     {
-        for (int i = 0; i < Animals.Length; i++)
+        for (int i = 0; i < animals.Length; i++)
         {
-            Animals[i].Reset();
+            animals[i].Reset();
         }
     }
 
 
     private void EnableAnimalControl()
     {
-        for (int i = 0; i < Animals.Length; i++)
+        for (int i = 0; i < animals.Length; i++)
         {
-            Animals[i].EnableControl();
+            animals[i].EnableControl();
         }
     }
 
 
     private void DisableAnimalControl()
     {
-        for (int i = 0; i < Animals.Length; i++)
+        for (int i = 0; i < animals.Length; i++)
         {
-            Animals[i].DisableControl();
+            animals[i].DisableControl();
         }
     }
 }
