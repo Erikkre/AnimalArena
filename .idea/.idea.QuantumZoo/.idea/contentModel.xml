@@ -1,12 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ContentModelStore">
-    <e p="C:\Unity\UnityProjects\QuantumZoo" t="IncludeRecursive">
+    <e p="C:\Unity\Projects\QuantumZoo" t="IncludeRecursive">
       <e p="Assembly-CSharp-Editor-firstpass.csproj" t="IncludeRecursive" />
       <e p="Assembly-CSharp-Editor.csproj" t="IncludeRecursive" />
       <e p="Assembly-CSharp-firstpass.csproj" t="IncludeRecursive" />
       <e p="Assembly-CSharp.csproj" t="IncludeRecursive" />
       <e p="Assets" t="Include">
+        <e p="AudioClips" t="Include">
+          <e p="Royalty Free Music" t="Include">
+            <e p="QuantumZooAttribution.txt" t="Include" />
+          </e>
+        </e>
         <e p="Custom Packages" t="Include">
           <e p="_Creepy_Cat" t="Include">
             <e p="3D Games Magic Pack Vol 1" t="Include">
@@ -598,6 +603,7 @@
             <e p="CoroutineManager.cs" t="Include" />
             <e p="FoodManager.cs" t="Include" />
             <e p="GameManager.cs" t="Include" />
+            <e p="MusicManager.cs" t="Include" />
           </e>
           <e p="Mass" t="Include">
             <e p="Mass.cs" t="Include" />
@@ -617,6 +623,6 @@
       <e p="Temp\bin" t="ExcludeRecursive" />
     </e>
     <e p="C:\Users\Erik Kredatus\.Rider2019.2\system\extResources" t="IncludeRecursive" />
-    <e p="C:\Users\Erik Kredatus\.Rider2019.2\system\resharper-host\local\Transient\ReSharperHost\v192\SolutionCaches\_QuantumZoo.206874461.00" t="ExcludeRecursive" />
+    <e p="C:\Users\Erik Kredatus\.Rider2019.2\system\resharper-host\local\Transient\ReSharperHost\v192\SolutionCaches\_QuantumZoo.439181626.00" t="ExcludeRecursive" />
   </component>
 </project>
