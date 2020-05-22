@@ -1,8 +1,9 @@
-﻿using System;
+﻿﻿using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Runtime.Remoting.Messaging;
 using UnityEngine;
+using UnityEngine.Analytics;
 using UnityEngine.Serialization;
 using Random = System.Random;
 using static MathHelpers;
@@ -26,20 +27,24 @@ public class FoodManager : MonoBehaviour
         gFoods = new ArrayList((maxFoodOnMap/4)+1);yFoods = new ArrayList((maxFoodOnMap/4)+1);
     }
 
+
+    private void ChooseFoodSpawn(Transform s)
+    {
+        //while (Physics.OverlapSphere()|| )
+    }
+
+    private bool FoodSpawning(bool s, ArrayList l, String name)
+    {
+        if (s && l.Count >= maxFoodOnMap / 4) { CancelInvoke(name+"SpawnFood"); return true;}
+        if (!s && l.Count<maxFoodOnMap/4) InvokeRepeating(name+"SpawnFood", spawnDelay, spawnInterval); return false;
+    }
+
     private void Update()
     {
-        //Debug.Log("r:"+rFoods.Count+",r capacity:"+rFoods.Capacity+"y:"+yFoods.Count);
-        if (rSpawning&&rFoods.Count>=maxFoodOnMap/4) {CancelInvoke("RSpawnFood");rSpawning=false;}
-        else if (!rSpawning&&rFoods.Count<maxFoodOnMap/4){InvokeRepeating("RSpawnFood", spawnDelay, spawnInterval);rSpawning=true;}
-        
-        if (pSpawning&&pFoods.Count>=maxFoodOnMap/4) {CancelInvoke("PSpawnFood");pSpawning=false;}
-        else if (!pSpawning&&pFoods.Count<maxFoodOnMap/4){InvokeRepeating("PSpawnFood", spawnDelay, spawnInterval);pSpawning=true;}
-        
-        if (gSpawning&&gFoods.Count>=maxFoodOnMap/4) {CancelInvoke("GSpawnFood");gSpawning=false;}
-        else if (!gSpawning&&gFoods.Count<maxFoodOnMap/4){InvokeRepeating("GSpawnFood", spawnDelay, spawnInterval);gSpawning=true;}
-        
-        if (ySpawning&&yFoods.Count>=maxFoodOnMap/4) {CancelInvoke("YSpawnFood");ySpawning=false;}
-        else if (!ySpawning&&yFoods.Count<maxFoodOnMap/4){InvokeRepeating("YSpawnFood", spawnDelay, spawnInterval);ySpawning=true;}
+        if (FoodSpawning(rSpawning, rFoods,"R")) rSpawning = false; else rSpawning = true;
+        if (FoodSpawning(gSpawning, gFoods,"G")) gSpawning = false; else gSpawning = true;
+        if (FoodSpawning(pSpawning, pFoods,"P")) pSpawning = false; else pSpawning = true;
+        if (FoodSpawning(ySpawning, yFoods,"Y")) ySpawning = false; else ySpawning = true;
     }
 
     void RSpawnFood()
@@ -49,6 +54,7 @@ public class FoodManager : MonoBehaviour
          rInstance.instance = Instantiate(foodPrefab,
              new Vector3(rSpawn.position.x+ (float) NextGaussianDouble(r)*spawnSpread,rSpawn.position.y+foodHeightOffset,rSpawn.position.z+(float) NextGaussianDouble(r)*spawnSpread), 
              rSpawn.rotation);
+         
          rInstance.instance.GetComponentInChildren<MeshRenderer>().material.color=red;
          rInstance.instance.GetComponent<Food>().foodColor = red;
          rInstance.instance.GetComponent<Food>().list = rFoods;
@@ -145,7 +151,6 @@ public class FoodManager : MonoBehaviour
 
     public void Reset ()
     {
-        
         yFoods.Clear();
         rFoods.Clear();
         gFoods.Clear();

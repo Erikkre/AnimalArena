@@ -13,7 +13,7 @@ public class GameManager : MonoBehaviour
     public Text messageText;                  // Reference to the overlay Text to display winning text, etc.
     public GameObject animalPrefab;             // Reference to the prefab the players will control.
     public AnimalManager[] animals;               // A collection of managers for enabling and disabling different aspects of the animals.
-
+    public FoodManager foodManager;
     [Header("Spawning Team Colors (Food&HealthBar")]  public Color red, purple, green, yellow;
 
     public bool playerIsAlive = true;
@@ -22,7 +22,7 @@ public class GameManager : MonoBehaviour
     private WaitForSeconds EndWait;           // Used to have a delay whilst the round or game ends.
     private AnimalManager RoundWinner;          // Reference to the winner of the current round.  Used to make an announcement of who won.
     private AnimalManager GameWinner;           // Reference to the winner of the game.  Used to make an announcement of who won.
-
+    
 
     private void Start()
     {
@@ -30,8 +30,7 @@ public class GameManager : MonoBehaviour
         // Create the delays so they only have to be made once.
         StartWait = new WaitForSeconds (startDelay);
         EndWait = new WaitForSeconds (endDelay);
-
-
+        
         SpawnAllAnimals();
         SetCameraTargets();
 
@@ -107,6 +106,7 @@ public class GameManager : MonoBehaviour
     private IEnumerator RoundStarting ()
     {
         // As soon as the round starts reset the animals and make sure they can't move.
+        foodManager.Reset();
         ResetAllAnimals ();
         DisableAnimalControl ();
 
