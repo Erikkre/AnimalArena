@@ -5,7 +5,7 @@ using UnityEngine.PlayerLoop;
 
 public class AnimalHealth : MonoBehaviour
 {
-    [HideInInspector]public float startingHealth;               // The amount of health each animal starts with.
+    [HideInInspector]public float startingAndMinHealthToShoot;               // The amount of health each animal starts with.
 
     //public Image FillImage;                           // The image component of the slider.
     [HideInInspector]public Color playerColor;
@@ -21,11 +21,11 @@ public class AnimalHealth : MonoBehaviour
     public Transform animalSphere;
     public SphereCollider sphereCollider;
     public int healthMassNumber;
-
+    public float sizeScalingWithHealthMultiplier =1;
     private void Awake ()
     {
 
-        startingHealth = healthMassNumber*100f / healthBarGroupings / 2; //player starts with 1 mass worth of health, if there are 6 groupings then 12 masses can be stored
+        startingAndMinHealthToShoot = healthMassNumber*100f / healthBarGroupings / 2; //player starts with 1 mass worth of health, if there are 6 groupings then 12 masses can be stored
         //healthBar.GetComponent<RepeatedRendererUGUI>().spriteIcon.color = playerColor;
 
         // Instantiate the explosion prefab and get a reference to the particle system on it.
@@ -43,7 +43,7 @@ public class AnimalHealth : MonoBehaviour
     {
 
         // When the animal is enabled, reset the animal's health and whether or not it's dead.
-        currentHealth = startingHealth;
+        currentHealth = startingAndMinHealthToShoot;
         healthBar.valueCurrent = (int) currentHealth;
         dead = false;
         UpdateScale();
@@ -71,7 +71,7 @@ public class AnimalHealth : MonoBehaviour
     {
         // Reduce current health by the amount of damage done.
         currentHealth += amount;
-        Debug.Log(amount+" health increased");
+        //Debug.Log(amount+" health increased");
         if (currentHealth > 100) currentHealth = 100;
         healthBar.valueCurrent = (int) currentHealth;
         UpdateScale();
@@ -92,14 +92,15 @@ public class AnimalHealth : MonoBehaviour
 
         // Play the animal explosion sound effect.
         explosionAudio.Play();
-
+        
         // Turn the animal off.
         gameObject.SetActive (false);
+        Destroy(this);
     }
 
     private void UpdateScale()
     {
-        float scale = 1 + (currentHealth / (100f / healthBarGroupings / 2)) / 10;
+        float scale = sizeScalingWithHealthMultiplier*currentHealth / 20;
         transform.localScale = new Vector3(scale, scale, scale);
     }
 }

@@ -20,16 +20,14 @@ public class AnimalShooting : MonoBehaviour
     public float maxLaunchForce = 80f;        // The force given to the mass if the fire button is held for the max charge time.
     public float maxChargeTime = 1f;       // How long the mass can charge for before it is fired at max force.
     private Transform targetTrans;
+    
 
-
-    private string FireButton;                // The input axis that is used for launching masss.
+    private string FireButton,CancelButton;                // The input axis that is used for launching masss.
     private float currentLaunchForce;         // The force that will be given to the mass when the fire button is released.
     private float ChargeSpeed;                // How fast the launch force increases, based on the max charge time.
     private bool Fired;                       // Whether or not the mass has been launched with this button press.
 
-    private int temp;
-    private float temp2;
-
+    private bool cancelledFire;
     private void OnEnable() {
         // When the animal is turned on, reset the launch force and the UI
         currentLaunchForce = minLaunchForce;
@@ -39,10 +37,9 @@ public class AnimalShooting : MonoBehaviour
 
     private void Start ()
     {
-
         // The fire axis is based on the player number.
         FireButton = "Fire" + playerNumber;
-
+        CancelButton = "Cancel" + playerNumber;
         // The rate that the launch force charges up is the range of possible forces by the max charge time.
         ChargeSpeed = (maxLaunchForce - minLaunchForce) / maxChargeTime;
         //Mass.GetComponent<Mass>().shooterPlayerNumber = PlayerNumber;
@@ -52,30 +49,42 @@ public class AnimalShooting : MonoBehaviour
     }
 
 
-    private void Update ()
+    private void LateUpdate ()
     {
-
-        if (targetTrans)  //if player character
+        if (targetTrans && animalHealth.currentHealth>animalHealth.startingAndMinHealthToShoot)  //if player character and they have enough health to shoot
         {
             //Debug.Log("% power shooting/2: "+currentLaunchForce/maxLaunchForce/2+", % health: "+100f/animalHealth.healthBarGroupings/2);
-
-            // The slider should have a default value of the minimum launch force.
-            if (aimSlider.value>minLaunchForce) aimSlider.value = minLaunchForce;
-
-            // If the max force has been exceeded and the mass hasn't yet been launched...
-            if (currentLaunchForce >= maxLaunchForce && !Fired)
+            
+            if (Input.GetButtonDown(CancelButton))
             {
-                Debug.Log("Max force hit, Fire, currentLaunchForce: "+currentLaunchForce);
-                // ... use the max force and launch the mass.
-                currentLaunchForce = maxLaunchForce;
-                Fire();
+                cancelledFire = true;
+                currentLaunchForce = minLaunchForce;
+                if (shootingAudio.isPlaying) shootingAudio.Stop();
+                if (aimSlider.value>minLaunchForce) aimSlider.value = minLaunchForce;
             }
-            // Otherwise, if the fire button has just started being pressed & half of the percentage of minLaunchForce from the max is less than the min health percentage
-            else if (Input.GetButtonDown(FireButton) && minLaunchForce/maxLaunchForce/2 < 100f/animalHealth.healthBarGroupings/2 && animalHealth.currentHealth > 100f/animalHealth.healthBarGroupings/2)
+            else if (Input.GetButtonUp(FireButton) && !Fired && !cancelledFire) //fire Released
             {
-                Debug.Log("Fire button pressed, currentLaunchForce: "+currentLaunchForce);
-                aimSlider.value = minLaunchForce;
-
+                Debug.Log("Fire button release");
+                
+                 
+                if (currentLaunchForce > maxLaunchForce) currentLaunchForce = maxLaunchForce;
+                if (!EnoughHealthToLaunch())
+                {//equation rearranged to find closest new currentLaunchForce value that will leave atleast 1 mass value
+                    //Debug.Log("currentLaunchForce be4:" + currentLaunchForce);
+                    currentLaunchForce -= - ((animalHealth.currentHealth*maxLaunchForce)/50f) + currentLaunchForce + (maxLaunchForce / animalHealth.healthBarGroupings);
+                    //Debug.Log("currentLaunchForce after:"+currentLaunchForce);
+                }
+                //Debug.Log("AnimalHealth be4"+animalHealth.currentHealth);
+                animalHealth.TakeDamage(((currentLaunchForce/maxLaunchForce)/2f)*100); //take off half of the percentage of the shot strength
+                //Debug.Log("AnimalHealth after"+animalHealth.currentHealth);
+                // ... launch the mass.
+                Fire();
+                
+            }
+            else if (Input.GetButtonDown(FireButton) && EnoughHealthToLaunch()) //fireButton just Pressed
+            {
+                Debug.Log("Fire button pressed && enoughHealth");
+                if (cancelledFire) cancelledFire = false;
                 // ... reset the fired flag and reset the launch force.
                 Fired = false;
                 currentLaunchForce = minLaunchForce;
@@ -84,56 +93,58 @@ public class AnimalShooting : MonoBehaviour
                 shootingAudio.clip = chargingClip;
                 shootingAudio.Play();
             }
-            else if (Input.GetButtonDown(FireButton)) //else if button just pressed and not enough health, flash the health bar
+            else if (Input.GetButton(FireButton) && !EnoughHealthToLaunch()&& !cancelledFire) //fireButton Pressed and not enough charge
             {
-                Debug.Log("Fire button pressed and not enough charge, currentLaunchForce: "+currentLaunchForce);
+                //just wait with flashing health bar
+                Aim();
+                if (shootingAudio.isPlaying) shootingAudio.Stop();
+                Debug.Log("Fire button pressed/held && NOT enoughHealth");
             }
-            // Otherwise, if the fire button is being held and the mass hasn't been launched yet & half of the percentage of currentLaunchForce is less than the current health percentage
-            else if (Input.GetButton(FireButton) && !Fired && currentLaunchForce/maxLaunchForce/2 < animalHealth.currentHealth/100 )
+            else if (!Fired && Input.GetButton(FireButton) && EnoughHealthToLaunch() && !cancelledFire) //fireButton held
             {
-                Debug.Log("Fire button held, currentLaunchForce: "+currentLaunchForce);
+                Debug.Log("Fire button held");
                 // Increment the launch force and update the slider.
                 currentLaunchForce += ChargeSpeed * Time.deltaTime;
-
-
                 aimSlider.value = currentLaunchForce;
 
-                aimSlider.transform.rotation = Quaternion.Euler(90,0, 10);
-
-                int angleToAdd;
-                if (targetTrans.position.x > animalPos.position.x) angleToAdd = -90;
-                else angleToAdd = 90;
-                
-                aimSlider.transform.rotation = Quaternion.Euler(90,0, 
-                    -Mathf.Rad2Deg* ((float)  Math.Atan((targetTrans.position.z-animalPos.position.z)/-(targetTrans.position.x-animalPos.position.x))  ) + angleToAdd);
-
+                Aim();
             }
-            // Otherwise, if the fire button is released and the mass hasn't been launched yet...
-            else if (Input.GetButtonUp(FireButton) && !Fired)
-            {
-                Debug.Log("Button released, Fire, currentLaunchForce: "+currentLaunchForce);
-                animalHealth.TakeDamage(((currentLaunchForce/maxLaunchForce)/2)*100); //take off half of the percentage of the shot strength
-                // ... launch the mass.
-                Fire();
-                currentLaunchForce = 0;
-            }
+            
         }
     }
 
+    public void Aim()
+    {
+        int angleToAdd;
+        if (targetTrans.position.x > animalPos.position.x) angleToAdd = -90;
+        else angleToAdd = 90;
+                
+        aimSlider.transform.rotation = Quaternion.Euler(90,0, 
+            -Mathf.Rad2Deg* ((float)  Math.Atan((targetTrans.position.z-animalPos.position.z)/-(targetTrans.position.x-animalPos.position.x))  ) + angleToAdd);
+    }
+
+    public bool EnoughHealthToLaunch()//health must stay above 1 mass with any prospective launch
+    {
+        //Debug.Log("Current animal health:"+animalHealth.currentHealth + "currentLaunchForce/2:"+((currentLaunchForce / maxLaunchForce)/2)*100 +    
+        //          "1 mass healthVal:"+100f / animalHealth.healthBarGroupings / 2f);
+        
+        return animalHealth.currentHealth - ((currentLaunchForce / maxLaunchForce)/2f)*100 >    
+               animalHealth.startingAndMinHealthToShoot;
+        //animal health% - launch%/2 (e.g. 2% launch power used = 1% health taken) should stay above 1 mass
+    }
 
     private void Fire ()
     {
-
         // Set the fired flag so only Fire is only called once.
         Fired = true;
-        mass.coroutineManagerInstance = coroutineManagerInstance;
-        mass.playerShooterNum = playerNumber;
+
         //print(Quaternion.LookRotation(targetTrans.position-FireTransform.position));
         // Create an instance of the mass and store a reference to it's rigidbody.
+        mass.coroutineManagerInstance = coroutineManagerInstance;
+        mass.playerShooterNum = playerNumber;
         Rigidbody massInstance =
             Instantiate (mass.rBody, fireTransform.position, Quaternion.LookRotation(targetTrans.position-fireTransform.position)) as Rigidbody;
-
-
+        
         // Set the mass's velocity to the launch force in the fire position's forward direction.
         massInstance.velocity = currentLaunchForce * (targetTrans.position-fireTransform.position).normalized; ;
 
@@ -143,5 +154,6 @@ public class AnimalShooting : MonoBehaviour
 
         // Reset the launch force.  This is a precaution in case of missing button events.
         currentLaunchForce = minLaunchForce;
+        if (aimSlider.value>minLaunchForce) aimSlider.value = minLaunchForce;
     }
 }

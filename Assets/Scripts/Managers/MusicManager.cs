@@ -29,7 +29,7 @@ public class MusicManager : MonoBehaviour
     {
         if (l != currentlyPlayingList)
         {
-            Debug.Log("new list");
+            //Debug.Log("new list");
             currentlyPlayingList = l;
             if (source.isPlaying) source.Stop();
 

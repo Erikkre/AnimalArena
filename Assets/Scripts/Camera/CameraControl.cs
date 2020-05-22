@@ -75,7 +75,8 @@ public class CameraControl : MonoBehaviour
 
         // Make sure the camera's size isn't below the minimum.
         size = Mathf.Max (size, minSize);
-        Camera.orthographicSize = Mathf.SmoothDamp (Camera.orthographicSize, size, ref ZoomSpeed, dampTime);
+        //Debug.Log("Camera fov target: "+size*3);
+        Camera.fieldOfView = Mathf.SmoothDamp (Camera.fieldOfView, size*2, ref ZoomSpeed, dampTime);
 
 
 

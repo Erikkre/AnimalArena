@@ -79,7 +79,7 @@ public class AnimalManager
     public void Reset ()
     {
         instance.transform.position = 
-            new Vector3(spawnPoint.position.x+Random.Range(-10,10),spawnPoint.position.y+Random.Range(10,30),spawnPoint.position.z+Random.Range(-10,10));
+            new Vector3(spawnPoint.position.x+Random.Range(-10,10),spawnPoint.position.y+20+Random.Range(10,28),spawnPoint.position.z+Random.Range(-10,10));
         instance.transform.rotation = spawnPoint.rotation;
 
         instance.SetActive (false);

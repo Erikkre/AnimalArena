@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &2520176953396945774
+--- !u!1 &1787322291849114306
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,45 +8,46 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 3333276296934607466}
-  - component: {fileID: 7356823800090443193}
-  - component: {fileID: 1688008593647823379}
+  - component: {fileID: 5732722969921995237}
+  - component: {fileID: 1123281004396567181}
+  - component: {fileID: 8718401592388577693}
+  - component: {fileID: 7909624179575137526}
   m_Layer: 0
-  m_Name: RadarSphere
+  m_Name: Sphere
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &3333276296934607466
+--- !u!4 &5732722969921995237
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2520176953396945774}
-  m_LocalRotation: {x: 0.000000081460335, y: 0, z: -0, w: 1}
-  m_LocalPosition: {x: -0, y: -0.53, z: 0}
-  m_LocalScale: {x: 0.25, y: 0.12, z: 0.25}
+  m_GameObject: {fileID: 1787322291849114306}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 0.5, y: 1, z: 0.5}
   m_Children: []
   m_Father: {fileID: 8881300758698527102}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!33 &7356823800090443193
+--- !u!33 &1123281004396567181
 MeshFilter:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2520176953396945774}
-  m_Mesh: {fileID: 6451608084578719824, guid: 178f52ec39115dc49b3d4ca9540f6e9e, type: 3}
---- !u!23 &1688008593647823379
+  m_GameObject: {fileID: 1787322291849114306}
+  m_Mesh: {fileID: 10207, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!23 &8718401592388577693
 MeshRenderer:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2520176953396945774}
+  m_GameObject: {fileID: 1787322291849114306}
   m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
@@ -79,6 +80,25 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+--- !u!95 &7909624179575137526
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1787322291849114306}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 0}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &5556296407137450861
 GameObject:
   m_ObjectHideFlags: 0
@@ -88,10 +108,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8881300758698527102}
-  - component: {fileID: 8706730068448119296}
-  - component: {fileID: 5583579886315216541}
   - component: {fileID: 8544020775292808913}
   - component: {fileID: 8199805589552390559}
+  - component: {fileID: 5382824842427890971}
   m_Layer: 0
   m_Name: Food
   m_TagString: Untagged
@@ -108,50 +127,12 @@ Transform:
   m_GameObject: {fileID: 5556296407137450861}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.7584353, y: 0.9195342, z: 0.75777173}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
-  - {fileID: 3333276296934607466}
+  - {fileID: 5732722969921995237}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!320 &8706730068448119296
-PlayableDirector:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5556296407137450861}
-  m_Enabled: 1
-  serializedVersion: 3
-  m_PlayableAsset: {fileID: 11400000, guid: 6d6b9df12dcf02d4c95c167043852690, type: 2}
-  m_InitialState: 1
-  m_WrapMode: 2
-  m_DirectorUpdateMode: 1
-  m_InitialTime: 0
-  m_SceneBindings:
-  - key: {fileID: -6234164135382484410, guid: 6d6b9df12dcf02d4c95c167043852690, type: 2}
-    value: {fileID: 5583579886315216541}
-  m_ExposedReferences:
-    m_References: []
---- !u!95 &5583579886315216541
-Animator:
-  serializedVersion: 3
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5556296407137450861}
-  m_Enabled: 1
-  m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 0}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 1
-  m_LinearVelocityBlending: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!114 &8544020775292808913
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -164,9 +145,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1291b85f597543cf93c1c4a0c6dad626, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  animalMask:
-    serializedVersion: 2
-    m_Bits: 512
   foodColor: {r: 0, g: 0, b: 0, a: 0}
   collider: {fileID: 8199805589552390559}
   instance: {fileID: 0}
@@ -182,5 +160,24 @@ SphereCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 0.4
-  m_Center: {x: 0, y: 0.26, z: 0}
+  m_Radius: 0.3
+  m_Center: {x: 0, y: 0.5, z: 0}
+--- !u!320 &5382824842427890971
+PlayableDirector:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5556296407137450861}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_PlayableAsset: {fileID: 11400000, guid: 97c23470fc5429a4d9206bded8eca743, type: 2}
+  m_InitialState: 1
+  m_WrapMode: 2
+  m_DirectorUpdateMode: 1
+  m_InitialTime: 0
+  m_SceneBindings:
+  - key: {fileID: 4779508541321453671, guid: 97c23470fc5429a4d9206bded8eca743, type: 2}
+    value: {fileID: 7909624179575137526}
+  m_ExposedReferences:
+    m_References: []
