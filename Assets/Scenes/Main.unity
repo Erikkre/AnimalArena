@@ -573,6 +573,7 @@ MonoBehaviour:
     instance: {fileID: 0}
     wins: 0
     coroutineManagerInstance: {fileID: 0}
+  foodManager: {fileID: 949312113}
   red: {r: 1, g: 0, b: 0, a: 0}
   purple: {r: 0.5131402, g: 0, b: 1, a: 0}
   green: {r: 0, g: 1, b: 0.0184803, a: 0}
