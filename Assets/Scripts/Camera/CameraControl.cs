@@ -86,7 +86,7 @@ public class CameraControl : MonoBehaviour
         if (numTargets > 1)
         {
             averagePos /= numTargets;
-            averagePos.z = avgCameraTargetZaxisOffset;
+            averagePos.z += avgCameraTargetZaxisOffset;
         }
 
         // Keep the same y value.
