@@ -106,8 +106,8 @@ public class AnimalHealth : MonoBehaviour
     private void UpdateScale()
     {
         float scale = 0.3f + sizeScalingWithHealthMultiplier*currentHealth / 50;
-        transform.localScale = new Vector3(scale, scale, scale);
-
+        sphereCollider.radius= scale/2f;
+        animalSphere.transform.localScale = new Vector3(scale, scale, scale);
 
         health.transform.localPosition =
             new Vector3(health.transform.localPosition.x,startingHealthBarY/3 + scale*60, health.transform.localPosition.z);//reposition health and lvl along with scale of animal

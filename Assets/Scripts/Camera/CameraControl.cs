@@ -11,7 +11,7 @@ public class CameraControl : MonoBehaviour
     private float ZoomSpeed;                      // Reference speed for the smooth damping of the orthographic size.
     private Vector3 MoveVelocity;                 // Reference velocity for the smooth damping of the position.
     private Vector3 DesiredPosition;              // The position the camera is moving towards.
-    public int otherPlayersTrackingRange = 45;
+    public int otherPlayersTrackingRange = 45, avgCameraTargetZaxisOffset=-2;
 
     private void Awake ()
     {
@@ -83,8 +83,11 @@ public class CameraControl : MonoBehaviour
 /********************** AVERAGE POINT FINDER SEGMENT***********************************/
 
         // If there are targets divide the sum of the positions by the number of them to find the average.
-        if (numTargets > 0)
+        if (numTargets > 1)
+        {
             averagePos /= numTargets;
+            averagePos.z = avgCameraTargetZaxisOffset;
+        }
 
         // Keep the same y value.
         averagePos.y = transform.position.y;
@@ -93,7 +96,6 @@ public class CameraControl : MonoBehaviour
         DesiredPosition = averagePos;
 
         transform.position = Vector3.SmoothDamp(transform.position, DesiredPosition, ref MoveVelocity, dampTime);
-
     }
 
 

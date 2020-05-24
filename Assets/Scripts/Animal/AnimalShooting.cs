@@ -20,6 +20,7 @@ public class AnimalShooting : MonoBehaviour
     public float maxLaunchForce = 80f;        // The force given to the mass if the fire button is held for the max charge time.
     public float maxChargeTime = 1f;       // How long the mass can charge for before it is fired at max force.
     public float shotToHealthUsageDivisor = 4f;
+    public float massStartScale = 0.5f, massScaleMultiplier=1.5f;
 
     private Transform targetTrans;
     
@@ -149,7 +150,7 @@ public class AnimalShooting : MonoBehaviour
         
         // Set the mass's velocity to the launch force in the fire position's forward direction.
         massInstance.velocity = currentLaunchForce * (targetTrans.position-fireTransform.position).normalized; ;
-
+        massInstance.transform.localScale = new Vector3(massStartScale+(currentLaunchForce/maxLaunchForce)*massScaleMultiplier,massStartScale+(currentLaunchForce/maxLaunchForce)*massScaleMultiplier,massStartScale+(currentLaunchForce/maxLaunchForce)*massScaleMultiplier);
         // Change the clip to the firing clip and play it.
         shootingAudio.clip = fireClip;
         shootingAudio.Play ();

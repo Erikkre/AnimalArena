@@ -626,8 +626,6 @@ GameObject:
   - component: {fileID: 1126589816692006134}
   - component: {fileID: 2435401334449927288}
   - component: {fileID: 6720486233941871021}
-  - component: {fileID: 552616671898725865}
-  - component: {fileID: 3806542735456584294}
   m_Layer: 0
   m_Name: Sphere
   m_TagString: Untagged
@@ -696,44 +694,6 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
---- !u!114 &552616671898725865
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5158914745442208303}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8326b9dca06e5bc4885942c9371f51f1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  startingAndMinHealthToShoot: 0
-  playerColor: {r: 0, g: 0, b: 0, a: 0}
-  explosionPrefab: {fileID: 151086, guid: ee49a9a8678ecf8468eb488e1ac8d42b, type: 3}
-  healthBar: {fileID: 6012312252528447759}
-  healthBarGroupings: 6
-  currentHealth: 100
-  animalSphere: {fileID: 1126589816692006134}
-  sphereCollider: {fileID: 0}
-  healthMassNumber: 1
-  sizeScalingWithHealthMultiplier: 1
-  health: {fileID: 6012312252528447759}
-  lvl: {fileID: 5313362294105344686}
-  healthInFood: 2
---- !u!135 &3806542735456584294
-SphereCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5158914745442208303}
-  m_Material: {fileID: 13400000, guid: 6c5a9240c7970fe4cb4ace749bf09b38, type: 2}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 0.5
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &8038635930756840293
 GameObject:
   m_ObjectHideFlags: 0
@@ -748,6 +708,8 @@ GameObject:
   - component: {fileID: 8038635930756742263}
   - component: {fileID: 369550962}
   - component: {fileID: 847645433}
+  - component: {fileID: 4020073863300815106}
+  - component: {fileID: 3160068105431604569}
   m_Layer: 9
   m_Name: Animal
   m_TagString: Untagged
@@ -1020,7 +982,7 @@ MonoBehaviour:
   mass: {fileID: 145830994, guid: 29cac487eae9d904fa19274774c4868c, type: 3}
   fireTransform: {fileID: 1813252857}
   animalPos: {fileID: 8038635930756867717}
-  animalHealth: {fileID: 552616671898725865}
+  animalHealth: {fileID: 4020073863300815106}
   coroutineManagerInstance: {fileID: 0}
   aimSlider: {fileID: 564258841}
   shootingAudio: {fileID: 8038635930756742256}
@@ -1030,6 +992,44 @@ MonoBehaviour:
   maxLaunchForce: 80
   maxChargeTime: 0.5
   shotToHealthUsageDivisor: 4
+--- !u!114 &4020073863300815106
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8038635930756840293}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8326b9dca06e5bc4885942c9371f51f1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  startingAndMinHealthToShoot: 0
+  playerColor: {r: 0, g: 0, b: 0, a: 0}
+  explosionPrefab: {fileID: 151086, guid: ee49a9a8678ecf8468eb488e1ac8d42b, type: 3}
+  healthBar: {fileID: 6012312252528447759}
+  healthBarGroupings: 6
+  currentHealth: 100
+  animalSphere: {fileID: 1126589816692006134}
+  sphereCollider: {fileID: 3160068105431604569}
+  healthMassNumber: 1
+  sizeScalingWithHealthMultiplier: 1
+  health: {fileID: 6012312252528447759}
+  lvl: {fileID: 5313362294105344686}
+  healthInFood: 2
+--- !u!135 &3160068105431604569
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8038635930756840293}
+  m_Material: {fileID: 13400000, guid: 6c5a9240c7970fe4cb4ace749bf09b38, type: 2}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.15
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &9212644306111055589
 GameObject:
   m_ObjectHideFlags: 0
@@ -1221,6 +1221,11 @@ PrefabInstance:
         type: 3}
       propertyPath: effectBlinkValue
       value: 0.14
+      objectReference: {fileID: 0}
+    - target: {fileID: 6071145621219618823, guid: c920a63f46339854d83cfc6b96e23a75,
+        type: 3}
+      propertyPath: lastRebuildHash
+      value: -920580672
       objectReference: {fileID: 0}
     - target: {fileID: 6071145621226178017, guid: c920a63f46339854d83cfc6b96e23a75,
         type: 3}
@@ -1493,6 +1498,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalScale.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8483697881867895619, guid: 7e0ba03028a343b4a94c7d3100a58f6f,
+        type: 3}
+      propertyPath: lastRebuildHash
+      value: -324200473
       objectReference: {fileID: 0}
     - target: {fileID: 8483697881867895621, guid: 7e0ba03028a343b4a94c7d3100a58f6f,
         type: 3}
