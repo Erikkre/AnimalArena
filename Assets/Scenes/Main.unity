@@ -1021,10 +1021,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   dampTime: 0.3
   screenEdgeBuffer: 1
-  minSize: 8
+  minSize: 9
   targets: []
-  otherPlayersTrackingRange: 30
-  avgCameraTargetZaxisOffset: -2
+  otherPlayersTrackingRange: 25
+  avgCameraTargetZaxisOffset: -4
 --- !u!4 &1996483768
 Transform:
   m_ObjectHideFlags: 0
