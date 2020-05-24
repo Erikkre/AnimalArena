@@ -54,6 +54,11 @@ public class GameManager : MonoBehaviour
             //if (i == 1) CameraControl.mainPlayer = Animals[i];
         }
 
+        for (int i = 0; i < animals.Length; i++)
+        {
+            print(animals[i].playerNumber);
+        }
+
 
     }
 

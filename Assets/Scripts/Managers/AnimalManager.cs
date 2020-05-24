@@ -31,7 +31,7 @@ public class AnimalManager
         // Get references to the components.
         Movement = instance.GetComponent<AnimalMovement> ();
         Shooting = instance.GetComponent<AnimalShooting> ();
-        Health = instance.GetComponent<AnimalHealth> ();
+        Health = instance.GetComponentInChildren<AnimalHealth> ();
         HealthCanvasGameObject = instance.GetComponentInChildren<Canvas> ().gameObject;
 
         // Set the player numbers to be consistent across the scripts.

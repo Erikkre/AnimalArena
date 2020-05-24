@@ -27,13 +27,12 @@ public class AnimalMovement : MonoBehaviour
     [HideInInspector]public Color playerColor;
 
     public Transform flatCanvas, raisedCanvas;
-    private Quaternion originalFlatCanvas, originalRaisedCanvas,originalLocalFlatCanvas, originalLocalRaisedCanvas;
-
+    private Quaternion flatCanvasRotation, raisedCanvasRotation;
+    private Vector3 flatCanvasScale, raisedCanvasScale;
     private void Awake ()
     {
-        originalFlatCanvas = flatCanvas.rotation;
-        originalRaisedCanvas = raisedCanvas.rotation;
-
+        flatCanvasRotation = flatCanvas.rotation; raisedCanvasRotation = raisedCanvas.rotation;
+        flatCanvasScale = flatCanvas.localScale; raisedCanvasScale = raisedCanvas.transform.localScale;
         //originalLocalFlatCanvas = flatCanvas.localRotation;
         //originalLocalRaisedCanvas = raisedCanvas.localRotation;
         Rigidbody = GetComponent<Rigidbody> ();
@@ -77,14 +76,19 @@ public class AnimalMovement : MonoBehaviour
 
         EngineAudio ();
 
+        raisedCanvas.rotation = raisedCanvasRotation;
+        flatCanvas.rotation = flatCanvasRotation;
+        //raisedCanvas.transform.localScale = raisedCanvasScale;
+        //raisedCanvas.localScale = raisedCanvas.localScale;
+        //transform.localScale = transform.localScale;
     }
 
     private void LateUpdate()
     {
-        flatCanvas.rotation = originalFlatCanvas;
-        raisedCanvas.rotation = originalRaisedCanvas;
-        //flatCanvas.transform.localRotation = originalLocalFlatCanvas;
-        //raisedCanvas.transform.localRotation=originalLocalRaisedCanvas;
+        //raisedCanvas.transform.localScale = raisedCanvasScale;
+        //transform.localScale = transform.localScale;
+        //flatCanvas.localScale = flatCanvas.localScale;
+        //raisedCanvas.localScale = raisedCanvas.localScale;
     }
 
     private void EngineAudio ()
@@ -114,7 +118,6 @@ public class AnimalMovement : MonoBehaviour
         }
     }
 
-
     private void FixedUpdate ()
     {
         // Adjust the rigidbodies position and orientation in FixedUpdate.
@@ -122,13 +125,11 @@ public class AnimalMovement : MonoBehaviour
         //Turn ();
     }
 
-
     private void Move ()
     {
         float movementX = xInputValue * speed * Time.deltaTime;
         float movementZ = zInputValue * speed * Time.deltaTime;
         float movementY = yInputValue * speed * Time.deltaTime;
-
 
         // Apply this movement to the rigidbody's position.
         Rigidbody.AddForce(new Vector3(movementX,movementY,movementZ));
@@ -139,9 +140,7 @@ public class AnimalMovement : MonoBehaviour
         //Rigidbody.velocity = force/3 ;
 
         // Apply this movement to the rigidbody's position.
-
     }
-
 
     /*private void Turn ()
     {

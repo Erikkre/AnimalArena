@@ -19,6 +19,8 @@ public class AnimalShooting : MonoBehaviour
     public float minLaunchForce = 7f;        // The force given to the mass if the fire button is not held.
     public float maxLaunchForce = 80f;        // The force given to the mass if the fire button is held for the max charge time.
     public float maxChargeTime = 1f;       // How long the mass can charge for before it is fired at max force.
+    public float shotToHealthUsageDivisor = 4f;
+
     private Transform targetTrans;
     
 
@@ -64,7 +66,7 @@ public class AnimalShooting : MonoBehaviour
             }
             else if (Input.GetButtonUp(FireButton) && !Fired && !cancelledFire) //fire Released
             {
-                Debug.Log("Fire button release");
+                //Debug.Log("Fire button release");
                 
                  
                 if (currentLaunchForce > maxLaunchForce) currentLaunchForce = maxLaunchForce;
@@ -75,7 +77,7 @@ public class AnimalShooting : MonoBehaviour
                     //Debug.Log("currentLaunchForce after:"+currentLaunchForce);
                 }
                 //Debug.Log("AnimalHealth be4"+animalHealth.currentHealth);
-                animalHealth.TakeDamage(((currentLaunchForce/maxLaunchForce)/2f)*100); //take off half of the percentage of the shot strength
+                animalHealth.TakeDamage(((currentLaunchForce/maxLaunchForce)/shotToHealthUsageDivisor)*100); //take off half of the percentage of the shot strength
                 //Debug.Log("AnimalHealth after"+animalHealth.currentHealth);
                 // ... launch the mass.
                 Fire();
@@ -83,7 +85,7 @@ public class AnimalShooting : MonoBehaviour
             }
             else if (Input.GetButtonDown(FireButton) && EnoughHealthToLaunch()) //fireButton just Pressed
             {
-                Debug.Log("Fire button pressed && enoughHealth");
+                //Debug.Log("Fire button pressed && enoughHealth");
                 if (cancelledFire) cancelledFire = false;
                 // ... reset the fired flag and reset the launch force.
                 Fired = false;
@@ -98,11 +100,11 @@ public class AnimalShooting : MonoBehaviour
                 //just wait with flashing health bar
                 Aim();
                 if (shootingAudio.isPlaying) shootingAudio.Stop();
-                Debug.Log("Fire button pressed/held && NOT enoughHealth");
+                //Debug.Log("Fire button pressed/held && NOT enoughHealth");
             }
             else if (!Fired && Input.GetButton(FireButton) && EnoughHealthToLaunch() && !cancelledFire) //fireButton held
             {
-                Debug.Log("Fire button held");
+                //Debug.Log("Fire button held");
                 // Increment the launch force and update the slider.
                 currentLaunchForce += ChargeSpeed * Time.deltaTime;
                 aimSlider.value = currentLaunchForce;
@@ -128,7 +130,7 @@ public class AnimalShooting : MonoBehaviour
         //Debug.Log("Current animal health:"+animalHealth.currentHealth + "currentLaunchForce/2:"+((currentLaunchForce / maxLaunchForce)/2)*100 +    
         //          "1 mass healthVal:"+100f / animalHealth.healthBarGroupings / 2f);
         
-        return animalHealth.currentHealth - ((currentLaunchForce / maxLaunchForce)/2f)*100 >    
+        return animalHealth.currentHealth - ((currentLaunchForce / maxLaunchForce)/shotToHealthUsageDivisor)*100 >
                animalHealth.startingAndMinHealthToShoot;
         //animal health% - launch%/2 (e.g. 2% launch power used = 1% health taken) should stay above 1 mass
     }

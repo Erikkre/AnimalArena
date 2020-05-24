@@ -11,7 +11,7 @@ public class Food : MonoBehaviour {
     [HideInInspector] public GameObject instance;
     [HideInInspector] public bool enabled;
     [HideInInspector] public ArrayList list;
-    public float healthInFoodMultiplier = 2;
+
     private void Update()
     {
         //if (enabled) ;
@@ -32,7 +32,7 @@ public class Food : MonoBehaviour {
         }
         else if (animalHealth!=null && animalHealth.currentHealth<100)
         {
-            animalHealth.AddHealth(healthInFoodMultiplier);
+            animalHealth.AddHealth();
             list.Remove(instance); //dlist.RemoveAt(0);
             Destroy(gameObject);
         }

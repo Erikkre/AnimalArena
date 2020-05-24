@@ -1,4 +1,5 @@
-﻿using EnergyBarToolkit;
+﻿using System.Collections.Generic;
+using EnergyBarToolkit;
 using UnityEngine.UI;
 using UnityEngine;
 using UnityEngine.PlayerLoop;
@@ -22,9 +23,13 @@ public class AnimalHealth : MonoBehaviour
     public SphereCollider sphereCollider;
     public int healthMassNumber;
     public float sizeScalingWithHealthMultiplier =1;
+    public EnergyBar health,lvl;
+    public float healthInFood = 20; //2
+    private float startingHealthBarY, startingLevelBarY;
+
     private void Awake ()
     {
-
+        startingHealthBarY = health.transform.localPosition.y; startingLevelBarY = lvl.transform.localPosition.y;
         startingAndMinHealthToShoot = healthMassNumber*100f / healthBarGroupings / 2; //player starts with 1 mass worth of health, if there are 6 groupings then 12 masses can be stored
         //healthBar.GetComponent<RepeatedRendererUGUI>().spriteIcon.color = playerColor;
 
@@ -67,10 +72,10 @@ public class AnimalHealth : MonoBehaviour
         UpdateScale();
     }
 
-    public void AddHealth (float amount)
+    public void AddHealth ()
     {
         // Reduce current health by the amount of damage done.
-        currentHealth += amount;
+        currentHealth += healthInFood;
         //Debug.Log(amount+" health increased");
         if (currentHealth > 100) currentHealth = 100;
         healthBar.valueCurrent = (int) currentHealth;
@@ -95,12 +100,19 @@ public class AnimalHealth : MonoBehaviour
         
         // Turn the animal off.
         gameObject.SetActive (false);
-        Destroy(this);
+        Destroy(transform.parent);
     }
 
     private void UpdateScale()
     {
-        float scale = sizeScalingWithHealthMultiplier*currentHealth / 20;
+        float scale = 0.3f + sizeScalingWithHealthMultiplier*currentHealth / 50;
         transform.localScale = new Vector3(scale, scale, scale);
+
+
+        health.transform.localPosition =
+            new Vector3(health.transform.localPosition.x,startingHealthBarY/3 + scale*60, health.transform.localPosition.z);//reposition health and lvl along with scale of animal
+        //print("health.transform.localPosition.y after scale update" + startingHealthBarY);
+        lvl.transform.localPosition =
+            new Vector3(lvl.transform.localPosition.x,startingLevelBarY/3 + scale*60, lvl.transform.localPosition.z);
     }
 }

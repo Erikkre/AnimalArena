@@ -33,13 +33,15 @@ public class Mass : MonoBehaviour
     {
         var otherPlayNum = (AnimalMovement) other.GetComponent(
             typeof(AnimalMovement));
+
         if (otherPlayNum != null && otherPlayNum.playerNumber == playerShooterNum)
         {
+            print(otherPlayNum.playerNumber);
             Physics.IgnoreCollision(collider, other);
         }
         else
         {
-             //"Animal"+GetComponent<AnimalManager>().PlayerNumber+" took damage.");
+            //"Animal"+GetComponent<AnimalManager>().PlayerNumber+" took damage.");
             // Collect all the colliders in a sphere from the mass's current position to a radius of the explosion radius.
             Collider[] colliders =
                 Physics.OverlapSphere(transform.position, explosionRadius, animalMask);
