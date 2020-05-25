@@ -14,8 +14,8 @@ public class GameManager : MonoBehaviour
     public GameObject animalPrefab;             // Reference to the prefab the players will control.
     public AnimalManager[] animals;               // A collection of managers for enabling and disabling different aspects of the animals.
     public FoodManager foodManager;
-    [Header("Spawning Team Colors (Food&HealthBar")]  public Color red, purple, green, yellow;
-
+    [Header("Spawning Team Colors (Food)")]  public Color red, purple, green, yellow;
+    [Header("Spawning Team Textures (hpBar)")]  public Texture redCell, purpleCell, greenCell, yellowCell;
     public bool playerIsAlive = true;
     private int RoundNumber;                  // Which round the game is currently on.
     private WaitForSeconds StartWait;         // Used to have a delay whilst the round starts.
@@ -41,6 +41,7 @@ public class GameManager : MonoBehaviour
 
     private void SpawnAllAnimals()
     {animals[0].playerColor = red; animals[1].playerColor = purple; animals[2].playerColor = green; animals[3].playerColor = yellow;
+        
         // For all the animals...
         for (int i = 0; i < animals.Length; i++)
         {
@@ -53,13 +54,8 @@ public class GameManager : MonoBehaviour
             animals[i].Setup();
             //if (i == 1) CameraControl.mainPlayer = Animals[i];
         }
-
-        for (int i = 0; i < animals.Length; i++)
-        {
-            print(animals[i].playerNumber);
-        }
-
-
+        animals[0].instance.GetComponentInChildren<MOBAEnergyBar>().CellTexture = redCell; animals[1].instance.GetComponentInChildren<MOBAEnergyBar>().CellTexture = purpleCell; 
+        animals[2].instance.GetComponentInChildren<MOBAEnergyBar>().CellTexture = greenCell; animals[3].instance.GetComponentInChildren<MOBAEnergyBar>().CellTexture = yellowCell;
     }
 
 
