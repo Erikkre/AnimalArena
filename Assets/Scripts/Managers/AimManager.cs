@@ -15,7 +15,7 @@ public class AimManager : MonoBehaviour
     #endregion
 
     // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
         if (reticleTrans) handleInput();
     }

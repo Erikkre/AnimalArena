@@ -537,7 +537,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   coroutineManagerInstance: {fileID: 949312114}
   numRoundsToWin: 2
-  startDelay: 1
+  startDelay: 0
   endDelay: 2
   cameraControl: {fileID: 1996483767}
   messageText: {fileID: 580091720}
@@ -1024,7 +1024,7 @@ MonoBehaviour:
   minSize: 9
   targets: []
   otherPlayersTrackingRange: 25
-  avgCameraTargetZaxisOffset: -4
+  avgCameraTargetZaxisOffset: -2
 --- !u!4 &1996483768
 Transform:
   m_ObjectHideFlags: 0

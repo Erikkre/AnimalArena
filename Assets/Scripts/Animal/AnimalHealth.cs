@@ -12,7 +12,8 @@ public class AnimalHealth : MonoBehaviour
     [HideInInspector]public Color playerColor;
 
     public GameObject explosionPrefab;                // A prefab that will be instantiated in Awake, then used whenever the animal dies.
-    public EnergyBar healthBar;
+    public MOBAHealthBarPanel hpAndLvlBar;
+    private MOBAEnergyBar hpBar, lvlBar;
     public int healthBarGroupings;    //standard is 6, each grouping = 2 mass
 
     private AudioSource explosionAudio;               // The audio source to play when the animal explodes.
@@ -22,14 +23,16 @@ public class AnimalHealth : MonoBehaviour
     public Transform animalSphere;
     public SphereCollider sphereCollider;
     public int healthMassNumber;
-    public float sizeScalingWithHealthMultiplier =1;
-    public EnergyBar health,lvl;
+    public float sizeScalingWithHealthMultiplier = 1;
     public float healthInFood = 20; //2
-    private float startingHealthBarY, startingLevelBarY;
-
+    
+    private float hpAndLvlBarStartingY;
     private void Awake ()
     {
-        startingHealthBarY = health.transform.localPosition.y; startingLevelBarY = lvl.transform.localPosition.y;
+        hpBar = hpAndLvlBar.HealthBar; lvlBar=hpAndLvlBar.ManaBar;
+        hpAndLvlBarStartingY = hpAndLvlBar.transform.localPosition.y;
+        hpBar.MaxValue = 100f;
+        
         startingAndMinHealthToShoot = healthMassNumber*100f / healthBarGroupings / 2; //player starts with 1 mass worth of health, if there are 6 groupings then 12 masses can be stored
         //healthBar.GetComponent<RepeatedRendererUGUI>().spriteIcon.color = playerColor;
 
@@ -49,7 +52,8 @@ public class AnimalHealth : MonoBehaviour
 
         // When the animal is enabled, reset the animal's health and whether or not it's dead.
         currentHealth = startingAndMinHealthToShoot;
-        healthBar.valueCurrent = (int) currentHealth;
+        
+        hpBar.Value = (int) currentHealth;
         dead = false;
         UpdateScale();
         // Update the health slider's value and color.
@@ -59,7 +63,7 @@ public class AnimalHealth : MonoBehaviour
     {
         // Reduce current health by the amount of damage done.
         currentHealth -= amount;
-        healthBar.valueCurrent = (int) currentHealth;
+        hpBar.Value = (int) currentHealth;
 
         // Change the UI elements appropriately.
 
@@ -78,7 +82,7 @@ public class AnimalHealth : MonoBehaviour
         currentHealth += healthInFood;
         //Debug.Log(amount+" health increased");
         if (currentHealth > 100) currentHealth = 100;
-        healthBar.valueCurrent = (int) currentHealth;
+        hpBar.Value = (int) currentHealth;
         UpdateScale();
     }
 
@@ -109,10 +113,7 @@ public class AnimalHealth : MonoBehaviour
         sphereCollider.radius= scale/2f;
         animalSphere.transform.localScale = new Vector3(scale, scale, scale);
 
-        health.transform.localPosition =
-            new Vector3(health.transform.localPosition.x,startingHealthBarY/3 + scale*60, health.transform.localPosition.z);//reposition health and lvl along with scale of animal
-        //print("health.transform.localPosition.y after scale update" + startingHealthBarY);
-        lvl.transform.localPosition =
-            new Vector3(lvl.transform.localPosition.x,startingLevelBarY/3 + scale*60, lvl.transform.localPosition.z);
+        hpAndLvlBar.transform.localPosition =
+            new Vector3(hpAndLvlBar.transform.localPosition.x,hpAndLvlBarStartingY/3 + scale*60, hpAndLvlBar.transform.localPosition.z);//reposition health and lvl along with scale of animal
     }
 }

@@ -5,15 +5,15 @@ using Random = UnityEngine.Random;
 public class AnimalMovement : MonoBehaviour
 {
     [HideInInspector]public int playerNumber = 1;              // Used to identify which animal belongs to which player.  This is set by this animal's manager.
-    public float speed = 1200f;                 // How fast the animal moves forward and back.
-    public float jSpeed = 20f;            //jump speed
+    private float speed;                 // How fast the animal moves forward and back.
+    private float jSpeed;            //jump speed
     //public float TurnSpeed = 180f;            // How fast the animal turns in degrees per second.
     public AudioSource rollingAudio;         // Reference to the audio source used to play engine sounds. NB: different to the shooting audio source.
     public AudioClip engineIdling;            // Audio to play when the animal isn't moving.
     public AudioClip engineDriving;           // Audio to play when the animal is moving.
     public float pitchRange = 0.2f;           // The amount by which the pitch of the engine noises can vary.
 
-    private Rigidbody Rigidbody;              // Reference used to move the animal.
+    private Rigidbody rigidBody;              // Reference used to move the animal.
 
     private string xAxisName;          // The name of the x input axis
     private string yAxisName;
@@ -24,25 +24,37 @@ public class AnimalMovement : MonoBehaviour
 
     private float TurnInputValue;             // The current value of the turn input.
     private float OriginalPitch;              // The pitch of the audio source at the start of the scene.
+    public int maxSpeed = 30;
     [HideInInspector]public Color playerColor;
 
+    public bool velocityBasedMovement;
     public Transform flatCanvas, raisedCanvas;
     private Quaternion flatCanvasRotation, raisedCanvasRotation;
-    private Vector3 flatCanvasScale, raisedCanvasScale;
+    public SphereCollider sphereCollider;
     private void Awake ()
     {
+        if (velocityBasedMovement)
+        {
+            speed = 500;
+            jSpeed = 1000;
+        }
+        else
+        {
+            speed = 2000;
+            jSpeed = 30000;
+        }
         flatCanvasRotation = flatCanvas.rotation; raisedCanvasRotation = raisedCanvas.rotation;
-        flatCanvasScale = flatCanvas.localScale; raisedCanvasScale = raisedCanvas.transform.localScale;
+        
         //originalLocalFlatCanvas = flatCanvas.localRotation;
         //originalLocalRaisedCanvas = raisedCanvas.localRotation;
-        Rigidbody = GetComponent<Rigidbody> ();
+        rigidBody = GetComponent<Rigidbody> ();
     }
 
 
     private void OnEnable ()
     {
         // When the animal is turned on, make sure it's not kinematic.
-        Rigidbody.isKinematic = false;
+        rigidBody.isKinematic = false;
 
         // Also reset the input values.
         xInputValue = 0f;
@@ -52,7 +64,7 @@ public class AnimalMovement : MonoBehaviour
     private void OnDisable ()
     {
         // When the animal is turned off, set it to kinematic so it stops moving.
-        Rigidbody.isKinematic = true;
+        rigidBody.isKinematic = true;
     }
 
     private void Start ()
@@ -70,14 +82,25 @@ public class AnimalMovement : MonoBehaviour
     private void Update ()
     {
         // Store the value of both input axes.
-        xInputValue = Input.GetAxis (xAxisName);
-        zInputValue = Input.GetAxis (zAxisName);
-        yInputValue = Input.GetAxis (yAxisName);
+        if (velocityBasedMovement)
+        {
+            xInputValue = Input.GetAxis(xAxisName);
+            zInputValue = Input.GetAxis(zAxisName);
+            yInputValue = Input.GetAxisRaw(yAxisName);
+        }
+        else
+        {
+            xInputValue = Input.GetAxisRaw (xAxisName);
+            zInputValue = Input.GetAxisRaw(zAxisName);
+            yInputValue = Input.GetAxisRaw (yAxisName);
+        }
+
+
 
         EngineAudio ();
-
         raisedCanvas.rotation = raisedCanvasRotation;
         flatCanvas.rotation = flatCanvasRotation;
+
         //raisedCanvas.transform.localScale = raisedCanvasScale;
         //raisedCanvas.localScale = raisedCanvas.localScale;
         //transform.localScale = transform.localScale;
@@ -120,6 +143,8 @@ public class AnimalMovement : MonoBehaviour
 
     private void FixedUpdate ()
     {
+        //raisedCanvas.rotation = raisedCanvasRotation;
+        //flatCanvas.rotation = flatCanvasRotation;
         // Adjust the rigidbodies position and orientation in FixedUpdate.
         Move ();
         //Turn ();
@@ -127,15 +152,30 @@ public class AnimalMovement : MonoBehaviour
 
     private void Move ()
     {
-        float movementX = xInputValue * speed * Time.deltaTime;
-        float movementZ = zInputValue * speed * Time.deltaTime;
-        float movementY = yInputValue * speed * Time.deltaTime;
+        
+        if (velocityBasedMovement){
+            float movementX = xInputValue * speed * Time.deltaTime;
+            float movementZ = zInputValue * speed * Time.deltaTime;
+            float movementY = 0;
+            if (rigidBody.position.y-sphereCollider.radius<=0.01) movementY = yInputValue * jSpeed * Time.deltaTime;
+            // Apply this movement to the rigidbody's position.
 
-        // Apply this movement to the rigidbody's position.
-        Rigidbody.AddForce(new Vector3(movementX,movementY,movementZ));
+            rigidBody.drag = 2 * (new Vector2(rigidBody.velocity.x,rigidBody.velocity.z).magnitude / maxSpeed);
+            rigidBody.velocity=new Vector3(movementX, rigidBody.velocity.y+movementY, movementZ);
+        }
+        else
+        {
+            float movementX = xInputValue * speed * Time.deltaTime;
+            float movementZ = zInputValue * speed * Time.deltaTime;
+            float movementY = 0;
+            
+            if (rigidBody.position.y-sphereCollider.radius<=0.01) movementY = yInputValue * jSpeed * Time.deltaTime;
+            // Apply this movement to the rigidbody's position.
 
-        Vector3 force = new Vector3(movementX, Rigidbody.velocity.y*3,
-            movementZ);
+            rigidBody.drag = 5 * (new Vector2(rigidBody.velocity.x,rigidBody.velocity.z).magnitude / maxSpeed);    //make y speed not affect an increase in drag
+            rigidBody.AddForce(new Vector3(movementX, movementY, movementZ));
+        }
+
         // Create a vector in the direction the animal is facing with a magnitude based on the input, speed and the time between frames.
         //Rigidbody.velocity = force/3 ;
 
