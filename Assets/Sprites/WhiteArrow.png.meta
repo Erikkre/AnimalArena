@@ -1,7 +1,10 @@
 fileFormatVersion: 2
-guid: ab943d3d5ac38bb448fabe3cdc9516d1
+guid: d7f6fab541f11534eb95ec0b8a30b16f
 TextureImporter:
-  internalIDToNameTable: []
+  internalIDToNameTable:
+  - first:
+      213: -1083046963149986211
+    second: WhiteArrow
   externalObjects: {}
   serializedVersion: 11
   mipmaps:
@@ -97,11 +100,32 @@ TextureImporter:
     forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
     serializedVersion: 2
-    sprites: []
+    sprites:
+    - serializedVersion: 2
+      name: WhiteArrow
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 256
+        height: 256
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 127, y: 130, z: 125, w: 124}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d562166768e38f0f0800000000000000
+      internalID: -1083046963149986211
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     outline: []
     physicsShape: []
     bones: []
-    spriteID: 
+    spriteID: c599622a97cea5f44b564bf0057e8f02
     internalID: 0
     vertices: []
     indices: 
