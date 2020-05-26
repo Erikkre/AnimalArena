@@ -577,6 +577,10 @@ MonoBehaviour:
   purple: {r: 0.5131402, g: 0, b: 1, a: 0}
   green: {r: 0, g: 1, b: 0.0184803, a: 0}
   yellow: {r: 1, g: 0.95224696, b: 0, a: 0}
+  redCell: {fileID: 2800000, guid: 50f76f5114bfb5a498ec4adf19c56568, type: 3}
+  purpleCell: {fileID: 2800000, guid: f73fd3a96c04a3d43b5adcc89e2b8230, type: 3}
+  greenCell: {fileID: 2800000, guid: 552e3bc5fa021034ca18d70f74386d05, type: 3}
+  yellowCell: {fileID: 2800000, guid: 98855da14184ddb459984a6592951771, type: 3}
   playerIsAlive: 1
 --- !u!4 &949312110
 Transform:
