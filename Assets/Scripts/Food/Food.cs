@@ -3,6 +3,8 @@ using System;
 using System.Collections;
 using UnityEngine;
 using System.Collections.Generic;
+using Random = UnityEngine.Random;
+
 [Serializable]
 public class Food : MonoBehaviour {
     //public LayerMask animalMask;
@@ -11,11 +13,12 @@ public class Food : MonoBehaviour {
     [HideInInspector] public GameObject instance;
     [HideInInspector] public bool enabled;
     [HideInInspector] public ArrayList list;
-
-    private void Update()
+    [HideInInspector] public int healthInSmallFood;
+    public void Awake()
     {
-        //if (enabled) ;
-        //interpolate
+        int size = Random.Range(1, 4);
+        //transform.localScale *= size;
+        healthInSmallFood *= size;
     }
 
     private void OnTriggerEnter(Collider other)
@@ -32,7 +35,7 @@ public class Food : MonoBehaviour {
         }
         else if (animalHealth!=null && animalHealth.currentHealth<100)
         {
-            animalHealth.AddHealth();
+            animalHealth.AddHealth(healthInSmallFood);
             list.Remove(instance); //dlist.RemoveAt(0);
             Destroy(gameObject);
         }

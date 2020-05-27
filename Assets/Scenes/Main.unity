@@ -235,7 +235,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 239632107}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 23.6, y: -0.6660414, z: -23.4}
+  m_LocalPosition: {x: 20, y: 0, z: -20}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 949312110}
@@ -265,7 +265,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 283134298}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -22.8, y: -0.6660414, z: 16.5}
+  m_LocalPosition: {x: -20, y: 0, z: 20}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 949312110}
@@ -294,13 +294,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 355768643}
-  m_LocalRotation: {x: 0, y: 0, z: -0, w: -1}
-  m_LocalPosition: {x: 22.7, y: -0.6660414, z: 16.6}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 20, y: 0, z: 20}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 949312110}
   m_RootOrder: 4
-  m_LocalEulerAnglesHint: {x: 0, y: 360, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &430251088 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 7649961294690673445, guid: 496c5a702597a234a9b82cccd53a61c6,
@@ -425,7 +425,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 665184657}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -26.4, y: -0.6660414, z: -22.9}
+  m_LocalPosition: {x: -20, y: 0, z: -20}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 949312110}
@@ -641,11 +641,12 @@ MonoBehaviour:
   ySpawn: {fileID: 283134299}
   foodPrefab: {fileID: 5556296407137450861, guid: 3470a0a038d1d4544a5ffa1fbf6ae856,
     type: 3}
-  maxFoodOnMap: 300
+  maxFoodOnMap: 500
   spawnDelay: 0
   spawnInterval: 0.01
-  spawnSpread: 15
-  foodHeightOffset: -0.25
+  spawnSpread: 5
+  foodHeightOffset: -1
+  healthInSmallFood: 2
 --- !u!114 &949312114
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -22,9 +22,9 @@ public class AnimalHealth : MonoBehaviour
     private bool dead;                                // Has the animal been reduced beyond zero health yet?
     public Transform animalSphere;
     public SphereCollider sphereCollider;
-    public int healthMassNumber;
+    public int healthStartPercent = 5;
     public float sizeScalingWithHealthMultiplier = 1;
-    public float healthInFood = 20; //2
+
     
     private float hpAndLvlBarStartingY;
     private void Awake ()
@@ -33,7 +33,7 @@ public class AnimalHealth : MonoBehaviour
         hpAndLvlBarStartingY = hpAndLvlBar.transform.localPosition.y;
         hpBar.MaxValue = 100f;
         
-        startingAndMinHealthToShoot = healthMassNumber*100f / healthBarGroupings / 2; //player starts with 1 mass worth of health, if there are 6 groupings then 12 masses can be stored
+        startingAndMinHealthToShoot = healthStartPercent; //player starts with 1 mass worth of health, if there are 6 groupings then 12 masses can be stored
         //healthBar.GetComponent<RepeatedRendererUGUI>().spriteIcon.color = playerColor;
 
         // Instantiate the explosion prefab and get a reference to the particle system on it.
@@ -76,10 +76,10 @@ public class AnimalHealth : MonoBehaviour
         UpdateScale();
     }
 
-    public void AddHealth ()
+    public void AddHealth (float health)
     {
         // Reduce current health by the amount of damage done.
-        currentHealth += healthInFood;
+        currentHealth += health;
         //Debug.Log(amount+" health increased");
         if (currentHealth > 100) currentHealth = 100;
         hpBar.Value = (int) currentHealth;

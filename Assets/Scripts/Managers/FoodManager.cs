@@ -21,6 +21,8 @@ public class FoodManager : MonoBehaviour
     private Random r = new Random();
     public int spawnSpread = 5;
     public float foodHeightOffset = -.25f;
+    public int healthInSmallFood = 2; //2
+
     void Start()
     {
         rFoods = new ArrayList((maxFoodOnMap/4)+1);pFoods = new ArrayList((maxFoodOnMap/4)+1);
@@ -47,62 +49,62 @@ public class FoodManager : MonoBehaviour
         if (FoodSpawning(ySpawning, yFoods,"Y")) ySpawning = false; else ySpawning = true;
     }
 
+    private Food AssignFood(Food inst,Transform spawnPoint,float xOffset,float zOffset,ArrayList l,Color c)
+    {
+        inst.instance = Instantiate(foodPrefab,
+            new Vector3(spawnPoint.position.x+xOffset,spawnPoint.position.y+foodHeightOffset,spawnPoint.position.z+zOffset),
+                spawnPoint.rotation);
+
+        Food f = inst.instance.GetComponent<Food>();
+        f.GetComponentInChildren<MeshRenderer>().material.color=c;
+        f.list = l;
+        f.healthInSmallFood = healthInSmallFood;
+        f.foodColor = c;
+        f.instance = inst.instance;
+        return inst;
+    }
+
     void RSpawnFood()
     {
-        Food rInstance = gameObject.AddComponent(typeof(Food)) as Food;
-         
-         rInstance.instance = Instantiate(foodPrefab,
-             new Vector3(rSpawn.position.x+ (float) NextGaussianDouble(r)*spawnSpread,rSpawn.position.y+foodHeightOffset,rSpawn.position.z+(float) NextGaussianDouble(r)*spawnSpread), 
-             rSpawn.rotation);
-         
-         rInstance.instance.GetComponentInChildren<MeshRenderer>().material.color=red;
-         rInstance.instance.GetComponent<Food>().foodColor = red;
-         rInstance.instance.GetComponent<Food>().list = rFoods;
-         rInstance.instance.GetComponent<Food>().instance = rInstance.instance;
-
-         rFoods.Add(rInstance.instance);
+        rFoods.Add(
+             AssignFood(gameObject.AddComponent(typeof(Food)) as Food,
+                 rSpawn,
+                 (float) NextGaussianDouble(r) * spawnSpread + spawnSpread,
+                 (float) NextGaussianDouble(r) * spawnSpread + spawnSpread,
+                 rFoods, red)
+         );
     }
 
     void PSpawnFood()
     {
-        Food pInstance = gameObject.AddComponent(typeof(Food)) as Food;
-
-        pInstance.instance = Instantiate(foodPrefab,
-            new Vector3(pSpawn.position.x + (float) NextGaussianDouble(r)*spawnSpread- (spawnSpread), pSpawn.position.y+foodHeightOffset,
-                pSpawn.position.z + (float) NextGaussianDouble(r)*spawnSpread),
-            pSpawn.rotation);
-        pInstance.instance.GetComponentInChildren<MeshRenderer>().material.color = purple;
-        pInstance.instance.GetComponent<Food>().foodColor = purple;
-        pInstance.instance.GetComponent<Food>().list = pFoods;
-        pInstance.instance.GetComponent<Food>().instance = pInstance.instance;
-        pFoods.Add(pInstance);
+        pFoods.Add(
+            AssignFood(gameObject.AddComponent(typeof(Food)) as Food,
+                pSpawn,
+                (float) NextGaussianDouble(r) * spawnSpread - spawnSpread,
+                (float) NextGaussianDouble(r) * spawnSpread + spawnSpread,
+                pFoods, purple)
+        );
     }
 
     void GSpawnFood()
     {
-        Food gInstance = gameObject.AddComponent(typeof(Food)) as Food;
-         
-        gInstance.instance = Instantiate(foodPrefab, 
-            new Vector3(gSpawn.position.x+(float) NextGaussianDouble(r)*spawnSpread- (spawnSpread),gSpawn.position.y+foodHeightOffset,gSpawn.position.z+(float) NextGaussianDouble(r)*spawnSpread- (spawnSpread/2f)),
-            gSpawn.rotation);
-        gInstance.instance.GetComponentInChildren<MeshRenderer>().material.color=green;
-        gInstance.instance.GetComponent<Food>().foodColor = green;
-        gInstance.instance.GetComponent<Food>().list = gFoods;
-        gInstance.instance.GetComponent<Food>().instance = gInstance.instance;
-        gFoods.Add(gInstance);
+        gFoods.Add(
+            AssignFood(gameObject.AddComponent(typeof(Food)) as Food,
+                gSpawn,
+                (float) NextGaussianDouble(r) * spawnSpread - spawnSpread,
+                (float) NextGaussianDouble(r) * spawnSpread - spawnSpread,
+                gFoods, green)
+        );
     }
 
     void YSpawnFood(){
-        Food yInstance = gameObject.AddComponent(typeof(Food)) as Food;
-        
-         yInstance.instance = Instantiate(foodPrefab, 
-             new Vector3(ySpawn.position.x+(float) NextGaussianDouble(r)*spawnSpread,ySpawn.position.y+foodHeightOffset,ySpawn.position.z+(float) NextGaussianDouble(r)*spawnSpread- (spawnSpread/2f)), 
-             ySpawn.rotation);
-         yInstance.instance.GetComponentInChildren<MeshRenderer>().material.color=yellow;
-         yInstance.instance.GetComponent<Food>().foodColor = yellow;
-         yInstance.instance.GetComponent<Food>().list = yFoods;
-         yInstance.instance.GetComponent<Food>().instance = yInstance.instance;
-         yFoods.Add(yInstance);
+        yFoods.Add(
+            AssignFood(gameObject.AddComponent(typeof(Food)) as Food,
+                ySpawn,
+                (float) NextGaussianDouble(r) * spawnSpread + spawnSpread,
+                (float) NextGaussianDouble(r) * spawnSpread - spawnSpread,
+                yFoods, yellow)
+        );
     }
     
     // Used during the phases of the game where the player shouldn't be able to control their animal.

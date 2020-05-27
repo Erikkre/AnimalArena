@@ -28,7 +28,7 @@ public class AnimalShooting : MonoBehaviour
     private string FireButton,CancelButton;                // The input axis that is used for launching masss.
     private float currentLaunchForce;         // The force that will be given to the mass when the fire button is released.
     private float ChargeSpeed;                // How fast the launch force increases, based on the max charge time.
-    private bool Fired;                       // Whether or not the mass has been launched with this button press.
+    private bool Fired, charging;                       // Whether or not the mass has been launched with this button press.
 
     private bool cancelledFire;
     private void OnEnable() {
@@ -64,6 +64,7 @@ public class AnimalShooting : MonoBehaviour
                 currentLaunchForce = minLaunchForce;
                 if (shootingAudio.isPlaying) shootingAudio.Stop();
                 if (aimSlider.value>minLaunchForce) aimSlider.value = minLaunchForce;
+                animalHealth.AddHealth(currentLaunchForce/shotToHealthUsageDivisor);
             }
             else if (Input.GetButtonUp(FireButton) && !Fired && !cancelledFire) //fire Released
             {
@@ -78,7 +79,7 @@ public class AnimalShooting : MonoBehaviour
                     //Debug.Log("currentLaunchForce after:"+currentLaunchForce);
                 }
                 //Debug.Log("AnimalHealth be4"+animalHealth.currentHealth);
-                animalHealth.TakeDamage(((currentLaunchForce/maxLaunchForce)/shotToHealthUsageDivisor)*100); //take off half of the percentage of the shot strength
+
                 //Debug.Log("AnimalHealth after"+animalHealth.currentHealth);
                 // ... launch the mass.
                 Fire();
@@ -90,6 +91,7 @@ public class AnimalShooting : MonoBehaviour
                 if (cancelledFire) cancelledFire = false;
                 // ... reset the fired flag and reset the launch force.
                 Fired = false;
+                charging = true;
                 currentLaunchForce = minLaunchForce;
 
                 // Change the clip to the charging clip and start it playing.
@@ -109,6 +111,7 @@ public class AnimalShooting : MonoBehaviour
                 // Increment the launch force and update the slider.
                 currentLaunchForce += ChargeSpeed * Time.deltaTime;
                 aimSlider.value = currentLaunchForce;
+                animalHealth.TakeDamage((ChargeSpeed * Time.deltaTime)/shotToHealthUsageDivisor); //take off each added power
 
                 Aim();
             }

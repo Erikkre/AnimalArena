@@ -674,7 +674,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: c39933e60e73205419d1f79a2af1fdac, type: 2}
+  - {fileID: 2100000, guid: 30ebb7c0d3f43124d91cd7f4d9060745, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -1016,9 +1016,8 @@ MonoBehaviour:
   currentHealth: 100
   animalSphere: {fileID: 1126589816692006134}
   sphereCollider: {fileID: 2710769789198237357}
-  healthMassNumber: 10
+  healthStartPercent: 5
   sizeScalingWithHealthMultiplier: 1
-  healthInFood: 20
 --- !u!135 &2710769789198237357
 SphereCollider:
   m_ObjectHideFlags: 0
