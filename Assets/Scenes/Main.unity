@@ -644,7 +644,7 @@ MonoBehaviour:
   maxFoodOnMap: 500
   spawnDelay: 0
   spawnInterval: 0.01
-  spawnSpread: 5
+  spawnSpread: 9
   foodHeightOffset: -1
   healthInSmallFood: 2
 --- !u!114 &949312114
