@@ -81,9 +81,9 @@ MonoBehaviour:
   m_HandleRect: {fileID: 0}
   m_Direction: 2
   m_MinValue: 7
-  m_MaxValue: 80
+  m_MaxValue: 60
   m_WholeNumbers: 0
-  m_Value: 80
+  m_Value: 60
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls: []
@@ -991,9 +991,9 @@ MonoBehaviour:
   chargingClip: {fileID: 8300000, guid: c17f124fcdc0f5446a72f793898bd74b, type: 3}
   fireClip: {fileID: 8300000, guid: 672a9941361ad494a99fba36759eca80, type: 3}
   minLaunchForce: 7
-  maxLaunchForce: 80
-  maxChargeTime: 0.5
-  shotToHealthUsageDivisor: 4
+  maxLaunchForce: 60
+  maxChargeTime: 0.7
+  shotToHealthUsageDivisor: 3
   massStartScale: 0.1
   massScaleMultiplier: 1.5
 --- !u!114 &4020073863300815106
@@ -1008,15 +1008,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8326b9dca06e5bc4885942c9371f51f1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  startingAndMinHealthToShoot: 0
+  minHealthPercent: 5
   playerColor: {r: 0, g: 0, b: 0, a: 0}
   explosionPrefab: {fileID: 151086, guid: ee49a9a8678ecf8468eb488e1ac8d42b, type: 3}
   hpAndLvlBar: {fileID: 1565280161498181195}
-  healthBarGroupings: 6
   currentHealth: 100
   animalSphere: {fileID: 1126589816692006134}
   sphereCollider: {fileID: 2710769789198237357}
-  healthStartPercent: 5
   sizeScalingWithHealthMultiplier: 1
 --- !u!135 &2710769789198237357
 SphereCollider:
@@ -1146,6 +1144,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Material
       value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 108810426488560473, guid: ce34b7e3a0b00d947b1c87c4a8908812,
+        type: 3}
+      propertyPath: BurnRate
+      value: 1.08
       objectReference: {fileID: 0}
     - target: {fileID: 108810426488573535, guid: ce34b7e3a0b00d947b1c87c4a8908812,
         type: 3}

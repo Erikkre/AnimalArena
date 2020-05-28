@@ -6,7 +6,7 @@ using UnityEngine.PlayerLoop;
 
 public class AnimalHealth : MonoBehaviour
 {
-    [HideInInspector]public float startingAndMinHealthToShoot;               // The amount of health each animal starts with.
+    public float minHealthPercent =5;               // The amount of health each animal starts with.
 
     //public Image FillImage;                           // The image component of the slider.
     [HideInInspector]public Color playerColor;
@@ -14,7 +14,6 @@ public class AnimalHealth : MonoBehaviour
     public GameObject explosionPrefab;                // A prefab that will be instantiated in Awake, then used whenever the animal dies.
     public MOBAHealthBarPanel hpAndLvlBar;
     private MOBAEnergyBar hpBar, lvlBar;
-    public int healthBarGroupings;    //standard is 6, each grouping = 2 mass
 
     private AudioSource explosionAudio;               // The audio source to play when the animal explodes.
     private ParticleSystem explosionParticles;        // The particle system the will play when the animal is destroyed.
@@ -22,7 +21,7 @@ public class AnimalHealth : MonoBehaviour
     private bool dead;                                // Has the animal been reduced beyond zero health yet?
     public Transform animalSphere;
     public SphereCollider sphereCollider;
-    public int healthStartPercent = 5;
+
     public float sizeScalingWithHealthMultiplier = 1;
 
     
@@ -33,7 +32,7 @@ public class AnimalHealth : MonoBehaviour
         hpAndLvlBarStartingY = hpAndLvlBar.transform.localPosition.y;
         hpBar.MaxValue = 100f;
         
-        startingAndMinHealthToShoot = healthStartPercent; //player starts with 1 mass worth of health, if there are 6 groupings then 12 masses can be stored
+        //player starts with 1 mass worth of health, if there are 6 groupings then 12 masses can be stored
         //healthBar.GetComponent<RepeatedRendererUGUI>().spriteIcon.color = playerColor;
 
         // Instantiate the explosion prefab and get a reference to the particle system on it.
@@ -49,9 +48,8 @@ public class AnimalHealth : MonoBehaviour
 
     private void OnEnable()
     {
-
         // When the animal is enabled, reset the animal's health and whether or not it's dead.
-        currentHealth = startingAndMinHealthToShoot;
+        currentHealth = minHealthPercent;
         
         hpBar.Value = (int) currentHealth;
         dead = false;
