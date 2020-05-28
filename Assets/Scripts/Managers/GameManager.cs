@@ -22,7 +22,7 @@ public class GameManager : MonoBehaviour
     private WaitForSeconds EndWait;           // Used to have a delay whilst the round or game ends.
     private AnimalManager RoundWinner;          // Reference to the winner of the current round.  Used to make an announcement of who won.
     private AnimalManager GameWinner;           // Reference to the winner of the game.  Used to make an announcement of who won.
-    
+    public static float maxMassSize;
 
     private void Start()
     {

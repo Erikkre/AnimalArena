@@ -16,14 +16,15 @@ public class Mass : MonoBehaviour
     public ParticleSystem explosionParticles;         // Reference to the particles that will play on explosion.
     public GameObject massExplosion;
     public AudioSource explosionAudio;                // Reference to the audio that will play on explosion.
-    public float maxDamage = 70f;                    // The amount of damage done if the explosion is centred on a animal.
-    public float explosionForce = 2000f;              // The amount of force added to a animal at the centre of the explosion.
-    public float maxLifeTime = 4f;                    // The time in seconds before the mass is removed.
+    public float maxDamage = 50f;                    // The amount of damage done if the explosion is centred on a animal.
+    public float explosionForce = 2500f;              // The amount of force added to a animal at the centre of the explosion.
+    public float maxLifeTime = 5f;                    // The time in seconds before the mass is removed.
     public float explosionRadius = 5f;                // The maximum distance away from the explosion animals can be and are still affected.
-
+    private float sizePercentRatio;
 
     private void Start ()
     {
+        sizePercentRatio = (transform.localScale.x / GameManager.maxMassSize);
         //rBody = GetComponent<Rigidbody>();
         // If it isn't destroyed by then, destroy the mass after it's lifetime.
         Destroy (gameObject, maxLifeTime);
@@ -61,7 +62,7 @@ public class Mass : MonoBehaviour
                     continue;
 
                 // Add an explosion force.
-                targetRigidbody.AddExplosionForce(explosionForce, transform.position,
+                targetRigidbody.AddExplosionForce(sizePercentRatio*explosionForce, transform.position,
                     explosionRadius);
 
                 // Find the AnimalHealth script associated with the rigidbody.
@@ -82,6 +83,7 @@ public class Mass : MonoBehaviour
             massExplosion.transform.parent = null;
 
             // Play the particle system.
+
             explosionParticles.Play();
             //turn on light and quickly interpolate for a flash effect
             explosionLight.enabled = true;
@@ -104,7 +106,6 @@ public class Mass : MonoBehaviour
             explosionLight.intensity = Mathf.Lerp(explosionLight.intensity, 0, 0.27f);
             yield return wait;
         }
-        //print("end");
     }
 
     private float CalculateDamage (Vector3 targetPosition)
@@ -118,8 +119,8 @@ public class Mass : MonoBehaviour
         // Calculate the proportion of the maximum distance (the explosionRadius) the target is away.
         float relativeDistance = (explosionRadius - explosionDistance) / explosionRadius;
 
-        // Calculate damage as this proportion of the maximum possible damage.
-        float damage = relativeDistance * maxDamage;
+        // Calculate damage as this proportion multiplied by the size percentage multiplied by the maximum possible damage.
+        float damage = relativeDistance * sizePercentRatio *maxDamage;
 
         // Make sure that the minimum damage is always 0.
         damage = Mathf.Max (0f, damage);

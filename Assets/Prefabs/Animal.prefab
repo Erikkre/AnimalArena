@@ -994,8 +994,8 @@ MonoBehaviour:
   maxLaunchForce: 60
   maxChargeTime: 0.7
   shotToHealthUsageDivisor: 3
-  massStartScale: 0.1
-  massScaleMultiplier: 1.5
+  massStartScale: 0.05
+  massScaleMultiplier: 1.1
 --- !u!114 &4020073863300815106
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1016,6 +1016,7 @@ MonoBehaviour:
   animalSphere: {fileID: 1126589816692006134}
   sphereCollider: {fileID: 2710769789198237357}
   sizeScalingWithHealthMultiplier: 1
+  dustTrail: {fileID: 8038635930452879866}
 --- !u!135 &2710769789198237357
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -1297,7 +1298,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 496482, guid: f7167ad2844254441b40b8a300b4f1fe, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -0.5610001
+      value: -0.561
       objectReference: {fileID: 0}
     - target: {fileID: 496482, guid: f7167ad2844254441b40b8a300b4f1fe, type: 3}
       propertyPath: m_LocalPosition.z
@@ -1345,7 +1346,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 496482, guid: f7167ad2844254441b40b8a300b4f1fe, type: 3}
       propertyPath: m_LocalScale.z
-      value: 5.7
+      value: 5.6999993
       objectReference: {fileID: 0}
     - target: {fileID: 19895962, guid: f7167ad2844254441b40b8a300b4f1fe, type: 3}
       propertyPath: CollisionModule.m_Bounce.scalar
@@ -1363,11 +1364,25 @@ PrefabInstance:
       propertyPath: InitialModule.startSize.minScalar
       value: 0.4
       objectReference: {fileID: 0}
+    - target: {fileID: 19895962, guid: f7167ad2844254441b40b8a300b4f1fe, type: 3}
+      propertyPath: scalingMode
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 19895962, guid: f7167ad2844254441b40b8a300b4f1fe, type: 3}
+      propertyPath: useRigidbodyForVelocity
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f7167ad2844254441b40b8a300b4f1fe, type: 3}
 --- !u!4 &8038635930438724610 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 496482, guid: f7167ad2844254441b40b8a300b4f1fe,
+    type: 3}
+  m_PrefabInstance: {fileID: 8038635930438500192}
+  m_PrefabAsset: {fileID: 0}
+--- !u!198 &8038635930452879866 stripped
+ParticleSystem:
+  m_CorrespondingSourceObject: {fileID: 19895962, guid: f7167ad2844254441b40b8a300b4f1fe,
     type: 3}
   m_PrefabInstance: {fileID: 8038635930438500192}
   m_PrefabAsset: {fileID: 0}

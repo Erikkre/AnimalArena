@@ -23,7 +23,7 @@ public class AnimalHealth : MonoBehaviour
     public SphereCollider sphereCollider;
 
     public float sizeScalingWithHealthMultiplier = 1;
-
+    public ParticleSystem dustTrail;
     
     private float hpAndLvlBarStartingY;
     private void Awake ()
@@ -110,6 +110,7 @@ public class AnimalHealth : MonoBehaviour
         float scale = 0.3f + sizeScalingWithHealthMultiplier*currentHealth / 50;
         sphereCollider.radius= scale/2f;
         animalSphere.transform.localScale = new Vector3(scale, scale, scale);
+        //dustTrail.transform.localScale = new Vector3(scale, scale, scale);
 
         hpAndLvlBar.transform.localPosition =
             new Vector3(hpAndLvlBar.transform.localPosition.x,hpAndLvlBarStartingY/3 + scale*50, hpAndLvlBar.transform.localPosition.z);//reposition health and lvl along with scale of animal

@@ -40,6 +40,7 @@ public class AnimalShooting : MonoBehaviour
 
     private void Start ()
     {
+        GameManager.maxMassSize = massStartScale + massScaleMultiplier;
         // The fire axis is based on the player number.
         FireButton = "Fire" + playerNumber;
         CancelButton = "Cancel" + playerNumber;
@@ -98,10 +99,8 @@ public class AnimalShooting : MonoBehaviour
                     aimSlider.value = currentLaunchForce;
                     animalHealth.TakeDamage((ChargeSpeed * Time.deltaTime)/shotToHealthUsageDivisor); //take off each added power
                 }
-                
                 Aim();
             }
-            
         }
     }
 
@@ -117,7 +116,6 @@ public class AnimalShooting : MonoBehaviour
 
     public bool EnoughHealthToLaunch()//health must stay above 1 mass with any prospective launch
     {
-      
         return animalHealth.currentHealth - ((currentLaunchForce / maxLaunchForce)/shotToHealthUsageDivisor)*100 >=
                animalHealth.minHealthPercent;
         //animal health% - launch%/2 (e.g. 2% launch power used = 1% health taken) should stay above 1 mass
@@ -140,7 +138,6 @@ public class AnimalShooting : MonoBehaviour
         massInstance.transform.localScale = new Vector3(massStartScale+(currentLaunchForce/maxLaunchForce)*massScaleMultiplier,massStartScale+(currentLaunchForce/maxLaunchForce)*massScaleMultiplier,massStartScale+(currentLaunchForce/maxLaunchForce)*massScaleMultiplier);
         // Change the clip to the firing clip and play it.
         
-
         // Reset the launch force.  This is a precaution in case of missing button events.
         currentLaunchForce = minLaunchForce;
         if (aimSlider.value>minLaunchForce) aimSlider.value = minLaunchForce;

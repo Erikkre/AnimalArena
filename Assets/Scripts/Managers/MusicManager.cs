@@ -11,7 +11,8 @@ public class MusicManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        switchToMainMenuMusic();
+        switchToBattleMusic();
+        //switchToMainMenuMusic();
     }
 
     // Update is called once per frame

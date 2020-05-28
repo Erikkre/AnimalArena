@@ -100,7 +100,7 @@ public class AnimalMovement : MonoBehaviour
         EngineAudio ();
         raisedCanvas.rotation = raisedCanvasRotation;
         flatCanvas.rotation = flatCanvasRotation;
-
+        
         //raisedCanvas.transform.localScale = raisedCanvasScale;
         //raisedCanvas.localScale = raisedCanvas.localScale;
         //transform.localScale = transform.localScale;
