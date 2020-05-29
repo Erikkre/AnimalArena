@@ -22,89 +22,92 @@ public class FoodManager : MonoBehaviour
     public int spawnSpread = 5;
     public float foodHeightOffset = -.25f;
     public int healthInSmallFood = 2; //2
-
+    public LayerMask levelMask;
     void Start()
     {
         rFoods = new ArrayList((maxFoodOnMap/4)+1);pFoods = new ArrayList((maxFoodOnMap/4)+1);
         gFoods = new ArrayList((maxFoodOnMap/4)+1);yFoods = new ArrayList((maxFoodOnMap/4)+1);
     }
 
-
-    private void ChooseFoodSpawn(Transform s)
+    private bool ShouldFoodSpawn(bool s, ArrayList l, String name)
     {
-        //while (Physics.OverlapSphere()|| )
-    }
-
-    private bool FoodSpawning(bool s, ArrayList l, String name)
-    {
-        if (s && l.Count >= maxFoodOnMap / 4) { CancelInvoke(name+"SpawnFood"); return true;}
-        if (!s && l.Count<maxFoodOnMap/4) InvokeRepeating(name+"SpawnFood", spawnDelay, spawnInterval); return false;
+        if (!s && l.Count < maxFoodOnMap / 4f) {InvokeRepeating(name+"SpawnFood", spawnDelay, spawnInterval); return true;}
+        return false;
     }
 
     private void Update()
     {
-        if (FoodSpawning(rSpawning, rFoods,"R")) rSpawning = false; else rSpawning = true;
-        if (FoodSpawning(gSpawning, gFoods,"G")) gSpawning = false; else gSpawning = true;
-        if (FoodSpawning(pSpawning, pFoods,"P")) pSpawning = false; else pSpawning = true;
-        if (FoodSpawning(ySpawning, yFoods,"Y")) ySpawning = false; else ySpawning = true;
+        Debug.Log("r:"+rFoods.Count+" ,maxFoodOnMap / 4f:"+maxFoodOnMap / 4f+", rSpawning:"+rSpawning);
+        if (ShouldFoodSpawn(rSpawning, rFoods,"R")) rSpawning = true; 
+        if (ShouldFoodSpawn(gSpawning, gFoods,"G")) gSpawning = true;
+        if (ShouldFoodSpawn(pSpawning, pFoods,"P")) pSpawning = true; 
+        if (ShouldFoodSpawn(ySpawning, yFoods,"Y")) ySpawning = true; 
     }
 
-    private Food AssignFood(Food inst,Transform spawnPoint,float xOffset,float zOffset,ArrayList l,Color c)
+    private void AssignFood(Transform spawnPoint,float xOffset,float zOffset,ArrayList l,Color c)
     {
+        Vector3 position;
+        do
+        {
+            position = new Vector3(spawnPoint.position.x+RandomGaussianSpreadAround0() + xOffset,
+                spawnPoint.position.y + foodHeightOffset,spawnPoint.position.z+RandomGaussianSpreadAround0() + zOffset);
+            
+        } while (Physics.OverlapSphere(position, 2, levelMask).Length != 0);
+
+        Food inst = gameObject.AddComponent(typeof(Food)) as Food;
+        
         inst.instance = Instantiate(foodPrefab,
-            new Vector3(spawnPoint.position.x+xOffset,spawnPoint.position.y+foodHeightOffset,spawnPoint.position.z+zOffset),
+            new Vector3(position.x,position.y,position.z),
                 spawnPoint.rotation);
 
-        Food f = inst.instance.GetComponent<Food>();
-        f.GetComponentInChildren<MeshRenderer>().material.color=c;
-        f.list = l;
-        f.healthInSmallFood = healthInSmallFood;
-        f.foodColor = c;
-        f.instance = inst.instance;
-        return inst;
+        
+        inst.instance.GetComponentInChildren<MeshRenderer>().material.color=c;
+        inst.instance.GetComponent<Food>().list = l;
+        inst.instance.GetComponent<Food>().healthInSmallFood = healthInSmallFood;
+        inst.instance.GetComponent<Food>().foodColor = c;
+        
+        inst.instance.GetComponent<Food>().instance = inst.instance;
+        l.Add(inst.instance);
     }
 
+    float RandomGaussianSpreadAround0()
+    {
+        return (float) NextGaussianDouble(r) * spawnSpread;
+    }
     void RSpawnFood()
     {
-        rFoods.Add(
-             AssignFood(gameObject.AddComponent(typeof(Food)) as Food,
-                 rSpawn,
-                 (float) NextGaussianDouble(r) * spawnSpread + spawnSpread,
-                 (float) NextGaussianDouble(r) * spawnSpread + spawnSpread,
-                 rFoods, red)
-         );
+        if (rFoods.Count >= maxFoodOnMap / 4f) { CancelInvoke("RSpawnFood"); rSpawning = false; return ;}
+        AssignFood(rSpawn,
+            spawnSpread,
+            spawnSpread,
+            rFoods, red);
     }
 
     void PSpawnFood()
     {
-        pFoods.Add(
-            AssignFood(gameObject.AddComponent(typeof(Food)) as Food,
-                pSpawn,
-                (float) NextGaussianDouble(r) * spawnSpread - spawnSpread,
-                (float) NextGaussianDouble(r) * spawnSpread + spawnSpread,
-                pFoods, purple)
-        );
+        if (pFoods.Count >= maxFoodOnMap / 4f) { CancelInvoke("PSpawnFood"); pSpawning = false; return ;}
+        AssignFood(pSpawn,
+            -spawnSpread,
+            spawnSpread,
+            pFoods, purple);
     }
 
     void GSpawnFood()
     {
-        gFoods.Add(
-            AssignFood(gameObject.AddComponent(typeof(Food)) as Food,
-                gSpawn,
-                (float) NextGaussianDouble(r) * spawnSpread - spawnSpread,
-                (float) NextGaussianDouble(r) * spawnSpread - spawnSpread,
-                gFoods, green)
-        );
+        if (gFoods.Count >= maxFoodOnMap / 4f) { CancelInvoke("GSpawnFood"); gSpawning = false; return ;}
+        AssignFood(gSpawn,
+            -spawnSpread,
+            -spawnSpread,
+            gFoods, green);
     }
 
-    void YSpawnFood(){
-        yFoods.Add(
-            AssignFood(gameObject.AddComponent(typeof(Food)) as Food,
-                ySpawn,
-                (float) NextGaussianDouble(r) * spawnSpread + spawnSpread,
-                (float) NextGaussianDouble(r) * spawnSpread - spawnSpread,
-                yFoods, yellow)
-        );
+    void YSpawnFood()
+    {
+        if (yFoods.Count >= maxFoodOnMap / 4f) { CancelInvoke("YSpawnFood"); ySpawning = false; return ;}
+        AssignFood(ySpawn,
+            spawnSpread,
+            -spawnSpread,
+            yFoods, yellow);
     }
     
     // Used during the phases of the game where the player shouldn't be able to control their animal.
@@ -153,9 +156,18 @@ public class FoodManager : MonoBehaviour
 
     public void Reset ()
     {
-        yFoods.Clear();
-        rFoods.Clear();
-        gFoods.Clear();
-        pFoods.Clear();
+        DestroyList(rFoods);
+        DestroyList(gFoods);
+        DestroyList(yFoods);
+        DestroyList(pFoods);
+    }
+
+    void DestroyList(ArrayList ar)
+    {
+        for (int i = 0; i < ar.Count; i++)
+        {
+            Destroy(((GameObject)ar[i]));
+        }
+        ar.Clear();
     }
 }

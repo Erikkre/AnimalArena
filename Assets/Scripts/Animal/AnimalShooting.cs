@@ -57,7 +57,7 @@ public class AnimalShooting : MonoBehaviour
     {
         if (targetTrans && animalHealth.currentHealth>animalHealth.minHealthPercent)  //if player character and they have enough health to shoot
         {
-            Debug.Log("power shooting: "+currentLaunchForce+", % health: "+animalHealth.currentHealth+", aimslider val: "+aimSlider.value);
+            //Debug.Log("power shooting: "+currentLaunchForce+", % health: "+animalHealth.currentHealth+", aimslider val: "+aimSlider.value);
             
             if (Input.GetButtonDown(CancelButton))
             {
@@ -97,7 +97,7 @@ public class AnimalShooting : MonoBehaviour
                 {
                     currentLaunchForce += ChargeSpeed * Time.deltaTime;
                     aimSlider.value = currentLaunchForce;
-                    animalHealth.TakeDamage((ChargeSpeed * Time.deltaTime)/shotToHealthUsageDivisor); //take off each added power
+                    animalHealth.TakeDamage((ChargeSpeed * Time.deltaTime)/shotToHealthUsageDivisor, true); //take off each added power
                 }
                 Aim();
             }

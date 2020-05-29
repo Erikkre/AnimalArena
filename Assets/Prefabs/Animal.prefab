@@ -674,7 +674,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 30ebb7c0d3f43124d91cd7f4d9060745, type: 2}
+  - {fileID: 2100000, guid: 394d7ad14fad09946af35b5a5631ade6, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -1149,7 +1149,12 @@ PrefabInstance:
     - target: {fileID: 108810426488560473, guid: ce34b7e3a0b00d947b1c87c4a8908812,
         type: 3}
       propertyPath: BurnRate
-      value: 1.08
+      value: 2.8
+      objectReference: {fileID: 0}
+    - target: {fileID: 108810426488560473, guid: ce34b7e3a0b00d947b1c87c4a8908812,
+        type: 3}
+      propertyPath: Value
+      value: 56
       objectReference: {fileID: 0}
     - target: {fileID: 108810426488573535, guid: ce34b7e3a0b00d947b1c87c4a8908812,
         type: 3}
@@ -1298,11 +1303,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 496482, guid: f7167ad2844254441b40b8a300b4f1fe, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -0.561
+      value: -1
       objectReference: {fileID: 0}
     - target: {fileID: 496482, guid: f7167ad2844254441b40b8a300b4f1fe, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0.314
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 496482, guid: f7167ad2844254441b40b8a300b4f1fe, type: 3}
       propertyPath: m_LocalRotation.x
@@ -1366,10 +1371,14 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 19895962, guid: f7167ad2844254441b40b8a300b4f1fe, type: 3}
       propertyPath: scalingMode
-      value: 2
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 19895962, guid: f7167ad2844254441b40b8a300b4f1fe, type: 3}
       propertyPath: useRigidbodyForVelocity
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 19895962, guid: f7167ad2844254441b40b8a300b4f1fe, type: 3}
+      propertyPath: CollisionModule.enabled
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []

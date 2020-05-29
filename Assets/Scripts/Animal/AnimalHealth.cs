@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using EnergyBarToolkit;
 using UnityEngine.UI;
 using UnityEngine;
@@ -24,13 +25,16 @@ public class AnimalHealth : MonoBehaviour
 
     public float sizeScalingWithHealthMultiplier = 1;
     public ParticleSystem dustTrail;
+    private ParticleSystem.MinMaxCurve dustSize;
     
     private float hpAndLvlBarStartingY;
     private void Awake ()
     {
+        dustSize = dustTrail.main.startSize;
         hpBar = hpAndLvlBar.HealthBar; lvlBar=hpAndLvlBar.ManaBar;
         hpAndLvlBarStartingY = hpAndLvlBar.transform.localPosition.y;
         hpBar.MaxValue = 100f;
+            
         
         //player starts with 1 mass worth of health, if there are 6 groupings then 12 masses can be stored
         //healthBar.GetComponent<RepeatedRendererUGUI>().spriteIcon.color = playerColor;
@@ -57,10 +61,14 @@ public class AnimalHealth : MonoBehaviour
         // Update the health slider's value and color.
     }
 
-    public void TakeDamage (float amount)
+    public void TakeDamage (float amount, bool dmgFromFiring)
     {
         // Reduce current health by the amount of damage done.
         currentHealth -= amount;
+        if (dmgFromFiring)
+        {
+            
+        }
         hpBar.Value = (int) currentHealth;
 
         // Change the UI elements appropriately.
@@ -110,8 +118,12 @@ public class AnimalHealth : MonoBehaviour
         float scale = 0.3f + sizeScalingWithHealthMultiplier*currentHealth / 50;
         sphereCollider.radius= scale/2f;
         animalSphere.transform.localScale = new Vector3(scale, scale, scale);
-        //dustTrail.transform.localScale = new Vector3(scale, scale, scale);
-
+        
+            dustTrail.transform.localScale = new Vector3(scale, scale/2, scale/2);
+        dustTrail.transform.localPosition = new Vector3(dustTrail.transform.localPosition.x, -sphereCollider.radius/4,sphereCollider.radius/1.3f);
+            //dustSize.constantMin = scale*10000;
+            //dustSize.constantMax = scale*100000;
+        
         hpAndLvlBar.transform.localPosition =
             new Vector3(hpAndLvlBar.transform.localPosition.x,hpAndLvlBarStartingY/3 + scale*50, hpAndLvlBar.transform.localPosition.z);//reposition health and lvl along with scale of animal
     }

@@ -76,7 +76,7 @@ public class Mass : MonoBehaviour
                 float damage = CalculateDamage(targetRigidbody.position);
 
                 // Deal this damage to the animal.
-                targetHealth.TakeDamage(damage);
+                targetHealth.TakeDamage(damage,false);
             }
 
             // Unparent the particles from the mass.
