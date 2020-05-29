@@ -12,10 +12,10 @@ GameObject:
   - component: {fileID: 7059535324433737578}
   - component: {fileID: 7059535324432606634}
   - component: {fileID: 7059535322484587173}
+  - component: {fileID: 5746952048108582577}
   - component: {fileID: 145830994}
   - component: {fileID: 5076529103087385054}
-  - component: {fileID: 5746952048108582577}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Mass
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -63,7 +63,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 394d7ad14fad09946af35b5a5631ade6, type: 2}
+  - {fileID: 2100000, guid: b3a1f2f69b4c3a84cba5446e31e87c20, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -97,9 +97,22 @@ Rigidbody:
   m_AngularDrag: 0.05
   m_UseGravity: 0
   m_IsKinematic: 0
-  m_Interpolate: 2
+  m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!135 &5746952048108582577
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7059535324430613354}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.01
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &145830994
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -114,12 +127,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerShooterNum: 1
   rBody: {fileID: 7059535322484587173}
-  collider: {fileID: 0}
+  collider: {fileID: 5746952048108582577}
   explosionLight: {fileID: 5680027840459643226}
+  massLight: {fileID: 5076529103087385054}
   coroutineManagerInstance: {fileID: 0}
   animalMask:
     serializedVersion: 2
-    m_Bits: 512
+    m_Bits: 1024
   explosionParticles: {fileID: 3398813380775369614}
   massExplosion: {fileID: 3398813380790262344}
   explosionAudio: {fileID: 5680027840459643227}
@@ -139,8 +153,8 @@ Light:
   m_Type: 2
   m_Shape: 0
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_Intensity: 1.5
-  m_Range: 15
+  m_Intensity: 4
+  m_Range: 20
   m_SpotAngle: 30
   m_InnerSpotAngle: 21.80208
   m_CookieSize: 10
@@ -188,19 +202,6 @@ Light:
   m_UseBoundingSphereOverride: 0
   m_ShadowRadius: 0
   m_ShadowAngle: 0
---- !u!135 &5746952048108582577
-SphereCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7059535324430613354}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 0.1
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1001 &3398813380790445720
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -218,11 +219,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 486730, guid: 89e78efe92dfe5a42837b392cdb0bf9e, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 2
+      value: 0.7
       objectReference: {fileID: 0}
     - target: {fileID: 486730, guid: 89e78efe92dfe5a42837b392cdb0bf9e, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -0
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 486730, guid: 89e78efe92dfe5a42837b392cdb0bf9e, type: 3}
       propertyPath: m_LocalRotation.x
@@ -255,16 +256,6 @@ PrefabInstance:
     - target: {fileID: 486730, guid: 89e78efe92dfe5a42837b392cdb0bf9e, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7059535322538246082, guid: 89e78efe92dfe5a42837b392cdb0bf9e,
-        type: 3}
-      propertyPath: m_Shadows.m_Type
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 7059535322538246082, guid: 89e78efe92dfe5a42837b392cdb0bf9e,
-        type: 3}
-      propertyPath: m_Shadows.m_Strength
-      value: 0.177
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 89e78efe92dfe5a42837b392cdb0bf9e, type: 3}

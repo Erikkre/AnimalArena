@@ -28,7 +28,7 @@ public class AimManager : MonoBehaviour
 
         if (Physics.Raycast(screenRay, out h, int.MaxValue, onlyRaycastGround) )//if ray from camera to mouse pos hits something with a collider, reticlePos and reticleNormal are set.
         {
-            reticleTrans.position = new Vector3(h.point.x, meshRend.bounds.size.y, h.point.z);
+            reticleTrans.position = new Vector3(h.point.x, -0.01f, h.point.z);
         }
     }
 }

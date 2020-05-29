@@ -64,7 +64,7 @@ public class AnimalShooting : MonoBehaviour
                 cancelledFire = true;
                 if (shootingAudio.isPlaying) shootingAudio.Stop();
                 if (aimSlider.value>minLaunchForce) aimSlider.value = minLaunchForce;
-                animalHealth.AddHealth(currentLaunchForce/shotToHealthUsageDivisor);
+                animalHealth.AddHealth(currentLaunchForce/1.13f/shotToHealthUsageDivisor);
                 currentLaunchForce = minLaunchForce;
             }
             else if (Input.GetButtonUp(FireButton) && !Fired && !cancelledFire)            //fire Released
@@ -131,7 +131,7 @@ public class AnimalShooting : MonoBehaviour
         mass.coroutineManagerInstance = coroutineManagerInstance;
         mass.playerShooterNum = playerNumber;
         Rigidbody massInstance =
-            Instantiate (mass.rBody, fireTransform.position, Quaternion.LookRotation(targetTrans.position-fireTransform.position)) as Rigidbody;
+            Instantiate(mass.rBody, fireTransform.position, Quaternion.identity);//Quaternion.LookRotation(targetTrans.position-fireTransform.position)) as Rigidbody;
         
         // Set the mass's velocity to the launch force in the fire position's forward direction.
         massInstance.velocity = currentLaunchForce * (targetTrans.position-fireTransform.position).normalized; ;

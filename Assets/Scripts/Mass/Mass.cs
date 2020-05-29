@@ -10,34 +10,47 @@ public class Mass : MonoBehaviour
     public Rigidbody rBody;
     public Collider collider;
 
-    public Light explosionLight;
+    public Light explosionLight, massLight;
     [HideInInspector]public CoroutineManager coroutineManagerInstance;
     public LayerMask animalMask;                        // Used to filter what the explosion affects, this should be set to "Players".
     public ParticleSystem explosionParticles;         // Reference to the particles that will play on explosion.
     public GameObject massExplosion;
     public AudioSource explosionAudio;                // Reference to the audio that will play on explosion.
+    
     public float maxDamage = 50f;                    // The amount of damage done if the explosion is centred on a animal.
     public float explosionForce = 2500f;              // The amount of force added to a animal at the centre of the explosion.
     public float maxLifeTime = 5f;                    // The time in seconds before the mass is removed.
     public float explosionRadius = 5f;                // The maximum distance away from the explosion animals can be and are still affected.
     private float sizePercentRatio;
-
+    private Vector3 posBeforePhysicsUpdate;
     private void Start ()
     {
         sizePercentRatio = (transform.localScale.x / GameManager.maxMassSize);
+        explosionRadius *= sizePercentRatio;
+        explosionForce *= sizePercentRatio;
+        maxDamage *= sizePercentRatio;
+        explosionLight.intensity *= sizePercentRatio;
+        explosionLight.range *= sizePercentRatio;
+        massLight.intensity *= sizePercentRatio;
+        massLight.range *= sizePercentRatio;
+        
         //rBody = GetComponent<Rigidbody>();
         // If it isn't destroyed by then, destroy the mass after it's lifetime.
         Destroy (gameObject, maxLifeTime);
     }
-
+    void FixedUpdate()
+    {
+        //1/Time.deltaTime
+        posBeforePhysicsUpdate = rBody.position-rBody.velocity*(Time.deltaTime/2.5f);
+    }
     private void OnTriggerEnter (Collider other)
     {
+        print("TRIGGERED");
         var otherPlayNum = (AnimalMovement) other.GetComponent(
             typeof(AnimalMovement));
 
         if (otherPlayNum != null && otherPlayNum.playerNumber == playerShooterNum)
         {
-            print(otherPlayNum.playerNumber);
             Physics.IgnoreCollision(collider, other);
         }
         else
@@ -62,9 +75,9 @@ public class Mass : MonoBehaviour
                     continue;
 
                 // Add an explosion force.
-                targetRigidbody.AddExplosionForce(sizePercentRatio*explosionForce, transform.position,
+                targetRigidbody.AddExplosionForce(explosionForce, transform.position,
                     explosionRadius);
-
+    
                 // Find the AnimalHealth script associated with the rigidbody.
                 AnimalHealth targetHealth = targetRigidbody.GetComponent<AnimalHealth>();
 
@@ -74,14 +87,17 @@ public class Mass : MonoBehaviour
 
                 // Calculate the amount of damage the target should take based on it's distance from the mass.
                 float damage = CalculateDamage(targetRigidbody.position);
-
+                
+                print("ExplosionForce: "+explosionForce+", damage: "+damage+", radius: "+explosionRadius+", maxDamage: "+maxDamage+", targetDistance: "+(targetRigidbody.position - transform.position));
+                
                 // Deal this damage to the animal.
                 targetHealth.TakeDamage(damage,false);
             }
 
             // Unparent the particles from the mass.
             massExplosion.transform.parent = null;
-
+            massExplosion.transform.position = new Vector3(posBeforePhysicsUpdate.x,massExplosion.transform.position.y,posBeforePhysicsUpdate.z);
+            
             // Play the particle system.
 
             explosionParticles.Play();
@@ -120,7 +136,7 @@ public class Mass : MonoBehaviour
         float relativeDistance = (explosionRadius - explosionDistance) / explosionRadius;
 
         // Calculate damage as this proportion multiplied by the size percentage multiplied by the maximum possible damage.
-        float damage = relativeDistance * sizePercentRatio *maxDamage;
+        float damage = relativeDistance *maxDamage;
 
         // Make sure that the minimum damage is always 0.
         damage = Mathf.Max (0f, damage);

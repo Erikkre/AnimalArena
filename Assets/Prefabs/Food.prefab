@@ -111,7 +111,7 @@ GameObject:
   - component: {fileID: 8544020775292808913}
   - component: {fileID: 8199805589552390559}
   - component: {fileID: 5382824842427890971}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Food
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -149,6 +149,7 @@ MonoBehaviour:
   collider: {fileID: 8199805589552390559}
   instance: {fileID: 0}
   enabled: 0
+  addedHealthInSmallFood: 0
 --- !u!135 &8199805589552390559
 SphereCollider:
   m_ObjectHideFlags: 0

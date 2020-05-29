@@ -674,7 +674,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 394d7ad14fad09946af35b5a5631ade6, type: 2}
+  - {fileID: 2100000, guid: b3a1f2f69b4c3a84cba5446e31e87c20, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -711,7 +711,7 @@ GameObject:
   - component: {fileID: 847645433}
   - component: {fileID: 4020073863300815106}
   - component: {fileID: 2710769789198237357}
-  m_Layer: 9
+  m_Layer: 10
   m_Name: Animal
   m_TagString: Untagged
   m_Icon: {fileID: 0}

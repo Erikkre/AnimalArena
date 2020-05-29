@@ -20,8 +20,7 @@ public class FoodManager : MonoBehaviour
     private bool rSpawning, pSpawning, gSpawning, ySpawning;
     private Random r = new Random();
     public int spawnSpread = 5;
-    public float foodHeightOffset = -.25f;
-    public int healthInSmallFood = 2; //2
+    public float addedHealthInSmallFood = 2f; //2f
     public LayerMask levelMask;
     void Start()
     {
@@ -37,7 +36,7 @@ public class FoodManager : MonoBehaviour
 
     private void Update()
     {
-        Debug.Log("r:"+rFoods.Count+" ,maxFoodOnMap / 4f:"+maxFoodOnMap / 4f+", rSpawning:"+rSpawning);
+        //Debug.Log("r:"+rFoods.Count+" ,maxFoodOnMap / 4f:"+maxFoodOnMap / 4f+", rSpawning:"+rSpawning);
         if (ShouldFoodSpawn(rSpawning, rFoods,"R")) rSpawning = true; 
         if (ShouldFoodSpawn(gSpawning, gFoods,"G")) gSpawning = true;
         if (ShouldFoodSpawn(pSpawning, pFoods,"P")) pSpawning = true; 
@@ -50,7 +49,7 @@ public class FoodManager : MonoBehaviour
         do
         {
             position = new Vector3(spawnPoint.position.x+RandomGaussianSpreadAround0() + xOffset,
-                spawnPoint.position.y + foodHeightOffset,spawnPoint.position.z+RandomGaussianSpreadAround0() + zOffset);
+                spawnPoint.position.y,spawnPoint.position.z+RandomGaussianSpreadAround0() + zOffset);
             
         } while (Physics.OverlapSphere(position, 2, levelMask).Length != 0);
 
@@ -63,7 +62,7 @@ public class FoodManager : MonoBehaviour
         
         inst.instance.GetComponentInChildren<MeshRenderer>().material.color=c;
         inst.instance.GetComponent<Food>().list = l;
-        inst.instance.GetComponent<Food>().healthInSmallFood = healthInSmallFood;
+        inst.instance.GetComponent<Food>().addedHealthInSmallFood = addedHealthInSmallFood;
         inst.instance.GetComponent<Food>().foodColor = c;
         
         inst.instance.GetComponent<Food>().instance = inst.instance;
@@ -166,7 +165,7 @@ public class FoodManager : MonoBehaviour
     {
         for (int i = 0; i < ar.Count; i++)
         {
-            Destroy(((GameObject)ar[i]));
+            Destroy((GameObject)ar[i]);
         }
         ar.Clear();
     }

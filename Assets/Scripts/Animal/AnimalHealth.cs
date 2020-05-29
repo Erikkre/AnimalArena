@@ -7,7 +7,7 @@ using UnityEngine.PlayerLoop;
 
 public class AnimalHealth : MonoBehaviour
 {
-    public float minHealthPercent =5;               // The amount of health each animal starts with.
+    public float minHealthPercent = 5;               // The amount of health each animal starts with.
 
     //public Image FillImage;                           // The image component of the slider.
     [HideInInspector]public Color playerColor;

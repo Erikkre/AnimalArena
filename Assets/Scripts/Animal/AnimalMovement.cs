@@ -36,12 +36,12 @@ public class AnimalMovement : MonoBehaviour
         if (velocityBasedMovement)
         {
             speed = 500;
-            jSpeed = 1000;
+            jSpeed = 1500;
         }
         else
         {
             speed = 2000;
-            jSpeed = 30000;
+            jSpeed = 40000;
         }
         flatCanvasRotation = flatCanvas.rotation; raisedCanvasRotation = raisedCanvas.rotation;
         

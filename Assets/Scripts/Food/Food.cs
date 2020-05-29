@@ -13,12 +13,16 @@ public class Food : MonoBehaviour {
     [HideInInspector] public GameObject instance;
     [HideInInspector] public bool enabled;
     [HideInInspector] public ArrayList list;
-    [HideInInspector] public int healthInSmallFood;
-    public void Awake()
+    [HideInInspector] public float addedHealthInSmallFood;
+    private float size;
+    private float healthByScale;
+    public void Start()
     {
-        int size = Random.Range(1, 4);
-        //transform.localScale *= size;
-        healthInSmallFood *= size;
+        size = Random.Range(0.5f, 2f);
+        
+        instance.transform.localScale = new Vector3(instance.transform.localScale.x*size,instance.transform.localScale.y*size,instance.transform.localScale.z*size);
+        instance.transform.position = new Vector3(instance.transform.position.x,instance.transform.position.y - 0.10f - size/2.9f,instance.transform.position.z);
+        
     }
 
     private void OnTriggerEnter(Collider other)
@@ -26,8 +30,7 @@ public class Food : MonoBehaviour {
         var animalHealth = (AnimalHealth) other.GetComponent(
             typeof(AnimalHealth));
 
-        //AnimalHealth animalHealth = other.GetComponentInParent<AnimalHealth>();
-        //Debug.Log("Player color: "+animalHealth.playerColor+", foodColor: "+foodColor);
+
 
         if (animalHealth != null && animalHealth.playerColor != foodColor)
         {
@@ -35,7 +38,10 @@ public class Food : MonoBehaviour {
         }
         else if (animalHealth!=null && animalHealth.currentHealth<100)
         {
-            animalHealth.AddHealth(healthInSmallFood);
+            //AnimalHealth animalHealth = other.GetComponentInParent<AnimalHealth>();
+            Debug.Log("foodHealth: "+Mathf.Pow(instance.transform.localScale.x+1f, 2f) );
+            
+            animalHealth.AddHealth(Mathf.Pow(instance.transform.localScale.x+addedHealthInSmallFood, 2.5f));
             list.Remove(instance); //dlist.RemoveAt(0);
             Destroy(gameObject);
         }
