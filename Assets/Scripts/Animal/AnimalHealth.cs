@@ -15,7 +15,7 @@ public class AnimalHealth : MonoBehaviour
 
     public GameObject explosionPrefab;                // A prefab that will be instantiated in Awake, then used whenever the animal dies.
     public MOBAHealthBarPanel hpAndLvlBar;
-    private MOBAEnergyBar hpBar, lvlBar;
+    private MOBAEnergyBar hpBar;
 
     private AudioSource explosionAudio;               // The audio source to play when the animal explodes.
     private ParticleSystem explosionParticles;        // The particle system the will play when the animal is destroyed.
@@ -32,15 +32,16 @@ public class AnimalHealth : MonoBehaviour
     [HideInInspector] public CoroutineManager coroutineManagerInstance;
     private float scaleTarget, tempSphereScaleHolder;
     public Rigidbody rBody;
-    
+    public float startingMass = 0.7f, massScalingDivisor = 5f;
     private void Awake ()
     {
         dustSize = dustTrail.main.startSize;
-        hpBar = hpAndLvlBar.HealthBar; lvlBar=hpAndLvlBar.ManaBar;
+        hpBar = hpAndLvlBar.HealthBar; 
         hpAndLvlBarStartingY = hpAndLvlBar.transform.localPosition.y;
         hpBar.MaxValue = 100f;
-            
         
+
+
         //player starts with 1 mass worth of health, if there are 6 groupings then 12 masses can be stored
         //healthBar.GetComponent<RepeatedRendererUGUI>().spriteIcon.color = playerColor;
 
@@ -59,8 +60,8 @@ public class AnimalHealth : MonoBehaviour
     {
         // When the animal is enabled, reset the animal's health and whether or not it's dead.
         currentHealth = 100;//minHealthPercent;
-        
-        hpBar.Value = (int) currentHealth;
+        hpBar.Value = 100;
+        hpBar.Value = currentHealth;
         dead = false;
         UpdateScale();
         // Update the health slider's value and color.
@@ -74,7 +75,7 @@ public class AnimalHealth : MonoBehaviour
         {
             
         }
-        hpBar.Value = (int) currentHealth;
+        hpBar.Value = currentHealth;
 
         // Change the UI elements appropriately.
 
@@ -136,7 +137,8 @@ public class AnimalHealth : MonoBehaviour
         tempSphereScaleHolder = animalSphere.transform.localScale.x;
         
         
-        rBody.mass = 0.8f+scaleTarget/5f;
+        rBody.mass = startingMass + scaleTarget/massScalingDivisor;
+        
         
         dustTrail.transform.localScale = new Vector3(scaleTarget, scaleTarget/2, scaleTarget/2);
         dustTrail.transform.localPosition = new Vector3(dustTrail.transform.localPosition.x, -sphereCollider.radius/4,sphereCollider.radius/1.3f);

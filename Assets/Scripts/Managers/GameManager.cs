@@ -27,8 +27,6 @@ public class GameManager : MonoBehaviour
 
     private void Start()
     {
-
-        
         GetComponent<FoodManager>().red = red;GetComponent<FoodManager>().purple = purple;GetComponent<FoodManager>().green = green;GetComponent<FoodManager>().yellow = yellow;
         // Create the delays so they only have to be made once.
         StartWait = new WaitForSeconds (startDelay);
@@ -43,8 +41,7 @@ public class GameManager : MonoBehaviour
 
 
     private void SpawnAllAnimals()
-    {animals[0].playerColor = red; animals[1].playerColor = purple; animals[2].playerColor = green; animals[3].playerColor = yellow;
-        
+    {
         // For all the animals...
         for (int i = 0; i < animals.Length; i++)
         {

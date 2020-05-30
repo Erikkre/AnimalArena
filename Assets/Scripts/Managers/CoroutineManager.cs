@@ -1,7 +1,7 @@
 ﻿using System.Collections;
-using Boo.Lang;
+using System.Collections.Generic;
 using UnityEngine;
-using UnityScript.Lang;
+
 
 namespace Managers
 {

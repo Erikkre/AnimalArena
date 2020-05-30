@@ -585,6 +585,8 @@
         <e p="Scripts" t="Include">
           <e p="Animal" t="Include">
             <e p="AnimalHealth.cs" t="Include" />
+            <e p="AnimalLvl.cs" t="Include" />
+            <e p="AnimalManager.cs" t="Include" />
             <e p="AnimalMovement.cs" t="Include" />
             <e p="AnimalShooting.cs" t="Include" />
           </e>
@@ -600,7 +602,6 @@
           </e>
           <e p="Managers" t="Include">
             <e p="AimManager.cs" t="Include" />
-            <e p="AnimalManager.cs" t="Include" />
             <e p="CoroutineManager.cs" t="Include" />
             <e p="FoodManager.cs" t="Include" />
             <e p="GameManager.cs" t="Include" />

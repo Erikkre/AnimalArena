@@ -144,6 +144,7 @@ public class AnimalShooting : MonoBehaviour
         
         
         Mass mInst = mass.instance.GetComponent<Mass>();
+        mInst.shooter = animalHealth;
         mInst.coroutineManagerInstance = coroutineManagerInstance;
         mInst.playerShooterNum = playerNumber;
         // Set the mass's velocity to the launch force in the fire position's forward direction.

@@ -570,6 +570,7 @@ MonoBehaviour:
     instance: {fileID: 0}
     wins: 0
     coroutineManagerInstance: {fileID: 0}
+    animalTexture: {fileID: 2800000, guid: 5cce8455ce883524584a025f7f3d55b1, type: 3}
   - playerColor: {r: 1, g: 0.9214486, b: 0, a: 0}
     spawnPoint: {fileID: 239632108}
     playerNumber: 0
@@ -577,6 +578,7 @@ MonoBehaviour:
     instance: {fileID: 0}
     wins: 0
     coroutineManagerInstance: {fileID: 0}
+    animalTexture: {fileID: 2800000, guid: 2b515f2d05273414cb7f6b8f1bd2f4fe, type: 3}
   - playerColor: {r: 0.44855833, g: 0, b: 1, a: 0}
     spawnPoint: {fileID: 355768644}
     playerNumber: 0
@@ -584,6 +586,7 @@ MonoBehaviour:
     instance: {fileID: 0}
     wins: 0
     coroutineManagerInstance: {fileID: 0}
+    animalTexture: {fileID: 2800000, guid: 79d1e2384b3d98c4eac1f7ee7c6d48c5, type: 3}
   - playerColor: {r: 0, g: 1, b: 0.11986828, a: 0}
     spawnPoint: {fileID: 283134299}
     playerNumber: 0
@@ -591,6 +594,7 @@ MonoBehaviour:
     instance: {fileID: 0}
     wins: 0
     coroutineManagerInstance: {fileID: 0}
+    animalTexture: {fileID: 2800000, guid: 6cc8ea4a25b7bac4ba3ab675b92018aa, type: 3}
   foodManager: {fileID: 949312113}
   red: {r: 1, g: 0, b: 0, a: 0}
   purple: {r: 0.5131402, g: 0, b: 1, a: 0}
@@ -664,7 +668,7 @@ MonoBehaviour:
   spawnDelay: 0
   spawnInterval: 2
   spawnSpread: 12
-  addedHealthInSmallFood: 2
+  addedHealthInSmallFood: 1
   levelMask:
     serializedVersion: 2
     m_Bits: 1

@@ -25,11 +25,8 @@ public class Mass : MonoBehaviour
     public MeshRenderer mRend;
     [HideInInspector] public float originalExplosionLightIntensity;
     [HideInInspector] public GameObject instance;
-    private void Start ()
-    {
-        Debug.Log("Mass started");
-        //Debug.Log("massLight.intensity to start with: " + massLight.intensity);
-    }
+    [HideInInspector] public AnimalHealth shooter;
+    
     void FixedUpdate()
     {
         //1/Time.deltaTime
@@ -81,6 +78,7 @@ public class Mass : MonoBehaviour
                 float damage = CalculateDamage(targetRigidbody.position);
                 
                 print("ExplosionForce: "+explosionForce+", damage: "+damage+", radius: "+explosionRadius+", maxDamage: "+maxDamage+", targetDistance: "+(targetRigidbody.position - transform.position));
+                shooter.GetComponent<AnimalLvl>().DamagePlayer(damage/maxDamage);
                 
                 // Deal this damage to the animal.
                 targetHealth.TakeDamage(damage,false);

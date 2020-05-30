@@ -1,8 +1,7 @@
 ﻿﻿using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Runtime.Remoting.Messaging;
-using UnityEngine;
+ using UnityEngine;
 using UnityEngine.Analytics;
 using UnityEngine.Serialization;
 using Random = System.Random;
@@ -57,18 +56,22 @@ public class FoodManager : MonoBehaviour
         
         if (inst.instance != null)
         {
-            inst.instance.transform.position = new Vector3(position.x, position.y, position.z);
+            float size = UnityEngine.Random.Range(0.5f, 2.5f);
+            inst.instance.transform.localScale = size*0.7f*Vector3.one;
+            
+            inst.instance.transform.position = new Vector3(position.x, position.y- 0.65f - size/3.2f, position.z);
             inst.instance.transform.rotation = spawnPoint.rotation;
-            
-            
+
             inst.instance.GetComponentInChildren<MeshRenderer>().material.color=c;
-            inst.instance.GetComponent<Food>().list = l;
-            inst.instance.GetComponent<Food>().addedHealthInSmallFood = addedHealthInSmallFood;
-            inst.instance.GetComponent<Food>().foodColor = c;
             
-            inst.instance.GetComponent<Food>().instance = inst.instance;
+            Food fInst = inst.instance.GetComponent<Food>();
+            fInst.instance = inst.instance;
+            fInst.list = l;
+            fInst.addedHealthInSmallFood = addedHealthInSmallFood;
+            fInst.foodColor = c;
+
             l.Add(inst.instance);
-            //Debug.Log("Food active");
+            Debug.Log("Food active");
             inst.instance.SetActive(true);
         }
     }
