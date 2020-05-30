@@ -3,7 +3,6 @@ using Managers;
 using UnityEngine;
 using UnityEngine.Experimental.GlobalIllumination;
 
-
 public class Mass : MonoBehaviour
 {
     public int playerShooterNum=1;
@@ -18,7 +17,7 @@ public class Mass : MonoBehaviour
     public AudioSource explosionAudio;                // Reference to the audio that will play on explosion.
     
     public float maxDamage = 50f;                    // The amount of damage done if the explosion is centred on a animal.
-    public float explosionForce = 2500f;              // The amount of force added to a animal at the centre of the explosion.
+    public float explosionForce = 700f;              // The amount of force added to a animal at the centre of the explosion.
     public float maxLifeTime = 5f;                    // The time in seconds before the mass is removed.
     public float explosionRadius = 5f;                // The maximum distance away from the explosion animals can be and are still affected.
     [HideInInspector] public float sizePercentRatio;
@@ -30,7 +29,6 @@ public class Mass : MonoBehaviour
     {
         Debug.Log("Mass started");
         //Debug.Log("massLight.intensity to start with: " + massLight.intensity);
-   
     }
     void FixedUpdate()
     {
@@ -39,7 +37,6 @@ public class Mass : MonoBehaviour
     }
     private void OnTriggerEnter (Collider other)
     {
-        
         var otherPlayNum = (AnimalMovement) other.GetComponent(
             typeof(AnimalMovement));
 
@@ -83,7 +80,7 @@ public class Mass : MonoBehaviour
                 // Calculate the amount of damage the target should take based on it's distance from the mass.
                 float damage = CalculateDamage(targetRigidbody.position);
                 
-                //print("ExplosionForce: "+explosionForce+", damage: "+damage+", radius: "+explosionRadius+", maxDamage: "+maxDamage+", targetDistance: "+(targetRigidbody.position - transform.position));
+                print("ExplosionForce: "+explosionForce+", damage: "+damage+", radius: "+explosionRadius+", maxDamage: "+maxDamage+", targetDistance: "+(targetRigidbody.position - transform.position));
                 
                 // Deal this damage to the animal.
                 targetHealth.TakeDamage(damage,false);

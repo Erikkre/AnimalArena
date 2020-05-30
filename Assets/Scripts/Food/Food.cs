@@ -26,7 +26,7 @@ public class Food : MonoBehaviour {
 
         size = Random.Range(0.5f, 2f);
         instance.transform.localScale = new Vector3(instance.transform.localScale.x*size,instance.transform.localScale.y*size,instance.transform.localScale.z*size);
-        //instance.transform.position = new Vector3(instance.transform.position.x,instance.transform.position.y - 0.15f - size/2.9f,instance.transform.position.z);
+        instance.transform.position = new Vector3(instance.transform.position.x,instance.transform.position.y - 0.65f - size/3.2f,instance.transform.position.z);
     }
 
     private void OnTriggerEnter(Collider other)

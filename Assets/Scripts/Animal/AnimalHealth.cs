@@ -30,7 +30,9 @@ public class AnimalHealth : MonoBehaviour
     
     private float hpAndLvlBarStartingY;
     [HideInInspector] public CoroutineManager coroutineManagerInstance;
-    private float scaleTarget;
+    private float scaleTarget, tempSphereScaleHolder;
+    public Rigidbody rBody;
+    
     private void Awake ()
     {
         dustSize = dustTrail.main.startSize;
@@ -115,13 +117,28 @@ public class AnimalHealth : MonoBehaviour
         Destroy(transform.parent);
     }
 
+    private void Update()
+    {
+        //if (playerColor.r==1) Debug.Log("ScaleHolder: " + tempSphereScaleHolder + ", scaleTarget: " + scaleTarget);
+        
+        if (tempSphereScaleHolder != scaleTarget)
+        {
+            sphereCollider.radius = Mathf.Lerp(sphereCollider.radius, scaleTarget / 2f, 0.15f);
+
+            tempSphereScaleHolder = Mathf.Lerp(tempSphereScaleHolder, scaleTarget, 0.15f);
+            animalSphere.transform.localScale = Vector3.one * tempSphereScaleHolder;
+        }
+    }
+
     private void UpdateScale()
     {
         scaleTarget = 0.3f + sizeScalingWithHealthMultiplier*currentHealth / 50;
-        sphereCollider.radius= scaleTarget/2f;
+        tempSphereScaleHolder = animalSphere.transform.localScale.x;
         
         
-            dustTrail.transform.localScale = new Vector3(scaleTarget, scaleTarget/2, scaleTarget/2);
+        rBody.mass = 0.8f+scaleTarget/5f;
+        
+        dustTrail.transform.localScale = new Vector3(scaleTarget, scaleTarget/2, scaleTarget/2);
         dustTrail.transform.localPosition = new Vector3(dustTrail.transform.localPosition.x, -sphereCollider.radius/4,sphereCollider.radius/1.3f);
             //dustSize.constantMin = scale*10000;
             //dustSize.constantMax = scale*100000;

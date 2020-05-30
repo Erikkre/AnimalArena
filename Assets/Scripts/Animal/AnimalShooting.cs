@@ -150,21 +150,22 @@ public class AnimalShooting : MonoBehaviour
         
        if (mInst.originalExplosionLightIntensity == 0)
             mInst.originalExplosionLightIntensity = originalExplosionLightIntensity;
-        
+
+       float massDamageToSizeRatio = 4f;
         mInst.sizePercentRatio = (mInst.transform.localScale.x / GameManager.maxMassSize);
-        mInst.explosionRadius *= mInst.sizePercentRatio;
-        mInst.explosionForce *= mInst.sizePercentRatio;
-        mInst.maxDamage *= mInst.sizePercentRatio;
+        mInst.explosionRadius *=  mInst.sizePercentRatio;
+        mInst.explosionForce *=   mInst.sizePercentRatio;
+        mInst.maxDamage *= massDamageToSizeRatio * (mInst.sizePercentRatio/massDamageToSizeRatio);
         mInst.explosionLight.intensity *= mInst.sizePercentRatio;
         mInst.explosionLight.range *= mInst.sizePercentRatio;
         
-        Debug.Log("massLight.intensity before math " + mInst.massLight.intensity);
+        //Debug.Log("massLight.intensity before math " + mInst.massLight.intensity);
         mInst.massLight.intensity *= mInst.sizePercentRatio;
-        Debug.Log("massLight.intensity after math " + mInst.massLight.intensity+", sizePercentRatio: "+mInst.sizePercentRatio);
+        //Debug.Log("massLight.intensity after math " + mInst.massLight.intensity+", sizePercentRatio: "+mInst.sizePercentRatio);
         
         mInst.massLight.range *= mInst.sizePercentRatio;
         
-        Debug.Log("mass active");
+        //Debug.Log("mass active");
         mass.instance.SetActive(true);
         
         // Reset the launch force.  This is a precaution in case of missing button events.

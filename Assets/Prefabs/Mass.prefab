@@ -138,7 +138,7 @@ MonoBehaviour:
   massExplosion: {fileID: 3398813380790262344}
   explosionAudio: {fileID: 5680027840459643227}
   maxDamage: 50
-  explosionForce: 1000
+  explosionForce: 700
   maxLifeTime: 5
   explosionRadius: 5
   sizePercentRatio: 0

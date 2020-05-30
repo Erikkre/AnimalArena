@@ -1020,6 +1020,7 @@ MonoBehaviour:
   sizeScalingWithHealthMultiplier: 1
   dustTrail: {fileID: 8038635930452879866}
   coroutineManagerInstance: {fileID: 0}
+  rBody: {fileID: 8038635930756742258}
 --- !u!135 &2710769789198237357
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -1149,10 +1150,15 @@ PrefabInstance:
       propertyPath: m_Material
       value: 
       objectReference: {fileID: 0}
+    - target: {fileID: 108810426488521309, guid: ce34b7e3a0b00d947b1c87c4a8908812,
+        type: 3}
+      propertyPath: m_Maskable
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 108810426488560473, guid: ce34b7e3a0b00d947b1c87c4a8908812,
         type: 3}
       propertyPath: BurnRate
-      value: 2.8
+      value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 108810426488560473, guid: ce34b7e3a0b00d947b1c87c4a8908812,
         type: 3}
