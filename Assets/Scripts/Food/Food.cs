@@ -16,22 +16,24 @@ public class Food : MonoBehaviour {
     [HideInInspector] public float addedHealthInSmallFood;
     private float size;
     private float healthByScale;
+
+    private Vector3 startingScale = Vector3.zero, startingPos = Vector3.zero;
     public void Start()
     {
+        //if (instance==null) instance = ObjectPoolerHelper.SharedInstance.GetPooledObject("Food"); 
+        
+        startingScale = instance.transform.localScale;
+
         size = Random.Range(0.5f, 2f);
-        
         instance.transform.localScale = new Vector3(instance.transform.localScale.x*size,instance.transform.localScale.y*size,instance.transform.localScale.z*size);
-        instance.transform.position = new Vector3(instance.transform.position.x,instance.transform.position.y - 0.10f - size/2.9f,instance.transform.position.z);
-        
+        //instance.transform.position = new Vector3(instance.transform.position.x,instance.transform.position.y - 0.15f - size/2.9f,instance.transform.position.z);
     }
 
     private void OnTriggerEnter(Collider other)
     {
         var animalHealth = (AnimalHealth) other.GetComponent(
             typeof(AnimalHealth));
-
-
-
+        
         if (animalHealth != null && animalHealth.playerColor != foodColor)
         {
             Physics.IgnoreCollision(collider, other);
@@ -39,11 +41,19 @@ public class Food : MonoBehaviour {
         else if (animalHealth!=null && animalHealth.currentHealth<100)
         {
             //AnimalHealth animalHealth = other.GetComponentInParent<AnimalHealth>();
-            Debug.Log("foodHealth: "+Mathf.Pow(instance.transform.localScale.x+1f, 2f) );
+            //Debug.Log("foodHealth: "+Mathf.Pow(instance.transform.localScale.x+1f, 2f) );
             
             animalHealth.AddHealth(Mathf.Pow(instance.transform.localScale.x+addedHealthInSmallFood, 2.5f));
             list.Remove(instance); //dlist.RemoveAt(0);
-            Destroy(gameObject);
+            gameObject.SetActive(false);
+
+            ResetScale();
         }
+    }
+
+    private void ResetScale() //for next food spawn
+    {
+        instance.transform.localScale = startingScale;
+        //instance.transform.position = startingPos;
     }
 }

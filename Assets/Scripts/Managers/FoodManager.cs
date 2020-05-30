@@ -36,7 +36,7 @@ public class FoodManager : MonoBehaviour
 
     private void Update()
     {
-        //Debug.Log("r:"+rFoods.Count+" ,maxFoodOnMap / 4f:"+maxFoodOnMap / 4f+", rSpawning:"+rSpawning);
+        //Debug.Log("r:"+rFoods.Count+" ,maxFoodOnMap / 4f:"+maxFoodOnMap / 4f+", rSpawning:"+rSpawning)
         if (ShouldFoodSpawn(rSpawning, rFoods,"R")) rSpawning = true; 
         if (ShouldFoodSpawn(gSpawning, gFoods,"G")) gSpawning = true;
         if (ShouldFoodSpawn(pSpawning, pFoods,"P")) pSpawning = true; 
@@ -46,27 +46,31 @@ public class FoodManager : MonoBehaviour
     private void AssignFood(Transform spawnPoint,float xOffset,float zOffset,ArrayList l,Color c)
     {
         Vector3 position;
-        do
-        {
+        do {
             position = new Vector3(spawnPoint.position.x+RandomGaussianSpreadAround0() + xOffset,
                 spawnPoint.position.y,spawnPoint.position.z+RandomGaussianSpreadAround0() + zOffset);
             
         } while (Physics.OverlapSphere(position, 2, levelMask).Length != 0);
-
-        Food inst = gameObject.AddComponent(typeof(Food)) as Food;
         
-        inst.instance = Instantiate(foodPrefab,
-            new Vector3(position.x,position.y,position.z),
-                spawnPoint.rotation);
-
+        Food inst = new Food();
+        inst.instance = ObjectPoolerHelper.SharedInstance.GetPooledObject("Food"); 
         
-        inst.instance.GetComponentInChildren<MeshRenderer>().material.color=c;
-        inst.instance.GetComponent<Food>().list = l;
-        inst.instance.GetComponent<Food>().addedHealthInSmallFood = addedHealthInSmallFood;
-        inst.instance.GetComponent<Food>().foodColor = c;
-        
-        inst.instance.GetComponent<Food>().instance = inst.instance;
-        l.Add(inst.instance);
+        if (inst.instance != null)
+        {
+            inst.instance.transform.position = new Vector3(position.x, position.y, position.z);
+            inst.instance.transform.rotation = spawnPoint.rotation;
+            
+            
+            inst.instance.GetComponentInChildren<MeshRenderer>().material.color=c;
+            inst.instance.GetComponent<Food>().list = l;
+            inst.instance.GetComponent<Food>().addedHealthInSmallFood = addedHealthInSmallFood;
+            inst.instance.GetComponent<Food>().foodColor = c;
+            
+            inst.instance.GetComponent<Food>().instance = inst.instance;
+            l.Add(inst.instance);
+            //Debug.Log("Food active");
+            inst.instance.SetActive(true);
+        }
     }
 
     float RandomGaussianSpreadAround0()
@@ -155,17 +159,17 @@ public class FoodManager : MonoBehaviour
 
     public void Reset ()
     {
-        DestroyList(rFoods);
-        DestroyList(gFoods);
-        DestroyList(yFoods);
-        DestroyList(pFoods);
+        EmptyList(rFoods);
+        EmptyList(gFoods);
+        EmptyList(yFoods);
+        EmptyList(pFoods);
     }
 
-    void DestroyList(ArrayList ar)
+    void EmptyList(ArrayList ar)
     {
         for (int i = 0; i < ar.Count; i++)
         {
-            Destroy((GameObject)ar[i]);
+           ((GameObject)ar[i]).SetActive(false);
         }
         ar.Clear();
     }

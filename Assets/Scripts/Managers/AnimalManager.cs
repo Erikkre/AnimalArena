@@ -39,6 +39,7 @@ public class AnimalManager
         Shooting.playerNumber = playerNumber;
         Health.playerColor = playerColor;
 
+        Health.coroutineManagerInstance = coroutineManagerInstance;
         Shooting.coroutineManagerInstance = coroutineManagerInstance;
         // Create a string using the correct color that says 'PLAYER 1' etc based on the animal's color and the player's number.
         coloredPlayerText = "<color=#" + ColorUtility.ToHtmlStringRGB(playerColor) + ">PLAYER " + playerNumber + "</color>";

@@ -21,22 +21,16 @@ public class Mass : MonoBehaviour
     public float explosionForce = 2500f;              // The amount of force added to a animal at the centre of the explosion.
     public float maxLifeTime = 5f;                    // The time in seconds before the mass is removed.
     public float explosionRadius = 5f;                // The maximum distance away from the explosion animals can be and are still affected.
-    private float sizePercentRatio;
+    [HideInInspector] public float sizePercentRatio;
     private Vector3 posBeforePhysicsUpdate;
+    public MeshRenderer mRend;
+    [HideInInspector] public float originalExplosionLightIntensity;
+    [HideInInspector] public GameObject instance;
     private void Start ()
     {
-        sizePercentRatio = (transform.localScale.x / GameManager.maxMassSize);
-        explosionRadius *= sizePercentRatio;
-        explosionForce *= sizePercentRatio;
-        maxDamage *= sizePercentRatio;
-        explosionLight.intensity *= sizePercentRatio;
-        explosionLight.range *= sizePercentRatio;
-        massLight.intensity *= sizePercentRatio;
-        massLight.range *= sizePercentRatio;
-        
-        //rBody = GetComponent<Rigidbody>();
-        // If it isn't destroyed by then, destroy the mass after it's lifetime.
-        Destroy (gameObject, maxLifeTime);
+        Debug.Log("Mass started");
+        //Debug.Log("massLight.intensity to start with: " + massLight.intensity);
+   
     }
     void FixedUpdate()
     {
@@ -45,7 +39,7 @@ public class Mass : MonoBehaviour
     }
     private void OnTriggerEnter (Collider other)
     {
-        print("TRIGGERED");
+        
         var otherPlayNum = (AnimalMovement) other.GetComponent(
             typeof(AnimalMovement));
 
@@ -55,6 +49,7 @@ public class Mass : MonoBehaviour
         }
         else
         {
+            print("TRIGGERED");
             //"Animal"+GetComponent<AnimalManager>().PlayerNumber+" took damage.");
             // Collect all the colliders in a sphere from the mass's current position to a radius of the explosion radius.
             Collider[] colliders =
@@ -88,40 +83,70 @@ public class Mass : MonoBehaviour
                 // Calculate the amount of damage the target should take based on it's distance from the mass.
                 float damage = CalculateDamage(targetRigidbody.position);
                 
-                print("ExplosionForce: "+explosionForce+", damage: "+damage+", radius: "+explosionRadius+", maxDamage: "+maxDamage+", targetDistance: "+(targetRigidbody.position - transform.position));
+                //print("ExplosionForce: "+explosionForce+", damage: "+damage+", radius: "+explosionRadius+", maxDamage: "+maxDamage+", targetDistance: "+(targetRigidbody.position - transform.position));
                 
                 // Deal this damage to the animal.
                 targetHealth.TakeDamage(damage,false);
             }
-
             // Unparent the particles from the mass.
-            massExplosion.transform.parent = null;
-            massExplosion.transform.position = new Vector3(posBeforePhysicsUpdate.x,massExplosion.transform.position.y,posBeforePhysicsUpdate.z);
+            rBody.isKinematic = true;
+            mRend.enabled = false;
+            transform.position = posBeforePhysicsUpdate;
             
             // Play the particle system.
 
             explosionParticles.Play();
             //turn on light and quickly interpolate for a flash effect
             explosionLight.enabled = true;
+            massLight.enabled = false;
             coroutineManagerInstance.newCoroutine(MassExplosionFlash());
             // Play the explosion sound effect.
             explosionAudio.Play();
 
-            // Once the particles have finished, destroy the gameobject they are on.
-
-            Destroy(explosionParticles.gameObject, explosionParticles.main.duration);
-            // Destroy the mass.
-            Destroy(gameObject);
+            // Once the particles have finished, disable the gameobject they are on.
         }
     }
+    
+    void ReturnToMassPoolAfterLifetime()
+    {
+        if (gameObject.activeInHierarchy)
+        {
+            rBody.isKinematic = false;
+            mRend.enabled = true;
+            explosionLight.enabled = false;
+            massLight.enabled = true;
+            //explosionParticles.Stop();
+            
+            //Debug.Log(("ReturnToMassPoolAfterLifetime"));
+            explosionLight.intensity = originalExplosionLightIntensity;
+            explosionRadius /= sizePercentRatio;
+            explosionForce /= sizePercentRatio;
+            maxDamage /= sizePercentRatio;
+            explosionLight.intensity /= sizePercentRatio;
+            explosionLight.range /= sizePercentRatio;
+            
+            //Debug.Log("massLight.intensity before: "+massLight.intensity);
+            massLight.intensity /= sizePercentRatio;
+            //Debug.Log("massLight.intensity after: "+massLight.intensity);
+            massLight.range /= sizePercentRatio;
+
+            gameObject.SetActive(false);
+        }
+    }
+    
     private IEnumerator MassExplosionFlash()
     {
         WaitForSeconds wait = new WaitForSeconds(0.05f);
-        while (explosionLight.intensity>0.1)
+        while (explosionLight.intensity>0.01)
         {
-            explosionLight.intensity = Mathf.Lerp(explosionLight.intensity, 0, 0.27f);
+            explosionLight.intensity = Mathf.Lerp(explosionLight.intensity, 0f, 0.27f);
+            //explosionLight.range = Mathf.Lerp(explosionLight.range/2, -0.1f, 0.97f);
             yield return wait;
         }
+        wait = new WaitForSeconds(1f);
+        yield return wait;
+        //Debug.Log("lightdisabled in coroutine");
+        ReturnToMassPoolAfterLifetime();
     }
 
     private float CalculateDamage (Vector3 targetPosition)

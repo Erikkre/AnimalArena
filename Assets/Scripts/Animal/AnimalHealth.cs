@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using EnergyBarToolkit;
+using Managers;
 using UnityEngine.UI;
 using UnityEngine;
 using UnityEngine.PlayerLoop;
@@ -28,6 +29,8 @@ public class AnimalHealth : MonoBehaviour
     private ParticleSystem.MinMaxCurve dustSize;
     
     private float hpAndLvlBarStartingY;
+    [HideInInspector] public CoroutineManager coroutineManagerInstance;
+    private float scaleTarget;
     private void Awake ()
     {
         dustSize = dustTrail.main.startSize;
@@ -53,7 +56,7 @@ public class AnimalHealth : MonoBehaviour
     private void OnEnable()
     {
         // When the animal is enabled, reset the animal's health and whether or not it's dead.
-        currentHealth = minHealthPercent;
+        currentHealth = 100;//minHealthPercent;
         
         hpBar.Value = (int) currentHealth;
         dead = false;
@@ -92,7 +95,6 @@ public class AnimalHealth : MonoBehaviour
         UpdateScale();
     }
 
-
     private void OnDeath ()
     {
         // Set the flag so that this function is only called once.
@@ -115,16 +117,16 @@ public class AnimalHealth : MonoBehaviour
 
     private void UpdateScale()
     {
-        float scale = 0.3f + sizeScalingWithHealthMultiplier*currentHealth / 50;
-        sphereCollider.radius= scale/2f;
-        animalSphere.transform.localScale = new Vector3(scale, scale, scale);
+        scaleTarget = 0.3f + sizeScalingWithHealthMultiplier*currentHealth / 50;
+        sphereCollider.radius= scaleTarget/2f;
         
-            dustTrail.transform.localScale = new Vector3(scale, scale/2, scale/2);
+        
+            dustTrail.transform.localScale = new Vector3(scaleTarget, scaleTarget/2, scaleTarget/2);
         dustTrail.transform.localPosition = new Vector3(dustTrail.transform.localPosition.x, -sphereCollider.radius/4,sphereCollider.radius/1.3f);
             //dustSize.constantMin = scale*10000;
             //dustSize.constantMax = scale*100000;
         
         hpAndLvlBar.transform.localPosition =
-            new Vector3(hpAndLvlBar.transform.localPosition.x,hpAndLvlBarStartingY/3 + scale*50, hpAndLvlBar.transform.localPosition.z);//reposition health and lvl along with scale of animal
+            new Vector3(hpAndLvlBar.transform.localPosition.x,hpAndLvlBarStartingY/3 + scaleTarget*50, hpAndLvlBar.transform.localPosition.z);//reposition health and lvl along with scale of animal
     }
 }

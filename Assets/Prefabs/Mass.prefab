@@ -17,11 +17,11 @@ GameObject:
   - component: {fileID: 5076529103087385054}
   m_Layer: 11
   m_Name: Mass
-  m_TagString: Untagged
+  m_TagString: Mass
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &7059535324430837578
 Transform:
   m_ObjectHideFlags: 0
@@ -141,6 +141,10 @@ MonoBehaviour:
   explosionForce: 1000
   maxLifeTime: 5
   explosionRadius: 5
+  sizePercentRatio: 0
+  mRend: {fileID: 7059535324432606634}
+  originalExplosionLightIntensity: 0
+  instance: {fileID: 0}
 --- !u!108 &5076529103087385054
 Light:
   m_ObjectHideFlags: 0
@@ -219,7 +223,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 486730, guid: 89e78efe92dfe5a42837b392cdb0bf9e, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.7
+      value: 1.5
       objectReference: {fileID: 0}
     - target: {fileID: 486730, guid: 89e78efe92dfe5a42837b392cdb0bf9e, type: 3}
       propertyPath: m_LocalPosition.z

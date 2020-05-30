@@ -996,6 +996,8 @@ MonoBehaviour:
   shotToHealthUsageDivisor: 3
   massStartScale: 0.05
   massScaleMultiplier: 1.1
+  explosionLight: {fileID: 7059535322538246082, guid: 89e78efe92dfe5a42837b392cdb0bf9e,
+    type: 3}
 --- !u!114 &4020073863300815106
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1017,6 +1019,7 @@ MonoBehaviour:
   sphereCollider: {fileID: 2710769789198237357}
   sizeScalingWithHealthMultiplier: 1
   dustTrail: {fileID: 8038635930452879866}
+  coroutineManagerInstance: {fileID: 0}
 --- !u!135 &2710769789198237357
 SphereCollider:
   m_ObjectHideFlags: 0

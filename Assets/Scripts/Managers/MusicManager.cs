@@ -8,6 +8,8 @@ public class MusicManager : MonoBehaviour
     public List<AudioClip> mainMenuSongs, battleSongs, shopSongs, creditsSongs;
 
     private List<AudioClip> currentlyPlayingList;
+
+    private AudioClip nextTrack;
     // Start is called before the first frame update
     void Start()
     {
@@ -25,7 +27,7 @@ public class MusicManager : MonoBehaviour
     public void switchToBattleMusic(){ PlayNextTrack(battleSongs); }
     public void switchToShopMusic(){ PlayNextTrack(shopSongs); }
     public void switchToCreditsMusic(){ PlayNextTrack(creditsSongs); }
-
+    public void PlayNextTrackInCurrentList(){PlayNextTrack(currentlyPlayingList);}
     public void PlayNextTrack(List<AudioClip> l)
     {
         if (l != currentlyPlayingList)
@@ -41,24 +43,25 @@ public class MusicManager : MonoBehaviour
             else
             {
 
-                AudioClip nextTrack =
-                    currentlyPlayingList[Random.Range(0, currentlyPlayingList.Count)];
-                while (nextTrack == source.clip)
+                do
                 {
-                    nextTrack = currentlyPlayingList[Random.Range(0, currentlyPlayingList.Count)];
-                }
+                    nextTrack =
+                        currentlyPlayingList[Random.Range(0, currentlyPlayingList.Count)];
+                } while (nextTrack == source.clip);
 
-                Invoke("PlayNextTrack", source.clip.length);
+                Invoke("PlayNextTrackInCurrentList", source.clip.length);
             }
         }
         else
         {
-            AudioClip nextTrack =
-                                currentlyPlayingList[Random.Range(0, currentlyPlayingList.Count)];
-            while (nextTrack == source.clip)
+            source.clip = nextTrack;
+            source.Play();
+            do
             {
-                nextTrack = currentlyPlayingList[Random.Range(0, currentlyPlayingList.Count)];
-            }
+                nextTrack =
+                    currentlyPlayingList[Random.Range(0, currentlyPlayingList.Count)];
+            } while (nextTrack == source.clip);
+            
         }
     }
 }

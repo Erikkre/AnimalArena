@@ -596,6 +596,7 @@
           </e>
           <e p="Helpers" t="Include">
             <e p="MathHelpers.cs" t="Include" />
+            <e p="ObjectPoolerHelper.cs" t="Include" />
           </e>
           <e p="Managers" t="Include">
             <e p="AimManager.cs" t="Include" />

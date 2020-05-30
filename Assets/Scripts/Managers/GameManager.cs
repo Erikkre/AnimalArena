@@ -1,4 +1,5 @@
 ﻿using System.Collections;
+using System.Collections.Generic;
 using Managers;
 using UnityEngine;
 using UnityEngine.UI;
@@ -26,6 +27,8 @@ public class GameManager : MonoBehaviour
 
     private void Start()
     {
+
+        
         GetComponent<FoodManager>().red = red;GetComponent<FoodManager>().purple = purple;GetComponent<FoodManager>().green = green;GetComponent<FoodManager>().yellow = yellow;
         // Create the delays so they only have to be made once.
         StartWait = new WaitForSeconds (startDelay);

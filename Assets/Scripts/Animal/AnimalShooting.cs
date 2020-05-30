@@ -31,6 +31,8 @@ public class AnimalShooting : MonoBehaviour
     private bool Fired, charging;                       // Whether or not the mass has been launched with this button press.
 
     private bool cancelledFire;
+    public Light explosionLight;
+    private float originalExplosionLightIntensity;
     private void OnEnable() {
         // When the animal is turned on, reset the launch force and the UI
         currentLaunchForce = minLaunchForce;
@@ -40,6 +42,7 @@ public class AnimalShooting : MonoBehaviour
 
     private void Start ()
     {
+        originalExplosionLightIntensity = explosionLight.intensity;
         GameManager.maxMassSize = massStartScale + massScaleMultiplier;
         // The fire axis is based on the player number.
         FireButton = "Fire" + playerNumber;
@@ -126,17 +129,43 @@ public class AnimalShooting : MonoBehaviour
         // Set the fired flag so only Fire is only called once.
         Fired = true;
 
-        //print(Quaternion.LookRotation(targetTrans.position-FireTransform.position));
+        //print("Bullet Fired");
         // Create an instance of the mass and store a reference to it's rigidbody.
-        mass.coroutineManagerInstance = coroutineManagerInstance;
-        mass.playerShooterNum = playerNumber;
-        Rigidbody massInstance =
-            Instantiate(mass.rBody, fireTransform.position, Quaternion.identity);//Quaternion.LookRotation(targetTrans.position-fireTransform.position)) as Rigidbody;
+      
+        //Rigidbody massInstance =
+        //    Instantiate(mass.rBody, fireTransform.position, Quaternion.identity);//Quaternion.LookRotation(targetTrans.position-fireTransform.position)) as Rigidbody;
+
+        Mass mass = new Mass();
+        mass.instance = ObjectPoolerHelper.SharedInstance.GetPooledObject("Mass");
+        mass.instance.transform.position = fireTransform.position;
+        mass.instance.transform.rotation = Quaternion.identity;
+        mass.instance.transform.localScale = new Vector3(massStartScale+(currentLaunchForce/maxLaunchForce)*massScaleMultiplier,massStartScale+(currentLaunchForce/maxLaunchForce)*massScaleMultiplier,massStartScale+(currentLaunchForce/maxLaunchForce)*massScaleMultiplier);
+        mass.instance.GetComponent<Rigidbody>().velocity = currentLaunchForce * (targetTrans.position-fireTransform.position).normalized;
         
+        
+        Mass mInst = mass.instance.GetComponent<Mass>();
+        mInst.coroutineManagerInstance = coroutineManagerInstance;
+        mInst.playerShooterNum = playerNumber;
         // Set the mass's velocity to the launch force in the fire position's forward direction.
-        massInstance.velocity = currentLaunchForce * (targetTrans.position-fireTransform.position).normalized; ;
-        massInstance.transform.localScale = new Vector3(massStartScale+(currentLaunchForce/maxLaunchForce)*massScaleMultiplier,massStartScale+(currentLaunchForce/maxLaunchForce)*massScaleMultiplier,massStartScale+(currentLaunchForce/maxLaunchForce)*massScaleMultiplier);
-        // Change the clip to the firing clip and play it.
+        
+       if (mInst.originalExplosionLightIntensity == 0)
+            mInst.originalExplosionLightIntensity = originalExplosionLightIntensity;
+        
+        mInst.sizePercentRatio = (mInst.transform.localScale.x / GameManager.maxMassSize);
+        mInst.explosionRadius *= mInst.sizePercentRatio;
+        mInst.explosionForce *= mInst.sizePercentRatio;
+        mInst.maxDamage *= mInst.sizePercentRatio;
+        mInst.explosionLight.intensity *= mInst.sizePercentRatio;
+        mInst.explosionLight.range *= mInst.sizePercentRatio;
+        
+        Debug.Log("massLight.intensity before math " + mInst.massLight.intensity);
+        mInst.massLight.intensity *= mInst.sizePercentRatio;
+        Debug.Log("massLight.intensity after math " + mInst.massLight.intensity+", sizePercentRatio: "+mInst.sizePercentRatio);
+        
+        mInst.massLight.range *= mInst.sizePercentRatio;
+        
+        Debug.Log("mass active");
+        mass.instance.SetActive(true);
         
         // Reset the launch force.  This is a precaution in case of missing button events.
         currentLaunchForce = minLaunchForce;
