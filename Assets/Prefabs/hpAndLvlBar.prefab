@@ -7,6 +7,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 174350, guid: 2cc4e1b4c282d36448c5912b9bb0b6cb, type: 3}
+      propertyPath: m_Name
+      value: Hp
+      objectReference: {fileID: 0}
     - target: {fileID: 187362, guid: 2cc4e1b4c282d36448c5912b9bb0b6cb, type: 3}
       propertyPath: m_Name
       value: HpAndLvlBar
@@ -14,6 +18,10 @@ PrefabInstance:
     - target: {fileID: 187362, guid: 2cc4e1b4c282d36448c5912b9bb0b6cb, type: 3}
       propertyPath: m_IsActive
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 190222, guid: 2cc4e1b4c282d36448c5912b9bb0b6cb, type: 3}
+      propertyPath: m_Name
+      value: Lvl
       objectReference: {fileID: 0}
     - target: {fileID: 11410934, guid: 2cc4e1b4c282d36448c5912b9bb0b6cb, type: 3}
       propertyPath: m_Material
@@ -29,19 +37,39 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 11437298, guid: 2cc4e1b4c282d36448c5912b9bb0b6cb, type: 3}
       propertyPath: Value
-      value: 100
+      value: 45.6
       objectReference: {fileID: 0}
     - target: {fileID: 11437298, guid: 2cc4e1b4c282d36448c5912b9bb0b6cb, type: 3}
       propertyPath: BurnRate
-      value: 0.08
+      value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 11437298, guid: 2cc4e1b4c282d36448c5912b9bb0b6cb, type: 3}
       propertyPath: SmallGapInterval
-      value: 7.68
+      value: 10.000001
       objectReference: {fileID: 0}
     - target: {fileID: 11437298, guid: 2cc4e1b4c282d36448c5912b9bb0b6cb, type: 3}
       propertyPath: BigGapSize
-      value: 0.025
+      value: 0.03
+      objectReference: {fileID: 0}
+    - target: {fileID: 11437298, guid: 2cc4e1b4c282d36448c5912b9bb0b6cb, type: 3}
+      propertyPath: SmallGapColour.r
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 11437298, guid: 2cc4e1b4c282d36448c5912b9bb0b6cb, type: 3}
+      propertyPath: SmallGapColour.g
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 11437298, guid: 2cc4e1b4c282d36448c5912b9bb0b6cb, type: 3}
+      propertyPath: SmallGapColour.b
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 11437298, guid: 2cc4e1b4c282d36448c5912b9bb0b6cb, type: 3}
+      propertyPath: BigGapInterval
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 11437298, guid: 2cc4e1b4c282d36448c5912b9bb0b6cb, type: 3}
+      propertyPath: SmallGapSize
+      value: 0.03
       objectReference: {fileID: 0}
     - target: {fileID: 11442288, guid: 2cc4e1b4c282d36448c5912b9bb0b6cb, type: 3}
       propertyPath: CellTexture
@@ -54,6 +82,58 @@ PrefabInstance:
     - target: {fileID: 11442288, guid: 2cc4e1b4c282d36448c5912b9bb0b6cb, type: 3}
       propertyPath: BurnColour.b
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 11442288, guid: 2cc4e1b4c282d36448c5912b9bb0b6cb, type: 3}
+      propertyPath: BurnTexture
+      value: 
+      objectReference: {fileID: 2800000, guid: 393797b17c0f35e41beb121878aae947, type: 3}
+    - target: {fileID: 11442288, guid: 2cc4e1b4c282d36448c5912b9bb0b6cb, type: 3}
+      propertyPath: SmallGapColour.r
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 11442288, guid: 2cc4e1b4c282d36448c5912b9bb0b6cb, type: 3}
+      propertyPath: SmallGapColour.g
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 11442288, guid: 2cc4e1b4c282d36448c5912b9bb0b6cb, type: 3}
+      propertyPath: SmallGapColour.b
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 11442288, guid: 2cc4e1b4c282d36448c5912b9bb0b6cb, type: 3}
+      propertyPath: BigGapColour.r
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 11442288, guid: 2cc4e1b4c282d36448c5912b9bb0b6cb, type: 3}
+      propertyPath: BigGapColour.b
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 11442288, guid: 2cc4e1b4c282d36448c5912b9bb0b6cb, type: 3}
+      propertyPath: MaxValue
+      value: 100
+      objectReference: {fileID: 0}
+    - target: {fileID: 11442288, guid: 2cc4e1b4c282d36448c5912b9bb0b6cb, type: 3}
+      propertyPath: Value
+      value: 85.25
+      objectReference: {fileID: 0}
+    - target: {fileID: 11442288, guid: 2cc4e1b4c282d36448c5912b9bb0b6cb, type: 3}
+      propertyPath: BurnRate
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 11442288, guid: 2cc4e1b4c282d36448c5912b9bb0b6cb, type: 3}
+      propertyPath: SmallGapInterval
+      value: 10.000001
+      objectReference: {fileID: 0}
+    - target: {fileID: 11442288, guid: 2cc4e1b4c282d36448c5912b9bb0b6cb, type: 3}
+      propertyPath: BigGapInterval
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 11442288, guid: 2cc4e1b4c282d36448c5912b9bb0b6cb, type: 3}
+      propertyPath: SmallGapSize
+      value: 0.03
+      objectReference: {fileID: 0}
+    - target: {fileID: 11442288, guid: 2cc4e1b4c282d36448c5912b9bb0b6cb, type: 3}
+      propertyPath: BigGapSize
+      value: 0.03
       objectReference: {fileID: 0}
     - target: {fileID: 11457012, guid: 2cc4e1b4c282d36448c5912b9bb0b6cb, type: 3}
       propertyPath: m_Material

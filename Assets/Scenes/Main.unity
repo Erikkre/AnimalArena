@@ -307,25 +307,6 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 1797650772649071259}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &464867431 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 111698, guid: 1cd1bdb2203012a40ab12a0d2fd7aa88,
-    type: 3}
-  m_PrefabInstance: {fileID: 1131721085}
-  m_PrefabAsset: {fileID: 0}
---- !u!65 &464867433
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 464867431}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 100, y: 2, z: 100}
-  m_Center: {x: 0, y: -1, z: 0}
 --- !u!1 &580091717
 GameObject:
   m_ObjectHideFlags: 0
@@ -639,9 +620,9 @@ MonoBehaviour:
   cam: {fileID: 186543952}
   reticleTrans: {fileID: 430251088}
   meshRend: {fileID: 106402278}
-  onlyRaycastGround:
+  raycastLayers:
     serializedVersion: 2
-    m_Bits: 256
+    m_Bits: 24832
 --- !u!114 &949312113
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -791,12 +772,7 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 6476316, guid: 1cd1bdb2203012a40ab12a0d2fd7aa88, type: 3}
-      propertyPath: m_Convex
-      value: 1
-      objectReference: {fileID: 0}
-    m_RemovedComponents:
-    - {fileID: 6476316, guid: 1cd1bdb2203012a40ab12a0d2fd7aa88, type: 3}
+    m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1cd1bdb2203012a40ab12a0d2fd7aa88, type: 3}
 --- !u!1 &1738692739
 GameObject:
