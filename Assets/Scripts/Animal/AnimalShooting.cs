@@ -109,12 +109,15 @@ public class AnimalShooting : MonoBehaviour
 
     public void Aim()
     {
-        int angleToAdd;
-        if (targetTrans.position.x > animalPos.position.x) angleToAdd = -90;
-        else angleToAdd = 90;
+       // int angleToAdd;
+        //if (targetTrans.position.x > animalPos.position.x) angleToAdd = -90;
+       // else angleToAdd = 90;
 
-        aimSlider.transform.rotation = Quaternion.Euler(110,0,
-            -Mathf.Rad2Deg* ((float)  Math.Atan((targetTrans.position.z-animalPos.position.z)/-(targetTrans.position.x-animalPos.position.x))  ) + angleToAdd);
+        aimSlider.transform.LookAt(targetTrans);
+        aimSlider.transform.Rotate(90, 0, 0);
+        //Quaternion.LookRotation(targetTrans.position - fireTransform.position);
+        //Quaternion.Euler(110,0,
+        //-Mathf.Rad2Deg* ((float)  Math.Atan((targetTrans.position.z-animalPos.position.z)/-(targetTrans.position.x-animalPos.position.x))  ) + angleToAdd);
     }
 
     public bool EnoughHealthToLaunch()//health must stay above 1 mass with any prospective launch
