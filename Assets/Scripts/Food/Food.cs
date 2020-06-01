@@ -7,9 +7,9 @@ using Random = UnityEngine.Random;
 
 [Serializable]
 public class Food : MonoBehaviour {
-    //public LayerMask animalMask;
+    //public LayerMask damageableMask;
     [HideInInspector] public Color foodColor;
-    public new Collider collider;
+    //public new Collider collider;
     [HideInInspector] public GameObject instance;
     [HideInInspector] public bool enabled;
     [HideInInspector] public ArrayList list;
@@ -17,18 +17,16 @@ public class Food : MonoBehaviour {
 
     private void OnTriggerEnter(Collider other)
     {
+        //Debug.Log("FoodTrigger");
+
         var animalHealth = (AnimalHealth) other.GetComponent(
             typeof(AnimalHealth));
-        
-        if (animalHealth != null && animalHealth.playerColor != foodColor)
-        {
-            Physics.IgnoreCollision(collider, other);
-        }
-        else if (animalHealth!=null && animalHealth.currentHealth<100)
+
+        if (animalHealth!=null &&  animalHealth.playerColor == foodColor && animalHealth.currentHealth<100)
         {
             //AnimalHealth animalHealth = other.GetComponentInParent<AnimalHealth>();
             //Debug.Log("foodHealth: "+Mathf.Pow(instance.transform.localScale.x+1f, 2f) );
-            Debug.Log(instance.transform.position.y.ToString() );
+            //Debug.Log("addhealth: "+Mathf.Pow(instance.transform.localScale.x+addedHealthInSmallFood, 2.5f) );
             
             animalHealth.AddHealth(Mathf.Pow(instance.transform.localScale.x+addedHealthInSmallFood, 2.5f));
             animalHealth.GetComponent<AnimalLvl>().PickupFood();

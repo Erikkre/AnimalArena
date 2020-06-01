@@ -122,7 +122,7 @@ public class AnimalHealth : MonoBehaviour
     {
         //if (playerColor.r==1) Debug.Log("ScaleHolder: " + tempSphereScaleHolder + ", scaleTarget: " + scaleTarget);
         
-        if (tempSphereScaleHolder != scaleTarget)
+        if (Math.Abs(tempSphereScaleHolder-scaleTarget)>0.05)
         {
             sphereCollider.radius = Mathf.Lerp(sphereCollider.radius, scaleTarget / 2f, 0.15f);
 

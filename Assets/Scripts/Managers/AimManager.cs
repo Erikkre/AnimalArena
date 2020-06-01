@@ -11,7 +11,7 @@ public class AimManager : MonoBehaviour
     public Camera cam;
     public Transform reticleTrans;
     public MeshRenderer meshRend;
-    public LayerMask onlyRaycastGround;
+    public LayerMask raycastLayers;
     #endregion
 
     // Update is called once per frame
@@ -26,9 +26,9 @@ public class AimManager : MonoBehaviour
 
         RaycastHit h;
 
-        if (Physics.Raycast(screenRay, out h, int.MaxValue, onlyRaycastGround) )//if ray from camera to mouse pos hits something with a collider, reticlePos and reticleNormal are set.
+        if (Physics.Raycast(screenRay, out h, int.MaxValue,raycastLayers) )//if ray from camera to mouse pos hits something with a collider, reticlePos and reticleNormal are set.
         {
-            reticleTrans.position = new Vector3(h.point.x, -0.01f, h.point.z);
+            reticleTrans.position = new Vector3(h.point.x, h.point.y, h.point.z);
         }
     }
 }

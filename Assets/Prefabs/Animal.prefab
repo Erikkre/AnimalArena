@@ -1007,7 +1007,7 @@ MonoBehaviour:
   minLaunchForce: 7
   maxLaunchForce: 60
   maxChargeTime: 0.7
-  shotToHealthUsageDivisor: 3
+  shotToHealthUsageDivisor: 2
   massStartScale: 0.05
   massScaleMultiplier: 1.1
   explosionLight: {fileID: 7059535322538246082, guid: 89e78efe92dfe5a42837b392cdb0bf9e,
@@ -1211,6 +1211,11 @@ PrefabInstance:
       propertyPath: BurnTexture
       value: 
       objectReference: {fileID: 2800000, guid: 393797b17c0f35e41beb121878aae947, type: 3}
+    - target: {fileID: 108810426488555483, guid: ce34b7e3a0b00d947b1c87c4a8908812,
+        type: 3}
+      propertyPath: SmallGapSize
+      value: 0.0556
+      objectReference: {fileID: 0}
     - target: {fileID: 108810426488560473, guid: ce34b7e3a0b00d947b1c87c4a8908812,
         type: 3}
       propertyPath: BurnRate
@@ -1219,7 +1224,22 @@ PrefabInstance:
     - target: {fileID: 108810426488560473, guid: ce34b7e3a0b00d947b1c87c4a8908812,
         type: 3}
       propertyPath: Value
-      value: 56
+      value: 100
+      objectReference: {fileID: 0}
+    - target: {fileID: 108810426488560473, guid: ce34b7e3a0b00d947b1c87c4a8908812,
+        type: 3}
+      propertyPath: SmallGapInterval
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 108810426488560473, guid: ce34b7e3a0b00d947b1c87c4a8908812,
+        type: 3}
+      propertyPath: BigGapInterval
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 108810426488560473, guid: ce34b7e3a0b00d947b1c87c4a8908812,
+        type: 3}
+      propertyPath: SmallGapSize
+      value: 0.0736
       objectReference: {fileID: 0}
     - target: {fileID: 108810426488573535, guid: ce34b7e3a0b00d947b1c87c4a8908812,
         type: 3}

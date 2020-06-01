@@ -62,12 +62,12 @@ public class AnimalShooting : MonoBehaviour
         {
             //Debug.Log("power shooting: "+currentLaunchForce+", % health: "+animalHealth.currentHealth+", aimslider val: "+aimSlider.value);
             
-            if (Input.GetButtonDown(CancelButton))
+            if (currentLaunchForce>minLaunchForce && Input.GetButtonDown(CancelButton))
             {
                 cancelledFire = true;
                 if (shootingAudio.isPlaying) shootingAudio.Stop();
                 if (aimSlider.value>minLaunchForce) aimSlider.value = minLaunchForce;
-                animalHealth.AddHealth(currentLaunchForce/1.13f/shotToHealthUsageDivisor);
+                animalHealth.AddHealth((currentLaunchForce-minLaunchForce)/shotToHealthUsageDivisor);
                 currentLaunchForce = minLaunchForce;
             }
             else if (Input.GetButtonUp(FireButton) && !Fired && !cancelledFire)            //fire Released
@@ -112,8 +112,8 @@ public class AnimalShooting : MonoBehaviour
         int angleToAdd;
         if (targetTrans.position.x > animalPos.position.x) angleToAdd = -90;
         else angleToAdd = 90;
-                
-        aimSlider.transform.rotation = Quaternion.Euler(90,0, 
+
+        aimSlider.transform.rotation = Quaternion.Euler(110,0,
             -Mathf.Rad2Deg* ((float)  Math.Atan((targetTrans.position.z-animalPos.position.z)/-(targetTrans.position.x-animalPos.position.x))  ) + angleToAdd);
     }
 
@@ -152,19 +152,23 @@ public class AnimalShooting : MonoBehaviour
        if (mInst.originalExplosionLightIntensity == 0)
             mInst.originalExplosionLightIntensity = originalExplosionLightIntensity;
 
-       float massDamageToSizeRatio = 4f;
+
         mInst.sizePercentRatio = (mInst.transform.localScale.x / GameManager.maxMassSize);
-        mInst.explosionRadius *=  mInst.sizePercentRatio;
-        mInst.explosionForce *=   mInst.sizePercentRatio;
-        mInst.maxDamage *= massDamageToSizeRatio * (mInst.sizePercentRatio/massDamageToSizeRatio);
-        mInst.explosionLight.intensity *= mInst.sizePercentRatio;
-        mInst.explosionLight.range *= mInst.sizePercentRatio;
+        float x = mInst.sizePercentRatio, sizePercentRatioOnCurve= x*(1f/ (x+1f)/0.5f);
+        //Debug.Log("sizePercentRatio: "+x+", sizePercentRatioOnCurve: "+sizePercentRatioOnCurve);
+
+
+        mInst.explosionRadius *= sizePercentRatioOnCurve;
+        mInst.explosionForce *= sizePercentRatioOnCurve;
+        mInst.maxDamage *= sizePercentRatioOnCurve;
+        mInst.explosionLight.intensity *= x;
+        mInst.explosionLight.range *= x;
         
         //Debug.Log("massLight.intensity before math " + mInst.massLight.intensity);
-        mInst.massLight.intensity *= mInst.sizePercentRatio;
-        //Debug.Log("massLight.intensity after math " + mInst.massLight.intensity+", sizePercentRatio: "+mInst.sizePercentRatio);
+        mInst.massLight.intensity *= x;
+        //Debug.Log("massLight.intensity after math " + mInst.massLight.intensity+", sizePercentRatio: "+x);
         
-        mInst.massLight.range *= mInst.sizePercentRatio;
+        mInst.massLight.range *= x;
         
         //Debug.Log("mass active");
         mass.instance.SetActive(true);

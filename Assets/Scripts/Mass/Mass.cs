@@ -11,7 +11,7 @@ public class Mass : MonoBehaviour
 
     public Light explosionLight, massLight;
     [HideInInspector]public CoroutineManager coroutineManagerInstance;
-    public LayerMask animalMask;                        // Used to filter what the explosion affects, this should be set to "Players".
+    public LayerMask damageableMask;                        // Used to filter what the explosion affects, this should be set to "Players".
     public ParticleSystem explosionParticles;         // Reference to the particles that will play on explosion.
     public GameObject massExplosion;
     public AudioSource explosionAudio;                // Reference to the audio that will play on explosion.
@@ -26,7 +26,7 @@ public class Mass : MonoBehaviour
     [HideInInspector] public float originalExplosionLightIntensity;
     [HideInInspector] public GameObject instance;
     [HideInInspector] public AnimalHealth shooter;
-    
+    private bool exploded=false;
     void FixedUpdate()
     {
         //1/Time.deltaTime
@@ -34,71 +34,89 @@ public class Mass : MonoBehaviour
     }
     private void OnTriggerEnter (Collider other)
     {
-        var otherPlayNum = (AnimalMovement) other.GetComponent(
-            typeof(AnimalMovement));
-
-        if (otherPlayNum != null && otherPlayNum.playerNumber == playerShooterNum)
+        Debug.Log("Mass trigger1");
+        if (!exploded)
         {
-            Physics.IgnoreCollision(collider, other);
-        }
-        else
-        {
-            print("TRIGGERED");
-            //"Animal"+GetComponent<AnimalManager>().PlayerNumber+" took damage.");
-            // Collect all the colliders in a sphere from the mass's current position to a radius of the explosion radius.
-            Collider[] colliders =
-                Physics.OverlapSphere(transform.position, explosionRadius, animalMask);
 
-            // Go through all the colliders...
-            for (int i = 0; i < colliders.Length; i++)
+            var otherPlayNum = (AnimalMovement) other.GetComponent(
+                typeof(AnimalMovement));
+
+            if (otherPlayNum != null && otherPlayNum.playerNumber == playerShooterNum)
             {
-                //print(i);
-                // ... and find their rigidbody.
-                Rigidbody targetRigidbody = colliders[i].GetComponent<Rigidbody>();
-
-                // If they don't have a rigidbody or theyre mass clones or theyre the original animal, go on to the next collider
-                if (!targetRigidbody || targetRigidbody.name.CompareTo("Mass") == 0
-                                     || targetRigidbody.name.CompareTo("Mass (Clone)") == 0
-                                     || ((AnimalMovement) targetRigidbody.GetComponent(
-                                         typeof(AnimalMovement))).playerNumber == playerShooterNum)
-                    continue;
-
-                // Add an explosion force.
-                targetRigidbody.AddExplosionForce(explosionForce, transform.position,
-                    explosionRadius);
-    
-                // Find the AnimalHealth script associated with the rigidbody.
-                AnimalHealth targetHealth = targetRigidbody.GetComponent<AnimalHealth>();
-
-                // If there is no AnimalHealth script attached to the gameobject, go on to the next collider.
-                if (!targetHealth)
-                    continue;
-
-                // Calculate the amount of damage the target should take based on it's distance from the mass.
-                float damage = CalculateDamage(targetRigidbody.position);
-                
-                print("ExplosionForce: "+explosionForce+", damage: "+damage+", radius: "+explosionRadius+", maxDamage: "+maxDamage+", targetDistance: "+(targetRigidbody.position - transform.position));
-                shooter.GetComponent<AnimalLvl>().DamagePlayer(damage/maxDamage);
-                
-                // Deal this damage to the animal.
-                targetHealth.TakeDamage(damage,false);
+                Physics.IgnoreCollision(collider, other);
             }
-            // Unparent the particles from the mass.
-            rBody.isKinematic = true;
-            mRend.enabled = false;
-            transform.position = posBeforePhysicsUpdate;
-            
-            // Play the particle system.
+            else
+            {
+                //"Animal"+GetComponent<AnimalManager>().PlayerNumber+" took damage.");
+                // Collect all the colliders in a sphere from the mass's current position to a radius of the explosion radius.
+                Collider[] colliders =
+                    Physics.OverlapSphere(transform.position, explosionRadius, damageableMask);
 
-            explosionParticles.Play();
-            //turn on light and quickly interpolate for a flash effect
-            explosionLight.enabled = true;
-            massLight.enabled = false;
-            coroutineManagerInstance.newCoroutine(MassExplosionFlash());
-            // Play the explosion sound effect.
-            explosionAudio.Play();
+                Debug.Log(colliders.Length);
+                // Go through all the colliders...
+                for (int i = 0; i < colliders.Length; i++)
+                {
+                    //print(i);
+                    // ... and find their rigidbody.
+                    Rigidbody targetRigidbody = colliders[i].GetComponent<Rigidbody>();
 
-            // Once the particles have finished, disable the gameobject they are on.
+                    // If they don't have a rigidbody go on to the next collider
+                    if (!targetRigidbody
+                    )
+                        continue;
+
+                    // Add an explosion force.
+                    targetRigidbody.AddExplosionForce(explosionForce, transform.position,
+                        explosionRadius);
+
+                    // Find the AnimalHealth script associated with the rigidbody.
+                    AnimalHealth targetHealth = targetRigidbody.GetComponent<AnimalHealth>();
+
+                    // If there is no AnimalHealth script attached to the gameobject, go on to the next collider.
+                    if (!targetHealth)
+                        continue;
+
+                    // Calculate the amount of damage the target should take based on it's distance from the mass.
+                    float damage = CalculateDamage(targetRigidbody.position);
+
+
+                    //if you hit yourself, take third damage
+                    if (targetRigidbody.GetComponent<AnimalMovement>().playerNumber == playerShooterNum)
+                    {
+                        targetRigidbody.AddExplosionForce(explosionForce*3, transform.position,
+                            explosionRadius);
+                        damage /= 3;
+                    }
+
+
+                    print("ExplosionForce: " + explosionForce + ", damage: " + damage +
+                          ", radius: " + explosionRadius + ", maxDamage: " + maxDamage +
+                          ", targetDistance: " + (targetRigidbody.position - transform.position));
+                    shooter.GetComponent<AnimalLvl>().DamagePlayer(damage / maxDamage);
+
+                    // Deal this damage to the animal.
+                    targetHealth.TakeDamage(damage, false);
+                }
+
+                // Unparent the particles from the mass.
+                rBody.isKinematic = true;
+                mRend.enabled = false;
+                transform.position = posBeforePhysicsUpdate;
+
+                // Play the particle system.
+
+                explosionParticles.Play();
+                //turn on light and quickly interpolate for a flash effect
+                explosionLight.enabled = true;
+                massLight.enabled = false;
+                coroutineManagerInstance.newCoroutine(MassExplosionFlash());
+                // Play the explosion sound effect.
+                explosionAudio.Play();
+
+                // Once the particles have finished, disable the gameobject they are on.
+                exploded = true;
+
+            }
         }
     }
     
@@ -114,9 +132,12 @@ public class Mass : MonoBehaviour
             
             //Debug.Log(("ReturnToMassPoolAfterLifetime"));
             explosionLight.intensity = originalExplosionLightIntensity;
-            explosionRadius /= sizePercentRatio;
-            explosionForce /= sizePercentRatio;
-            maxDamage /= sizePercentRatio;
+
+            float x = sizePercentRatio, sizePercentRatioOnCurve= x*(1f/ (x+1f)/0.5f);
+            explosionRadius /= sizePercentRatioOnCurve;
+            explosionForce /= sizePercentRatioOnCurve;
+            maxDamage /= sizePercentRatioOnCurve;
+
             explosionLight.intensity /= sizePercentRatio;
             explosionLight.range /= sizePercentRatio;
             
@@ -125,6 +146,7 @@ public class Mass : MonoBehaviour
             //Debug.Log("massLight.intensity after: "+massLight.intensity);
             massLight.range /= sizePercentRatio;
 
+            exploded = false;
             gameObject.SetActive(false);
         }
     }

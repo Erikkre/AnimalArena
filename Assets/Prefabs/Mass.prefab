@@ -111,7 +111,7 @@ SphereCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 0.01
+  m_Radius: 0.05
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &145830994
 MonoBehaviour:
@@ -131,7 +131,7 @@ MonoBehaviour:
   explosionLight: {fileID: 5680027840459643226}
   massLight: {fileID: 5076529103087385054}
   coroutineManagerInstance: {fileID: 0}
-  animalMask:
+  damageableMask:
     serializedVersion: 2
     m_Bits: 1024
   explosionParticles: {fileID: 3398813380775369614}
@@ -145,6 +145,7 @@ MonoBehaviour:
   mRend: {fileID: 7059535324432606634}
   originalExplosionLightIntensity: 0
   instance: {fileID: 0}
+  shooter: {fileID: 0}
 --- !u!108 &5076529103087385054
 Light:
   m_ObjectHideFlags: 0

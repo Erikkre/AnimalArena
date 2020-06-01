@@ -49,7 +49,7 @@ public class FoodManager : MonoBehaviour
             position = new Vector3(spawnPoint.position.x+RandomGaussianSpreadAround0() + xOffset,
                 spawnPoint.position.y,spawnPoint.position.z+RandomGaussianSpreadAround0() + zOffset);
             
-        } while (Physics.OverlapSphere(position, 2, levelMask).Length != 0);
+        } while (Physics.OverlapSphere(position, 2, levelMask).Length != 0); //if foodposition hits level, keep finding new position
         
         Food inst = new Food();
         inst.instance = ObjectPoolerHelper.SharedInstance.GetPooledObject("Food"); 
@@ -71,7 +71,7 @@ public class FoodManager : MonoBehaviour
             fInst.foodColor = c;
 
             l.Add(inst.instance);
-            Debug.Log("Food active");
+            //Debug.Log("Food active");
             inst.instance.SetActive(true);
         }
     }
