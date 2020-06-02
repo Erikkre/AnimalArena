@@ -1026,6 +1026,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   minHealthPercent: 5
   playerColor: {r: 0, g: 0, b: 0, a: 0}
+  playerNumber: {r: 0, g: 0, b: 0, a: 0}
   explosionPrefab: {fileID: 151086, guid: ee49a9a8678ecf8468eb488e1ac8d42b, type: 3}
   hpAndLvlBar: {fileID: 1565280161498181195}
   currentHealth: 100
@@ -1165,6 +1166,21 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Material
       value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 108810426488555483, guid: ce34b7e3a0b00d947b1c87c4a8908812,
+        type: 3}
+      propertyPath: Value
+      value: 100
+      objectReference: {fileID: 0}
+    - target: {fileID: 108810426488560473, guid: ce34b7e3a0b00d947b1c87c4a8908812,
+        type: 3}
+      propertyPath: Value
+      value: 100
+      objectReference: {fileID: 0}
+    - target: {fileID: 108810426488560473, guid: ce34b7e3a0b00d947b1c87c4a8908812,
+        type: 3}
+      propertyPath: BurnRate
+      value: 0.1
       objectReference: {fileID: 0}
     - target: {fileID: 108810426488573535, guid: ce34b7e3a0b00d947b1c87c4a8908812,
         type: 3}

@@ -4,7 +4,7 @@ using Random = UnityEngine.Random;
 
 public class AnimalMovement : MonoBehaviour
 {
-    [HideInInspector]public int playerNumber = 1;              // Used to identify which animal belongs to which player.  This is set by this animal's manager.
+    [HideInInspector]public int playerNumber;              // Used to identify which animal belongs to which player.  This is set by this animal's manager.
     private float speed;                 // How fast the animal moves forward and back.
     private float jSpeed;            //jump speed
     //public float TurnSpeed = 180f;            // How fast the animal turns in degrees per second.

@@ -154,7 +154,7 @@ InputManager:
     descriptiveName: Vertical keyboard axis for player 1
     descriptiveNegativeName: 
     negativeButton: 
-    positiveButton: space
+    positiveButton: enter
     altNegativeButton: 
     altPositiveButton: 
     gravity: 3
@@ -170,7 +170,7 @@ InputManager:
     descriptiveName: Vertical keyboard axis for player 1
     descriptiveNegativeName: 
     negativeButton: 
-    positiveButton: space
+    positiveButton: 
     altNegativeButton: 
     altPositiveButton: 
     gravity: 3
@@ -186,7 +186,7 @@ InputManager:
     descriptiveName: Vertical keyboard axis for player 1
     descriptiveNegativeName: 
     negativeButton: 
-    positiveButton: space
+    positiveButton: 
     altNegativeButton: 
     altPositiveButton: 
     gravity: 3

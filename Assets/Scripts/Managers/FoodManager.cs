@@ -20,7 +20,7 @@ public class FoodManager : MonoBehaviour
     private Random r = new Random();
     public int spawnSpread = 5;
     public float addedHealthInSmallFood = 2f; //2f
-    public LayerMask levelMask;
+    public LayerMask collidersMask;
     void Start()
     {
         rFoods = new ArrayList((maxFoodOnMap/4)+1);pFoods = new ArrayList((maxFoodOnMap/4)+1);
@@ -49,7 +49,7 @@ public class FoodManager : MonoBehaviour
             position = new Vector3(spawnPoint.position.x+RandomGaussianSpreadAround0() + xOffset,
                 spawnPoint.position.y,spawnPoint.position.z+RandomGaussianSpreadAround0() + zOffset);
             
-        } while (Physics.OverlapSphere(position, 2, levelMask).Length != 0); //if foodposition hits level, keep finding new position
+        } while (Physics.OverlapSphere(position, 2, collidersMask).Length != 0); //if foodposition hits level, keep finding new position
         
         Food inst = new Food();
         inst.instance = ObjectPoolerHelper.SharedInstance.GetPooledObject("Food"); 

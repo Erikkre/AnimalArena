@@ -12,7 +12,7 @@ public class AnimalHealth : MonoBehaviour
 
     //public Image FillImage;                           // The image component of the slider.
     [HideInInspector]public Color playerColor;
-
+    [HideInInspector]public int playerNumber;
     public GameObject explosionPrefab;                // A prefab that will be instantiated in Awake, then used whenever the animal dies.
     public MOBAHealthBarPanel hpAndLvlBar;
     private MOBAEnergyBar hpBar;
@@ -33,6 +33,46 @@ public class AnimalHealth : MonoBehaviour
     private float scaleTarget, tempSphereScaleHolder;
     public Rigidbody rBody;
     public float startingMass = 0.7f, massScalingDivisor = 5f;
+    private Vector3 velBeforePhysicsUpdate;
+
+
+    private float RammingDamagedSizePortionEquation(float scaleTarget)
+    {
+        return Mathf.Log(scaleTarget + 0.04f) / 5f + 0.5f;
+    }
+    private void OnCollisionEnter(Collision other)
+    {
+        if ( rBody.velocity.magnitude * rBody.mass > 5 ){
+            Debug.Log("Animal"+playerNumber+" is heavy and fast");
+
+            var otherAnimalHealth = (AnimalHealth) other.transform.GetComponent(
+                typeof(AnimalHealth));
+
+            //other.relativeVelocity
+            if (otherAnimalHealth != null && otherAnimalHealth.playerNumber != playerNumber)
+            {
+                float
+                    thisDamagePotential; //= otherAnimalHealth.velBeforePhysicsUpdate.magnitude + RammingDamagedSizePortionEquation(otherAnimalHealth.scaleTarget);
+
+                thisDamagePotential =
+                    Vector3.Dot(other.contacts[0].normal, rBody.velocity) * rBody.mass;
+
+                //Debug.Log("animal"+otherAnimalHealth.playerNumber+": "+otherAnimalDamagePotential+", my animal"+playerNumber+": "+Vector3.Dot(other.contacts[0].normal, rBody.velocity) * rBody.mass);
+
+                if (Math.Abs(thisDamagePotential) > 2)
+                {
+                    TakeDamage(
+                        thisDamagePotential,
+                        false);
+
+                    Debug.Log("Animal " + playerNumber + " damaged for " +
+                              thisDamagePotential +
+                              " damage.");
+                }
+            }
+        }
+    }
+
     private void Awake ()
     {
         dustSize = dustTrail.main.startSize;

@@ -392,7 +392,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Quantum Zoo
+  m_Text: Animal Arena
 --- !u!222 &580091721
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -650,9 +650,9 @@ MonoBehaviour:
   spawnInterval: 2
   spawnSpread: 12
   addedHealthInSmallFood: 1
-  levelMask:
+  collidersMask:
     serializedVersion: 2
-    m_Bits: 1
+    m_Bits: 24576
 --- !u!114 &949312114
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -724,6 +724,22 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 101518, guid: 1cd1bdb2203012a40ab12a0d2fd7aa88, type: 3}
+      propertyPath: m_Name
+      value: LeftBounds
+      objectReference: {fileID: 0}
+    - target: {fileID: 115872, guid: 1cd1bdb2203012a40ab12a0d2fd7aa88, type: 3}
+      propertyPath: m_Name
+      value: ForwardBounds
+      objectReference: {fileID: 0}
+    - target: {fileID: 125100, guid: 1cd1bdb2203012a40ab12a0d2fd7aa88, type: 3}
+      propertyPath: m_Name
+      value: RightBounds
+      objectReference: {fileID: 0}
+    - target: {fileID: 159038, guid: 1cd1bdb2203012a40ab12a0d2fd7aa88, type: 3}
+      propertyPath: m_Name
+      value: BackBounds
+      objectReference: {fileID: 0}
     - target: {fileID: 171356, guid: 1cd1bdb2203012a40ab12a0d2fd7aa88, type: 3}
       propertyPath: m_Name
       value: LevelArt
@@ -771,6 +787,10 @@ PrefabInstance:
     - target: {fileID: 488946, guid: 1cd1bdb2203012a40ab12a0d2fd7aa88, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1397860674, guid: 1cd1bdb2203012a40ab12a0d2fd7aa88, type: 3}
+      propertyPath: m_Name
+      value: TopBounds
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1cd1bdb2203012a40ab12a0d2fd7aa88, type: 3}

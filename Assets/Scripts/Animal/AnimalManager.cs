@@ -37,6 +37,7 @@ public class AnimalManager
         // Set the player numbers to be consistent across the scripts.
         Movement.playerNumber = playerNumber;
         Shooting.playerNumber = playerNumber;
+        Health.playerNumber = playerNumber;
         Health.playerColor = playerColor;
 
         Health.coroutineManagerInstance = coroutineManagerInstance;
