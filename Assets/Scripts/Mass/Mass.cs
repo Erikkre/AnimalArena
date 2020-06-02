@@ -92,7 +92,7 @@ public class Mass : MonoBehaviour
                     print("ExplosionForce: " + explosionForce + ", damage: " + damage +
                           ", radius: " + explosionRadius + ", maxDamage: " + maxDamage +
                           ", targetDistance: " + (targetRigidbody.position - transform.position));
-                    shooter.GetComponent<AnimalLvl>().DamagePlayer(damage / maxDamage);
+                    shooter.GetComponent<AnimalLvl>().DamagePlayerForXP(damage / maxDamage);
 
                     // Deal this damage to the animal.
                     targetHealth.TakeDamage(damage, false);

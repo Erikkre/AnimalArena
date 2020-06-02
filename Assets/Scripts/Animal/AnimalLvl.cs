@@ -21,13 +21,13 @@ public class AnimalLvl : MonoBehaviour
         
     }
     
-    public void PickupFood()
+    public void PickupFoodForXP()
     {
         lvl += .7f;
         lvlBar.Value = lvl;
     }
     
-    public void DamagePlayer(float dmgPercentRatio)
+    public void DamagePlayerForXP(float dmgPercentRatio)
     {
         lvl += dmgPercentRatio*10f;
         lvlBar.Value = lvl;

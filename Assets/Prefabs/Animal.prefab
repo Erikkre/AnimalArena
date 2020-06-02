@@ -1026,7 +1026,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   minHealthPercent: 5
   playerColor: {r: 0, g: 0, b: 0, a: 0}
-  playerNumber: {r: 0, g: 0, b: 0, a: 0}
+  playerNumber: 0
   explosionPrefab: {fileID: 151086, guid: ee49a9a8678ecf8468eb488e1ac8d42b, type: 3}
   hpAndLvlBar: {fileID: 1565280161498181195}
   currentHealth: 100
@@ -1037,7 +1037,7 @@ MonoBehaviour:
   coroutineManagerInstance: {fileID: 0}
   rBody: {fileID: 8038635930756742258}
   startingMass: 0.7
-  massScalingDivisor: 5
+  massScalingDivisor: 6
 --- !u!135 &2710769789198237357
 SphereCollider:
   m_ObjectHideFlags: 0

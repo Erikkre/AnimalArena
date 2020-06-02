@@ -35,15 +35,20 @@ public class AnimalHealth : MonoBehaviour
     public float startingMass = 0.7f, massScalingDivisor = 5f;
     private Vector3 velBeforePhysicsUpdate;
 
+    void FixedUpdate()
+    {
+        //1/Time.deltaTime
+        velBeforePhysicsUpdate = rBody.velocity;
+    }
 
     private float RammingDamagedSizePortionEquation(float scaleTarget)
     {
         return Mathf.Log(scaleTarget + 0.04f) / 5f + 0.5f;
     }
     private void OnCollisionEnter(Collision other)
-    {
-        if ( rBody.velocity.magnitude * rBody.mass > 5 ){
-            Debug.Log("Animal"+playerNumber+" is heavy and fast");
+    {//Debug.Log("Animal"+playerNumber+" going "+velBeforePhysicsUpdate.magnitude * rBody.mass);
+        if ( velBeforePhysicsUpdate.magnitude * rBody.mass > 10f ){
+
 
             var otherAnimalHealth = (AnimalHealth) other.transform.GetComponent(
                 typeof(AnimalHealth));
@@ -55,19 +60,18 @@ public class AnimalHealth : MonoBehaviour
                     thisDamagePotential; //= otherAnimalHealth.velBeforePhysicsUpdate.magnitude + RammingDamagedSizePortionEquation(otherAnimalHealth.scaleTarget);
 
                 thisDamagePotential =
-                    Vector3.Dot(other.contacts[0].normal, rBody.velocity) * rBody.mass;
+                    Vector3.Dot(velBeforePhysicsUpdate,other.contacts[0].normal*-1) * rBody.mass;
 
-                //Debug.Log("animal"+otherAnimalHealth.playerNumber+": "+otherAnimalDamagePotential+", my animal"+playerNumber+": "+Vector3.Dot(other.contacts[0].normal, rBody.velocity) * rBody.mass);
+                //Debug.Log("animal"+otherAnimalHealth.playerNumber+": "+Vector3.Dot(otherAnimalHealth.velBeforePhysicsUpdate,other.contacts[0].normal) * otherAnimalHealth.rBody.mass+", my animal"+playerNumber+": "+thisDamagePotential);
 
-                if (Math.Abs(thisDamagePotential) > 2)
+                if (thisDamagePotential > 5)
                 {
-                    TakeDamage(
+                    otherAnimalHealth.TakeDamage(
                         thisDamagePotential,
                         false);
 
-                    Debug.Log("Animal " + playerNumber + " damaged for " +
-                              thisDamagePotential +
-                              " damage.");
+                    GetComponent<AnimalLvl>().DamagePlayerForXP(thisDamagePotential);
+                    //Debug.Log("Animal " + otherAnimalHealth.playerNumber + " damaged for " + thisDamagePotential + " damage.");
                 }
             }
         }

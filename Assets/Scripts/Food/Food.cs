@@ -29,7 +29,7 @@ public class Food : MonoBehaviour {
             //Debug.Log("addhealth: "+Mathf.Pow(instance.transform.localScale.x+addedHealthInSmallFood, 2.5f) );
             
             animalHealth.AddHealth(Mathf.Pow(instance.transform.localScale.x+addedHealthInSmallFood, 2.5f));
-            animalHealth.GetComponent<AnimalLvl>().PickupFood();
+            animalHealth.GetComponent<AnimalLvl>().PickupFoodForXP();
             list.Remove(instance); //dlist.RemoveAt(0);
             gameObject.SetActive(false);
         }
