@@ -1172,6 +1172,26 @@ PrefabInstance:
       propertyPath: Value
       value: 100
       objectReference: {fileID: 0}
+    - target: {fileID: 108810426488555483, guid: ce34b7e3a0b00d947b1c87c4a8908812,
+        type: 3}
+      propertyPath: MaxValue
+      value: 100
+      objectReference: {fileID: 0}
+    - target: {fileID: 108810426488555483, guid: ce34b7e3a0b00d947b1c87c4a8908812,
+        type: 3}
+      propertyPath: BurnRate
+      value: 0.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 108810426488555483, guid: ce34b7e3a0b00d947b1c87c4a8908812,
+        type: 3}
+      propertyPath: SmallGapInterval
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 108810426488555483, guid: ce34b7e3a0b00d947b1c87c4a8908812,
+        type: 3}
+      propertyPath: BigGapInterval
+      value: 20
+      objectReference: {fileID: 0}
     - target: {fileID: 108810426488560473, guid: ce34b7e3a0b00d947b1c87c4a8908812,
         type: 3}
       propertyPath: Value
@@ -1181,6 +1201,21 @@ PrefabInstance:
         type: 3}
       propertyPath: BurnRate
       value: 0.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 108810426488560473, guid: ce34b7e3a0b00d947b1c87c4a8908812,
+        type: 3}
+      propertyPath: MaxValue
+      value: 100
+      objectReference: {fileID: 0}
+    - target: {fileID: 108810426488560473, guid: ce34b7e3a0b00d947b1c87c4a8908812,
+        type: 3}
+      propertyPath: SmallGapInterval
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 108810426488560473, guid: ce34b7e3a0b00d947b1c87c4a8908812,
+        type: 3}
+      propertyPath: BigGapInterval
+      value: 20
       objectReference: {fileID: 0}
     - target: {fileID: 108810426488573535, guid: ce34b7e3a0b00d947b1c87c4a8908812,
         type: 3}

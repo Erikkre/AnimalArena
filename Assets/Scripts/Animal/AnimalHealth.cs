@@ -67,8 +67,7 @@ public class AnimalHealth : MonoBehaviour
                 if (thisDamagePotential > 5)
                 {
                     otherAnimalHealth.TakeDamage(
-                        thisDamagePotential,
-                        false);
+                        thisDamagePotential);
 
                     GetComponent<AnimalLvl>().DamagePlayerForXP(thisDamagePotential);
                     //Debug.Log("Animal " + otherAnimalHealth.playerNumber + " damaged for " + thisDamagePotential + " damage.");
@@ -104,21 +103,16 @@ public class AnimalHealth : MonoBehaviour
     {
         // When the animal is enabled, reset the animal's health and whether or not it's dead.
         currentHealth = 100;//minHealthPercent;
-        hpBar.Value = 100;
-        hpBar.Value = currentHealth;
+        hpBar.SetValueNoBurn(currentHealth);
         dead = false;
         UpdateScale();
         // Update the health slider's value and color.
     }
 
-    public void TakeDamage (float amount, bool dmgFromFiring)
+    public void TakeDamage (float amount)
     {
         // Reduce current health by the amount of damage done.
         currentHealth -= amount;
-        if (dmgFromFiring)
-        {
-            
-        }
         hpBar.Value = currentHealth;
 
         // Change the UI elements appropriately.
@@ -132,13 +126,14 @@ public class AnimalHealth : MonoBehaviour
         UpdateScale();
     }
 
-    public void AddHealth (float health)
+    public void AddHealth (float amount, bool cancelledHealthAddback)
     {
         // Reduce current health by the amount of damage done.
-        currentHealth += health;
+        currentHealth += amount;
         //Debug.Log(amount+" health increased");
         if (currentHealth > 100) currentHealth = 100;
-        hpBar.Value = (int) currentHealth;
+        hpBar.SetValueNoBurn(currentHealth);
+        if (cancelledHealthAddback) hpBar.damage -= amount;
         UpdateScale();
     }
 

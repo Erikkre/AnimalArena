@@ -67,7 +67,7 @@ public class AnimalShooting : MonoBehaviour
                 cancelledFire = true;
                 if (shootingAudio.isPlaying) shootingAudio.Stop();
                 if (aimSlider.value>minLaunchForce) aimSlider.value = minLaunchForce;
-                animalHealth.AddHealth((currentLaunchForce-minLaunchForce)/shotToHealthUsageDivisor);
+                animalHealth.AddHealth((currentLaunchForce-minLaunchForce)/shotToHealthUsageDivisor, true);
                 currentLaunchForce = minLaunchForce;
             }
             else if (Input.GetButtonUp(FireButton) && !Fired && !cancelledFire)            //fire Released
@@ -100,7 +100,7 @@ public class AnimalShooting : MonoBehaviour
                 {
                     currentLaunchForce += ChargeSpeed * Time.deltaTime;
                     aimSlider.value = currentLaunchForce;
-                    animalHealth.TakeDamage((ChargeSpeed * Time.deltaTime)/shotToHealthUsageDivisor, true); //take off each added power
+                    animalHealth.TakeDamage((ChargeSpeed * Time.deltaTime)/shotToHealthUsageDivisor); //take off each added power
                 }
                 Aim();
             }

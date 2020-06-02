@@ -95,7 +95,7 @@ public class Mass : MonoBehaviour
                     shooter.GetComponent<AnimalLvl>().DamagePlayerForXP(damage / maxDamage);
 
                     // Deal this damage to the animal.
-                    targetHealth.TakeDamage(damage, false);
+                    targetHealth.TakeDamage(damage);
                 }
 
                 // Unparent the particles from the mass.

@@ -17,18 +17,19 @@ public class Food : MonoBehaviour {
 
     private void OnTriggerEnter(Collider other)
     {
-        //Debug.Log("FoodTrigger");
+
 
         var animalHealth = (AnimalHealth) other.GetComponent(
             typeof(AnimalHealth));
 
-        if (animalHealth!=null &&  animalHealth.playerColor == foodColor && animalHealth.currentHealth<100)
+        Debug.Log(animalHealth.playerColor+", "+foodColor);
+        if (animalHealth!=null &&  animalHealth.playerColor.Equals(foodColor) && animalHealth.currentHealth<100)
         {
             //AnimalHealth animalHealth = other.GetComponentInParent<AnimalHealth>();
             //Debug.Log("foodHealth: "+Mathf.Pow(instance.transform.localScale.x+1f, 2f) );
             //Debug.Log("addhealth: "+Mathf.Pow(instance.transform.localScale.x+addedHealthInSmallFood, 2.5f) );
             
-            animalHealth.AddHealth(Mathf.Pow(instance.transform.localScale.x+addedHealthInSmallFood, 2.5f));
+            animalHealth.AddHealth(Mathf.Pow(instance.transform.localScale.x+addedHealthInSmallFood, 2.5f), false);
             animalHealth.GetComponent<AnimalLvl>().PickupFoodForXP();
             list.Remove(instance); //dlist.RemoveAt(0);
             gameObject.SetActive(false);

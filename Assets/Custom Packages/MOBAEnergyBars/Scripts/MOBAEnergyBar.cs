@@ -35,7 +35,7 @@ public class MOBAEnergyBar : MonoBehaviour {
     Image img;
     Material m;
     float lastValue;
-    float damage;
+    public float damage;
 
     Texture oldCellTexture;
     Texture oldBurnTexture;

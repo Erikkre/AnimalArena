@@ -51,10 +51,11 @@ public class GameManager : MonoBehaviour
                 Instantiate(animalPrefab, animals[i].spawnPoint.position, animals[i].spawnPoint.rotation);
             animals[i].playerNumber = i + 1;
             animals[i].coroutineManagerInstance = coroutineManagerInstance;
-            if (i % 4 == 0) animals[i].playerColor = red;
+
             if (i % 1 == 0) animals[i].playerColor = purple;
             if (i % 2 == 0) animals[i].playerColor = green;
             if (i % 3 == 0) animals[i].playerColor = yellow;
+            if (i % 4 == 0) animals[i].playerColor = red;
             animals[i].Setup();
             //if (i == 1) CameraControl.mainPlayer = Animals[i];
         }

@@ -11,8 +11,7 @@ public class AnimalLvl : MonoBehaviour
     void Start()
     {
         lvlBar.MaxValue = 100f;
-        lvlBar.Value = 100;
-        lvlBar.Value = 0;
+        lvlBar.SetValueNoBurn(lvl);
     }
 
     // Update is called once per frame
@@ -24,12 +23,12 @@ public class AnimalLvl : MonoBehaviour
     public void PickupFoodForXP()
     {
         lvl += .7f;
-        lvlBar.Value = lvl;
+        lvlBar.SetValueNoBurn(lvl);
     }
     
     public void DamagePlayerForXP(float dmgPercentRatio)
     {
-        lvl += dmgPercentRatio*10f;
-        lvlBar.Value = lvl;
+        lvl += dmgPercentRatio;
+        lvlBar.SetValueNoBurn(lvl);
     }
 }

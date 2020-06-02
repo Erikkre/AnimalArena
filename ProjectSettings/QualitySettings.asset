@@ -228,7 +228,7 @@ QualitySettings:
     shadows: 2
     shadowResolution: 2
     shadowProjection: 0
-    shadowCascades: 2
+    shadowCascades: 4
     shadowDistance: 400
     shadowNearPlaneOffset: 3
     shadowCascade2Split: 0.33333334
@@ -261,3 +261,4 @@ QualitySettings:
   m_PerPlatformDefaultQuality:
     Android: 6
     Standalone: 6
+    WebGL: 6
