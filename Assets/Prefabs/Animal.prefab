@@ -1180,7 +1180,7 @@ PrefabInstance:
     - target: {fileID: 108810426488555483, guid: ce34b7e3a0b00d947b1c87c4a8908812,
         type: 3}
       propertyPath: BurnRate
-      value: 0.1
+      value: 0.13
       objectReference: {fileID: 0}
     - target: {fileID: 108810426488555483, guid: ce34b7e3a0b00d947b1c87c4a8908812,
         type: 3}
@@ -1200,7 +1200,7 @@ PrefabInstance:
     - target: {fileID: 108810426488560473, guid: ce34b7e3a0b00d947b1c87c4a8908812,
         type: 3}
       propertyPath: BurnRate
-      value: 0.1
+      value: 0.13
       objectReference: {fileID: 0}
     - target: {fileID: 108810426488560473, guid: ce34b7e3a0b00d947b1c87c4a8908812,
         type: 3}
