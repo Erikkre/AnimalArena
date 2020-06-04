@@ -133,7 +133,7 @@ MonoBehaviour:
   coroutineManagerInstance: {fileID: 0}
   damageableMask:
     serializedVersion: 2
-    m_Bits: 1024
+    m_Bits: 9216
   explosionParticles: {fileID: 3398813380775369614}
   massExplosion: {fileID: 3398813380790262344}
   explosionAudio: {fileID: 5680027840459643227}
