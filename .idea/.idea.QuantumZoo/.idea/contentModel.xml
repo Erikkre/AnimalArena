@@ -611,12 +611,40 @@
             <e p="Mass.cs" t="Include" />
           </e>
           <e p="SimpleCameraController.cs" t="Include" />
+          <e p="Terrain" t="Include">
+            <e p="TerrainRaiseLowerHeightmap.cs" t="Include" />
+            <e p="TerrainRaiseLowerHeightmapEditor.cs" t="Include" />
+          </e>
           <e p="UI" t="Include">
             <e p="UIDirectionControl.cs" t="Include" />
           </e>
         </e>
         <e p="Shaders" t="Include">
           <e p="HealthBar.shader" t="Include" />
+        </e>
+        <e p="Terrain" t="Include">
+          <e p="Tools" t="Include">
+            <e p="Terrain Toolkit" t="Include">
+              <e p="Editor" t="Include">
+                <e p="TerrainToolkitEditor.cs" t="Include" />
+              </e>
+              <e p="Scripts" t="Include">
+                <e p="TerrainToolkit.cs" t="Include" />
+              </e>
+            </e>
+            <e p="Terrain Tools" t="Include">
+              <e p="0.1.0-preview" t="Include">
+                <e p="Terrain Assets" t="Include">
+                  <e p="ThirdPartyNotices.txt" t="Include" />
+                </e>
+              </e>
+            </e>
+          </e>
+        </e>
+        <e p="TerrainRotator" t="Include">
+          <e p="Editor" t="Include">
+            <e p="TerrainRotator.cs" t="Include" />
+          </e>
         </e>
       </e>
       <e p="obj" t="ExcludeRecursive" />
