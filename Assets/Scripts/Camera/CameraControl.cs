@@ -3,8 +3,8 @@
 public class CameraControl : MonoBehaviour
 {
     public float dampTime = 0.2f;                 // Approximate time for the camera to refocus.
-    public float screenEdgeBuffer = 1f;           // Space between the top/bottom most target and the screen edge.
-    public float minSize = 9f;                  // The smallest orthographic size the camera can be.
+    public float screenEdgeBuffer = 3f;           // Space between the top/bottom most target and the screen edge.
+    public float minSize = 109f;                  // The smallest orthographic size the camera can be.
     [HideInInspector] public AnimalManager[] targets; // All the targets the camera needs to encompass.
 
     private Camera Camera;                        // Used for referencing the camera.
@@ -73,6 +73,7 @@ public class CameraControl : MonoBehaviour
         // Add the edge buffer to the size.
         size += screenEdgeBuffer;
 
+        size = 19;
         // Make sure the camera's size isn't below the minimum.
         size = Mathf.Max (size, minSize);
         //Debug.Log("Camera fov target: "+size*3);

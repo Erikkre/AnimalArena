@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ContentModelStore">
-    <e p="C:\Unity\UnityProjects\QuantumZoo" t="IncludeRecursive">
+    <e p="C:\Unity\QuantumZoo" t="IncludeRecursive">
       <e p="Assembly-CSharp-Editor-firstpass.csproj" t="IncludeRecursive" />
       <e p="Assembly-CSharp-Editor.csproj" t="IncludeRecursive" />
       <e p="Assembly-CSharp-firstpass.csproj" t="IncludeRecursive" />
@@ -601,6 +601,7 @@
             <e p="ObjectPoolerHelper.cs" t="Include" />
           </e>
           <e p="Managers" t="Include">
+            <e p="AdManager.cs" t="Include" />
             <e p="AimManager.cs" t="Include" />
             <e p="CoroutineManager.cs" t="Include" />
             <e p="FoodManager.cs" t="Include" />
@@ -652,7 +653,7 @@
       <e p="QuantumZoo.sln" t="IncludeFlat" />
       <e p="Temp\bin" t="ExcludeRecursive" />
     </e>
-    <e p="C:\Users\Erik Kredatus\.Rider2019.2\system\extResources" t="IncludeRecursive" />
-    <e p="C:\Users\Erik Kredatus\.Rider2019.2\system\resharper-host\local\Transient\ReSharperHost\v192\SolutionCaches\_QuantumZoo.206874461.00" t="ExcludeRecursive" />
+    <e p="C:\Users\Erik Kredatus\AppData\local\JetBrains\Rider2020.1\extResources" t="IncludeRecursive" />
+    <e p="C:\Users\Erik Kredatus\AppData\local\JetBrains\Rider2020.1\resharper-host\local\Transient\ReSharperHost\v201\SolutionCaches\_QuantumZoo.-90959286.00" t="ExcludeRecursive" />
   </component>
 </project>
